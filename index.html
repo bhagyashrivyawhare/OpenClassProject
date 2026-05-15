@@ -619,12 +619,82 @@
         }
 
         function renderCourses(docs, isT) {
-            const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
-            if (container) container.innerHTML = `<div class="grid md:grid-cols-2 gap-6">${docs.map(doc => {
-                const c = doc.data();
-                return `<div class="glass p-6 rounded-[2.5rem] border border-white/5"><img src="${c.thumbnail}" class="w-full h-52 object-cover rounded-2xl mb-4"><div><h2 class="text-xl font-black italic mb-2">${c.title}</h2><div class="flex justify-between items-center"><h3 class="text-lg font-black text-brandOrange">₹${c.price}</h3><button onclick="openCourse('${doc.id}')" class="btn-brand px-6 py-2 text-xs">View Course</button></div></div></div>`;
-            }).join('')}</div>`;
-        }
+
+    const container =
+        document.getElementById('courses-feed') ||
+        document.getElementById('tab-display');
+
+    if (!container) return;
+
+    container.innerHTML = `
+    
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+
+        ${docs.map(doc => {
+
+            const c = doc.data();
+
+            return `
+
+            <div class="glass rounded-[2.5rem] overflow-hidden border border-white/5 shadow-2xl hover:scale-[1.02] transition-all duration-300 flex flex-col">
+
+                <!-- IMAGE -->
+                <div class="relative">
+
+                    <img 
+                        src="${c.thumbnail}" 
+                        class="w-full h-56 object-cover">
+
+                    <div class="absolute top-4 right-4 bg-brandOrange text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">
+                        ₹${c.price}
+                    </div>
+
+                </div>
+
+                <!-- CONTENT -->
+                <div class="p-6 flex flex-col flex-grow">
+
+                    <h2 class="text-2xl font-black italic mb-3 line-clamp-2">
+                        ${c.title}
+                    </h2>
+
+                    <p class="text-sm opacity-60 mb-6 line-clamp-3">
+                        ${c.description || "Premium learning experience"}
+                    </p>
+
+                    <!-- BUTTONS -->
+                    <div class="mt-auto flex gap-3">
+
+                        <button 
+                            onclick="openCourse('${doc.id}')"
+                            class="flex-1 py-3 btn-brand text-xs rounded-2xl">
+                            View Course
+                        </button>
+
+                        ${isT ? `
+                        
+                        <button 
+                            onclick="delC('${doc.id}')"
+                            class="px-4 py-3 bg-red-500/10 text-red-500 rounded-2xl hover:bg-red-500 hover:text-white transition-all">
+                            🗑
+                        </button>
+
+                        ` : ""}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+
+        }).join('')}
+
+    </div>
+    
+    `;
+}
 
         function renderResourceCard(d, isT) {
             const i = d.data();
