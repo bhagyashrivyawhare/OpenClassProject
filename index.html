@@ -657,7 +657,7 @@
 
                     <img 
                         src="${c.thumbnail}" 
-                    class="w-full h-44 object-contain bg-zinc-900 p-3 rounded-t-[2rem]"
+                   class="w-full h-36 object-cover rounded-t-[2rem]"
 
                     <div class="absolute top-4 right-4 bg-brandOrange text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">
                         ₹${c.price}
@@ -677,11 +677,11 @@
                     </p>
 
                     <!-- BUTTONS -->
-                    <div class="mt-auto flex gap-3">
+                    <div class="mt-auto flex items-center gap-2">
 
                         <button 
                             onclick="openCourse('${doc.id}')"
-                           class="flex-1 py-2 btn-brand text-[10px] rounded-xl">
+                        class="flex-1 h-11 btn-brand text-xs rounded-xl whitespace-nowrap">
                             View Course
                         </button>
 
