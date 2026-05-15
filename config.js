@@ -1,5 +1,5 @@
 // OpenClass Security Configuration
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyAE729BAWQ3z22VviTKTCleBX0IstMkWfY",
   authDomain: "openclass-e814a.firebaseapp.com",
   projectId: "openclass-e814a",
