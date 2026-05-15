@@ -788,6 +788,82 @@
             }).join('')}</div>`;
         }
         window.delG = async (id) => { if(confirm("Delete Hub Community?")) { await Core.deleteDoc(Core.doc(Core.db, "groups", id)); loadHome(); } };
+        // OPEN PROFILE POPUP
+window.openProfilePopup = () => {
+
+    document.getElementById('profile-popup').classList.remove('hidden');
+
+    document.getElementById('profile-name-input').value = profile.name || "";
+
+    document.getElementById('popup-profile-img').src =
+        profile.photo ||
+        "https://ui-avatars.com/api/?name=" + profile.name;
+};
+
+// CLOSE POPUP
+window.closeProfilePopup = () => {
+    document.getElementById('profile-popup').classList.add('hidden');
+};
+
+// IMAGE PREVIEW
+document.addEventListener('change', (e) => {
+
+    if (e.target.id === 'profile-image-input') {
+
+        const file = e.target.files[0];
+
+        if (file) {
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+
+                document.getElementById('popup-profile-img').src =
+                    event.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+});
+
+// SAVE PROFILE
+window.saveProfileChanges = async () => {
+
+    const updatedName =
+        document.getElementById('profile-name-input').value;
+
+    const updatedPhoto =
+        document.getElementById('popup-profile-img').src;
+
+    try {
+
+        await Core.updateDoc(
+            Core.doc(Core.db, "users", Core.auth.currentUser.uid),
+            {
+                name: updatedName,
+                photo: updatedPhoto
+            }
+        );
+
+        profile.name = updatedName;
+        profile.photo = updatedPhoto;
+
+        // UPDATE NAVBAR IMAGE
+        document.getElementById('nav-profile-pic').innerHTML =
+            `<img src="${updatedPhoto}" class="w-full h-full object-cover">`;
+
+        toast("Profile Updated");
+
+        closeProfilePopup();
+
+        loadHome();
+
+    } catch(err) {
+
+        toast("Profile Update Failed", "error");
+    }
+};
         window.onclick = (e) => { if (e.target === document.getElementById('custom-modal')) document.getElementById('custom-modal').classList.add('hidden'); };
     </script>
     <!-- PROFILE POPUP -->
