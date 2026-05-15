@@ -1,13 +1,14 @@
 // OpenClass Security Configuration
-export const firebaseConfig = {
-    apiKey: "AIzaSyAAtk7rWxT7VFKA6J1UVHicHSakceMc4TA",
-    authDomain: "openclass-565ca.firebaseapp.com",
-    projectId: "openclass-565ca",
-    storageBucket: "openclass-565ca.firebasestorage.app",
-    messagingSenderId: "43042586871",
-    appId: "1:43042586871:web:d35842d6f67d44c24fd3f2",
-    measurementId: "G-BR2YDKX6B4"
+const firebaseConfig = {
+  apiKey: "AIzaSyAE729BAWQ3z22VviTKTCleBX0IstMkWfY",
+  authDomain: "openclass-e814a.firebaseapp.com",
+  projectId: "openclass-e814a",
+  storageBucket: "openclass-e814a.firebasestorage.app",
+  messagingSenderId: "955552487309",
+  appId: "1:955552487309:web:1ab0dd042529032ad20fc4",
+  measurementId: "G-JESQ4M5X6T"
 };
+
 
 export const emailConfig = {
     serviceID: "service_djr1n0f",
