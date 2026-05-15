@@ -159,7 +159,10 @@
                         <input type="text" id="g-search" oninput="reactiveSearch(this.value)" placeholder="Search campus..." class="input-field rounded-2xl pl-12 pr-6 py-2.5 text-sm w-full">
                     </div>
                     <button onclick="toggleMode()" class="p-2 glass rounded-xl">🌓</button>
-                    <div id="nav-profile-pic" class="w-10 h-10 rounded-full border-2 overflow-hidden hidden md:block"></div>
+                    <div id="nav-profile-pic"
+                     onclick="openProfilePopup()"
+                     class="w-10 h-10 rounded-full border-2 overflow-hidden hidden md:block cursor-pointer hover:scale-110 transition-all">
+                    </div>
                     <button onclick="logout()" class="text-[10px] font-black text-red-500 uppercase px-4 py-2 border border-red-500/20 rounded-xl">Logout</button>
                 </div>
             </nav>
