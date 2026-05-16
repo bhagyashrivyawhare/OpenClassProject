@@ -738,69 +738,61 @@
             if (container) container.innerHTML = docs.map(d => renderResourceCard(d, isT)).join(''); 
         }
 
-       function renderCourses(docs, isT) {
-    const container =
-        document.getElementById('courses-feed') ||
-        document.getElementById('tab-display');
+       container.innerHTML = `
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
 
-    if (container) {
-        container.innerHTML = `
-         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
-            ${docs.map(doc => {
-                const c = doc.data();
+${docs.map(doc => {
+    const c = doc.data();
 
-                return `
-              <div class="glass rounded-[2.5rem] overflow-hidden 
-border border-white/10 shadow-xl 
-bg-white min-h-[340px]
-flex flex-col">
-                    <!-- IMAGE -->
-                    <div class="w-full h-[180px] bg-zinc-100 overflow-hidden">
-                        <img 
-                            src="${c.thumbnail}" 
-                            class="w-full h-full object-cover"
-                            alt="${c.title}"
-                        >
-                    </div>
+    return `
+    <div class="glass rounded-[2rem] overflow-hidden
+    border border-white/10 shadow-xl bg-white
+    flex flex-col">
 
-                    <!-- CONTENT -->
-                   <div class="p-4 flex flex-col flex-1">
+        <!-- IMAGE -->
+        <div class="w-full h-[160px] overflow-hidden bg-zinc-100">
+            <img
+                src="${c.thumbnail}"
+                alt="${c.title}"
+                class="w-full h-full object-cover"
+            >
+        </div>
 
-                        <div class="flex-1">
-                            <h2 class="text-xl font-black italic 
-                                text-[#003B66] leading-tight mb-3
-                                line-clamp-2">
-                                ${c.title}
-                            </h2>
+        <!-- CONTENT -->
+        <div class="p-4 flex flex-col flex-1">
 
-                            <p class="text-zinc-500 text-base">
-                                Premium Course
-                            </p>
-                        </div>
+            <div class="flex-1">
+                <h2 class="text-xl font-black italic text-[#003B66] mb-2 line-clamp-2">
+                    ${c.title}
+                </h2>
 
-                        <!-- BOTTOM -->
-                        <div class="flex items-center justify-between mt-4 gap-3">
+                <p class="text-zinc-500 text-sm">
+                    Premium Course
+                </p>
+            </div>
 
-                            <h3 class="text-2xl font-black text-orange-500">
-                                ${parseFloat(c.price) === 0 
-                                    ? 'FREE' 
-                                    : '₹' + c.price}
-                            </h3>
+            <!-- BOTTOM -->
+            <div class="flex items-center justify-between mt-4">
 
-                            <button
-                                onclick="openCourse('${doc.id}')"
-                              class="btn-brand px-4 py-2 text-[10px] rounded-xl whitespace-nowrap shrink-0"
-                                VIEW COURSE
-                            </button>
+                <h3 class="text-2xl font-black text-orange-500">
+                    ${parseFloat(c.price) === 0
+                        ? 'FREE'
+                        : '₹' + c.price}
+                </h3>
 
-                        </div>
-                    </div>
-                </div>
-                `;
-            }).join('')}
-        </div>`;
-    }
-}
+                <button
+                    onclick="openCourse('${doc.id}')"
+                    class="btn-brand px-4 py-2 text-xs rounded-xl whitespace-nowrap">
+                    VIEW COURSE
+                </button>
+
+            </div>
+        </div>
+    </div>
+    `;
+}).join('')}
+
+</div>`;
         function renderResourceCard(d, isT) {
             const i = d.data();
             let liveStatusLabel = '';
