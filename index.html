@@ -65,14 +65,15 @@
             user-select: none;
             transition: all 1.2s ease-in-out;
         }
-
-        @keyframes popUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-       .line-clamp-2{
+        .line-clamp-2{
     display:-webkit-box;
     -webkit-line-clamp:2;
     -webkit-box-orient:vertical;
     overflow:hidden;
 }
+
+        @keyframes popUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      
     </style>
 </head>
 <body class="selection:bg-brandOrange/30">
@@ -737,51 +738,65 @@
             if (container) container.innerHTML = docs.map(d => renderResourceCard(d, isT)).join(''); 
         }
 
-        function renderCourses(docs, isT) {
-    const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
+       function renderCourses(docs, isT) {
+    const container =
+        document.getElementById('courses-feed') ||
+        document.getElementById('tab-display');
 
     if (container) {
         container.innerHTML = `
-        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 w-full">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
             ${docs.map(doc => {
                 const c = doc.data();
 
                 return `
-                <div class="glass rounded-[2.5rem] overflow-hidden border border-white/5 shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col">
+                <div class="glass rounded-[2.5rem] overflow-hidden 
+                    border border-white/10 shadow-xl 
+                    bg-white min-h-[430px]
+                    flex flex-col">
 
-                    <!-- Course Image -->
-                    <div class="w-full h-52 bg-zinc-900 overflow-hidden">
+                    <!-- IMAGE -->
+                    <div class="w-full aspect-video bg-zinc-100 overflow-hidden">
                         <img 
                             src="${c.thumbnail}" 
                             class="w-full h-full object-cover"
+                            alt="${c.title}"
                         >
                     </div>
 
-                    <!-- Content -->
-                    <div class="p-6 flex flex-col flex-grow justify-between">
+                    <!-- CONTENT -->
+                    <div class="p-6 flex flex-col flex-1">
 
-                        <div>
-                            <h2 class="text-2xl font-black italic line-clamp-2 mb-3">
+                        <div class="flex-1">
+                            <h2 class="text-3xl font-black italic 
+                                text-[#003B66] leading-tight mb-3
+                                line-clamp-2">
                                 ${c.title}
                             </h2>
 
-                            <p class="text-sm opacity-60 line-clamp-2 mb-5">
-                                ${c.description || 'Premium Course'}
+                            <p class="text-zinc-500 text-lg">
+                                Premium Course
                             </p>
                         </div>
 
-                        <!-- Bottom -->
-                        <div class="flex items-center justify-between mt-auto">
-                            <h3 class="text-3xl font-black text-brandOrange">
-                                ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
+                        <!-- BOTTOM -->
+                        <div class="flex items-center justify-between mt-8 gap-4">
+
+                            <h3 class="text-5xl font-black text-orange-500">
+                                ${parseFloat(c.price) === 0 
+                                    ? 'FREE' 
+                                    : '₹' + c.price}
                             </h3>
 
-                            <button 
+                            <button
                                 onclick="openCourse('${doc.id}')"
-                                class="btn-brand px-6 py-3 text-xs rounded-2xl whitespace-nowrap"
+                                class="btn-brand px-7 py-4 
+                                text-sm rounded-2xl
+                                whitespace-nowrap shrink-0"
                             >
                                 VIEW COURSE
                             </button>
+
                         </div>
                     </div>
                 </div>
