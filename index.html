@@ -737,6 +737,13 @@
             const container = document.getElementById(target) || document.getElementById('tab-display');
             if (container) container.innerHTML = docs.map(d => renderResourceCard(d, isT)).join(''); 
         }
+        function renderCourses(docs, isT) {
+
+    const container =
+        document.getElementById('courses-feed') ||
+        document.getElementById('tab-display');
+
+    if (!container) return;
 
       container.innerHTML = `
 <div class="flex flex-wrap gap-12">
