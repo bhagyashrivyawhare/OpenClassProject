@@ -732,13 +732,52 @@
         }
 
         function renderCourses(docs, isT) {
-            const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
-            if (container) container.innerHTML = `<div class="grid md:grid-cols-2 gap-6 w-full">${docs.map(doc => {
-                const c = doc.data();
-                return `<div class="glass p-6 rounded-[2.5rem] border border-white/5 flex flex-col justify-between"><img src="${c.thumbnail}" class="w-full h-52 object-cover rounded-2xl mb-4 border border-white/5"><div><h2 class="text-xl font-black italic mb-2 truncate">${c.title}</h2><div class="flex justify-between items-center mt-4"><h3 class="text-lg font-black text-brandOrange">${parseFloat(c.price)===0?'FREE':'₹'+c.price}</h3><button onclick="openCourse('${doc.id}')" class="btn-brand px-6 py-2 text-xs">Inspect Module</button></div></div></div>`;
-            }).join('')}</div>`;
-        }
+    const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
 
+    if (container)
+        container.innerHTML = `
+        <div class="grid md:grid-cols-2 gap-8 w-full">
+            ${docs.map(doc => {
+                const c = doc.data();
+
+                return `
+                <div class="bg-white rounded-[2rem] p-5 shadow-lg border border-zinc-100">
+
+                    <!-- Course Image -->
+                    <img 
+                        src="${c.thumbnail}" 
+                        class="w-full h-56 object-cover rounded-[1.5rem] mb-5"
+                    >
+
+                    <!-- Title -->
+                    <h2 class="text-2xl font-black italic text-[#002e50] mb-4">
+                        ${c.title}
+                    </h2>
+
+                    <!-- Bottom -->
+                    <div class="flex items-center justify-between">
+
+                        <!-- Price -->
+                        <h3 class="text-3xl font-black text-orange-500">
+                            ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
+                        </h3>
+
+                        <!-- Button -->
+                        <button 
+                            onclick="openCourse('${doc.id}')"
+                            class="px-8 py-3 rounded-2xl text-white font-bold text-sm
+                            bg-gradient-to-r from-blue-700 to-orange-400 shadow-md"
+                        >
+                            VIEW COURSE
+                        </button>
+
+                    </div>
+                </div>
+                `;
+            }).join('')}
+        </div>
+    `;
+}
         function renderResourceCard(d, isT) {
             const i = d.data();
             let liveStatusLabel = '';
