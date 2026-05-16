@@ -745,18 +745,17 @@
 
     if (container) {
         container.innerHTML = `
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
             ${docs.map(doc => {
                 const c = doc.data();
 
                 return `
-               <div class="glass rounded-[2.5rem] overflow-hidden 
-               border border-white/10 shadow-xl 
-               bg-white w-[320px] min-h-[380px]
-               flex flex-col">
-
+              <div class="glass rounded-[2.5rem] overflow-hidden 
+border border-white/10 shadow-xl 
+bg-white min-h-[340px]
+flex flex-col">
                     <!-- IMAGE -->
-                    <div class="w-full h-[180px] bg-zinc-100 overflow-hidden">
+                    <div class="w-full h-[140px] bg-zinc-100 overflow-hidden">
                         <img 
                             src="${c.thumbnail}" 
                             class="w-full h-full object-cover"
@@ -774,7 +773,7 @@
                                 ${c.title}
                             </h2>
 
-                            <p class="text-zinc-500 text-lg">
+                            <p class="text-zinc-500 text-base">
                                 Premium Course
                             </p>
                         </div>
@@ -790,7 +789,7 @@
 
                             <button
                                 onclick="openCourse('${doc.id}')"
-                               class="btn-brand px-5 py-2 text-xs rounded-xl whitespace-nowrap shrink-0 min-w-[130px]">
+                              class="btn-brand px-4 py-2 text-[10px] rounded-xl whitespace-nowrap shrink-0"
                                 VIEW COURSE
                             </button>
 
