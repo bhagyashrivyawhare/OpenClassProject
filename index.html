@@ -732,50 +732,108 @@
         }
 
         function renderCourses(docs, isT) {
-    const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
+
+    const container =
+        document.getElementById('courses-feed') ||
+        document.getElementById('tab-display');
 
     if (container)
+
         container.innerHTML = `
-        <div class="grid md:grid-cols-2 gap-8 w-full">
+
+        <div class="
+            grid
+            md:grid-cols-2
+            gap-10
+            w-full
+        ">
+
             ${docs.map(doc => {
+
                 const c = doc.data();
 
                 return `
-                <div class="bg-white rounded-[2rem] p-5 shadow-lg border border-zinc-100">
 
-                    <!-- Course Image -->
-                    <img 
-                        src="${c.thumbnail}" 
-                        class="w-full h-56 object-cover rounded-[1.5rem] mb-5"
+                <div class="
+                    bg-white
+                    rounded-[40px]
+                    p-6
+                    shadow-xl
+                    border
+                    border-zinc-100
+                    max-w-[470px]
+                ">
+
+                    <!-- IMAGE -->
+                    <img
+                        src="${c.thumbnail}"
+                        class="
+                            w-full
+                            h-[240px]
+                            object-cover
+                            rounded-[28px]
+                        "
                     >
 
-                    <!-- Title -->
-                    <h2 class="text-2xl font-black italic text-[#002e50] mb-4">
+                    <!-- TITLE -->
+                    <h2 class="
+                        text-[24px]
+                        font-black
+                        italic
+                        text-[#002e50]
+                        mt-6
+                    ">
                         ${c.title}
                     </h2>
 
-                    <!-- Bottom -->
-                    <div class="flex items-center justify-between">
+                    <!-- PRICE + BUTTON -->
+                    <div class="
+                        flex
+                        items-center
+                        justify-between
+                        mt-8
+                    ">
 
-                        <!-- Price -->
-                        <h3 class="text-3xl font-black text-orange-500">
-                            ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
+                        <!-- PRICE -->
+                        <h3 class="
+                            text-[42px]
+                            font-black
+                            text-orange-500
+                        ">
+                            ${parseFloat(c.price) === 0
+                                ? 'FREE'
+                                : '₹' + c.price}
                         </h3>
 
-                        <!-- Button -->
-                        <button 
+                        <!-- BUTTON -->
+                        <button
                             onclick="openCourse('${doc.id}')"
-                            class="px-8 py-3 rounded-2xl text-white font-bold text-sm
-                            bg-gradient-to-r from-blue-700 to-orange-400 shadow-md"
+                            class="
+                                px-10
+                                py-4
+                                rounded-[20px]
+                                text-white
+                                font-black
+                                text-sm
+                                bg-gradient-to-r
+                                from-blue-700
+                                to-orange-400
+                                shadow-lg
+                            "
                         >
                             VIEW COURSE
                         </button>
 
                     </div>
+
                 </div>
+
                 `;
+
             }).join('')}
+
         </div>
+
     `;
 }
         function renderResourceCard(d, isT) {
