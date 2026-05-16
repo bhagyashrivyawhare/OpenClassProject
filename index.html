@@ -748,12 +748,8 @@
 
         container.innerHTML = `
 
-        <div class="
-            grid
-            md:grid-cols-2
-            gap-10
-            w-full
-        ">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        
 
             ${docs.map(doc => {
 
@@ -761,27 +757,12 @@
 
                 return `
 
-                <div class="
-                    bg-white
-                    rounded-[40px]
-                    p-6
-                    shadow-xl
-                    border
-                    border-zinc-100
-                    max-w-[470px]
-                ">
+    <div class="bg-white rounded-[40px] p-6 shadow-xl border border-zinc-100 w-full">
 
                     <!-- IMAGE -->
                     <img
                         src="${c.thumbnail}"
-                        class="
-                            w-full
-                            h-[240px]
-                            object-cover
-                            rounded-[28px]
-                        "
-                    >
-
+                        class="w-full h-[250px] object-cover rounded-[28px] mb-6"
                     <!-- TITLE -->
                     <h2 class="
                         text-[24px]
@@ -802,11 +783,7 @@
                     ">
 
                         <!-- PRICE -->
-                        <h3 class="
-                            text-[42px]
-                            font-black
-                            text-orange-500
-                        ">
+                        <h3 class="text-[42px] font-black text-orange-500"
                             ${parseFloat(c.price) === 0
                                 ? 'FREE'
                                 : '₹' + c.price}
@@ -815,19 +792,8 @@
                         <!-- BUTTON -->
                         <button
                             onclick="openCourse('${doc.id}')"
-                            class="
-                                px-10
-                                py-4
-                                rounded-[20px]
-                                text-white
-                                font-black
-                                text-sm
-                                bg-gradient-to-r
-                                from-blue-700
-                                to-orange-400
-                                shadow-lg
-                            "
-                        >
+                            class="px-10 py-4 rounded-[20px] text-white font-black text-sm
+bg-gradient-to-r from-blue-700 to-orange-400 shadow-lg"
                             VIEW COURSE
                         </button>
 
