@@ -632,84 +632,59 @@
             if (container) container.innerHTML = docs.map(d => renderResourceCard(d, isT)).join(''); 
         }
 
-        function renderCourses(docs, isT) {
+       window.renderCourses = (docs, isTeacher) => {
+    const targetFeed = document.getElementById('courses-feed') || document.getElementById('tab-display');
+    if (!targetFeed) return;
 
-    const container =
-        document.getElementById('courses-feed') ||
-        document.getElementById('tab-display');
+    if (docs.length === 0) {
+        targetFeed.innerHTML = `
+            <div class="col-span-2 glass p-10 rounded-[2rem] text-center border border-white/5 opacity-50">
+                <p class="text-sm font-bold tracking-wider uppercase">No Courses Launched Yet</p>
+            </div>`;
+        return;
+    }
 
-    if (!container) return;
-
-    container.innerHTML = `
-    
-    <div class="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-
-        ${docs.map(doc => {
-
-            const c = doc.data();
-
-            return `
-
-          <div class="glass rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl hover:scale-[1.02] transition-all duration-300 flex flex-col">
-
-                <!-- IMAGE -->
-                <div class="relative">
-
-                    <img 
-                        src="${c.thumbnail}" 
-                   class="w-full h-44 object-contain bg-zinc-900 p-3 rounded-t-[2rem]"
-
-                    <div class="absolute top-4 right-4 bg-brandOrange text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">
-                        ₹${c.price}
-                    </div>
-
+    targetFeed.className = "grid md:grid-cols-2 gap-6";
+    targetFeed.innerHTML = docs.map(doc => {
+        const data = doc.data();
+        const courseId = doc.id;
+        
+        return `
+        <div class="glass rounded-[2.5rem] overflow-hidden border border-white/5 shadow-xl hover:scale-[1.01] transition-all flex flex-col">
+            <div class="relative h-48 bg-zinc-900 overflow-hidden">
+                <img src="${data.banner || 'https://images.unsplash.com/photo-1516116211223-5c359a36298a?w=500'}" 
+                     class="w-full h-full object-cover">
+                <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-black tracking-widest text-brandOrange uppercase border border-brandOrange/20">
+                    ${data.level || 'EXPERT'}
                 </div>
-
-                <!-- CONTENT -->
-                <div class="p-4 flex flex-col flex-grow">
-
-                    <h2 class="text-2xl font-black italic mb-3 line-clamp-2">
-                        ${c.title}
-                    </h2>
-
-                    <p class="text-sm opacity-60 mb-6 line-clamp-3">
-                        ${c.description || "Premium learning experience"}
-                    </p>
-
-                    <!-- BUTTONS -->
-                    <div class="mt-auto flex items-center gap-2">
-
-                        <button 
-                            onclick="openCourse('${doc.id}')"
-                        class="flex-1 h-11 btn-brand text-xs rounded-xl whitespace-nowrap">
+            </div>
+            
+            <div class="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-xl font-black italic text-brandOrange line-clamp-1 mb-2">${data.title || 'Java Course'}</h4>
+                    <p class="text-xs opacity-50 font-medium line-clamp-2 mb-6">${data.description || 'Master complete core structures and backend modules.'}</p>
+                </div>
+                
+                <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                    <div>
+                        <span class="text-[9px] font-bold opacity-30 uppercase block">Course Fee</span>
+                        <span class="text-xl font-black text-white">₹${data.price || '1000'}</span>
+                    </div>
+                    
+                    ${isTeacher ? `
+                        <button onclick="manageCourse('${courseId}')" class="px-6 py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border border-white/10">
+                            Manage Course
+                        </button>
+                    ` : `
+                        <button onclick="enrollInCourse('${courseId}', ${data.price})" class="px-6 py-3 btn-brand rounded-xl text-[10px] tracking-wider">
                             View Course
                         </button>
-
-                        ${isT ? `
-                        
-                        <button 
-                            onclick="delC('${doc.id}')"
-                            class="px-4 py-3 bg-red-500/10 text-red-500 rounded-2xl hover:bg-red-500 hover:text-white transition-all">
-                            🗑
-                        </button>
-
-                        ` : ""}
-
-                    </div>
-
+                    `}
                 </div>
-
             </div>
-
-            `;
-
-        }).join('')}
-
-    </div>
-    
-    `;
-}
-
+        </div>`;
+    }).join('');
+};
         function renderResourceCard(d, isT) {
             const i = d.data();
             let previewThumb = Core.getThumbnail(i.url);
