@@ -750,13 +750,13 @@
                 const c = doc.data();
 
                 return `
-                <div class="glass rounded-[2.5rem] overflow-hidden 
-                    border border-white/10 shadow-xl 
-                    bg-white min-h-[430px]
-                    flex flex-col">
+               <div class="glass rounded-[2.5rem] overflow-hidden 
+               border border-white/10 shadow-xl 
+               bg-white w-[320px] min-h-[380px]
+               flex flex-col">
 
                     <!-- IMAGE -->
-                    <div class="w-full aspect-video bg-zinc-100 overflow-hidden">
+                    <div class="w-full h-[180px] bg-zinc-100 overflow-hidden">
                         <img 
                             src="${c.thumbnail}" 
                             class="w-full h-full object-cover"
@@ -765,7 +765,7 @@
                     </div>
 
                     <!-- CONTENT -->
-                    <div class="p-6 flex flex-col flex-1">
+                   <div class="p-4 flex flex-col flex-1">
 
                         <div class="flex-1">
                             <h2 class="text-xl font-black italic 
@@ -780,7 +780,7 @@
                         </div>
 
                         <!-- BOTTOM -->
-                        <div class="flex items-center justify-between mt-8 gap-4">
+                        <div class="flex items-center justify-between mt-4 gap-3">
 
                             <h3 class="text-2xl font-black text-orange-500">
                                 ${parseFloat(c.price) === 0 
