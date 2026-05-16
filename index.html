@@ -67,12 +67,11 @@
         }
 
         @keyframes popUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        #courses-feed{
-    width:100%;
-}
-
-#courses-feed .grid{
-    align-items:start;
+       .line-clamp-2{
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
 }
     </style>
 </head>
@@ -739,75 +738,57 @@
         }
 
         function renderCourses(docs, isT) {
+    const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
 
-    const container =
-        document.getElementById('courses-feed') ||
-        document.getElementById('tab-display');
-
-    if (container)
-
+    if (container) {
         container.innerHTML = `
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        
-
+        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 w-full">
             ${docs.map(doc => {
-
                 const c = doc.data();
 
                 return `
+                <div class="glass rounded-[2.5rem] overflow-hidden border border-white/5 shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col">
 
-    <div class="bg-white rounded-[40px] p-6 shadow-xl border border-zinc-100 w-full">
-
-                    <!-- IMAGE -->
-                    <img
-                        src="${c.thumbnail}"
-                        class="w-full h-[250px] object-cover rounded-[28px] mb-6"
-                    <!-- TITLE -->
-                    <h2 class="
-                        text-[24px]
-                        font-black
-                        italic
-                        text-[#002e50]
-                        mt-6
-                    ">
-                        ${c.title}
-                    </h2>
-
-                    <!-- PRICE + BUTTON -->
-                    <div class="
-                        flex
-                        items-center
-                        justify-between
-                        mt-8
-                    ">
-
-                        <!-- PRICE -->
-                        <h3 class="text-[42px] font-black text-orange-500"
-                            ${parseFloat(c.price) === 0
-                                ? 'FREE'
-                                : '₹' + c.price}
-                        </h3>
-
-                        <!-- BUTTON -->
-                        <button
-                            onclick="openCourse('${doc.id}')"
-                            class="px-10 py-4 rounded-[20px] text-white font-black text-sm
-bg-gradient-to-r from-blue-700 to-orange-400 shadow-lg"
-                            VIEW COURSE
-                        </button>
-
+                    <!-- Course Image -->
+                    <div class="w-full h-52 bg-zinc-900 overflow-hidden">
+                        <img 
+                            src="${c.thumbnail}" 
+                            class="w-full h-full object-cover"
+                        >
                     </div>
 
+                    <!-- Content -->
+                    <div class="p-6 flex flex-col flex-grow justify-between">
+
+                        <div>
+                            <h2 class="text-2xl font-black italic line-clamp-2 mb-3">
+                                ${c.title}
+                            </h2>
+
+                            <p class="text-sm opacity-60 line-clamp-2 mb-5">
+                                ${c.description || 'Premium Course'}
+                            </p>
+                        </div>
+
+                        <!-- Bottom -->
+                        <div class="flex items-center justify-between mt-auto">
+                            <h3 class="text-3xl font-black text-brandOrange">
+                                ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
+                            </h3>
+
+                            <button 
+                                onclick="openCourse('${doc.id}')"
+                                class="btn-brand px-6 py-3 text-xs rounded-2xl whitespace-nowrap"
+                            >
+                                VIEW COURSE
+                            </button>
+                        </div>
+                    </div>
                 </div>
-
                 `;
-
             }).join('')}
-
-        </div>
-
-    `;
+        </div>`;
+    }
 }
         function renderResourceCard(d, isT) {
             const i = d.data();
