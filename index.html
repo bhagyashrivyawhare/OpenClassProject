@@ -270,31 +270,36 @@
             return "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop";
         };
 
-       window.checkLiveStatus = (dateStr, startTime, endTime) => {
+     window.checkLiveStatus = (dateStr, startTime, endTime) => {
 
     if (!dateStr || !startTime || !endTime) {
         return 'recorded';
     }
 
-    try {
+    const now = new Date();
 
-        const now = new Date();
+    // Current Date
+    const currentDate =
+        now.toISOString().split('T')[0];
 
-        const startDateTime =
-            new Date(`${dateStr}T${startTime}`);
+    // Current Time HH:MM
+    const currentTime =
+        now.toTimeString().slice(0,5);
 
-        const endDateTime =
-            new Date(`${dateStr}T${endTime}`);
-
-        if (now >= startDateTime && now <= endDateTime) {
-            return 'live';
-        }
-
-        return 'recorded';
-
-    } catch (e) {
+    // Date check
+    if (currentDate !== dateStr) {
         return 'recorded';
     }
+
+    // Time check
+    if (
+        currentTime >= startTime &&
+        currentTime <= endTime
+    ) {
+        return 'live';
+    }
+
+    return 'recorded';
 };
 
         function setupPlayer(videoId, metadata, rawUrl) {
