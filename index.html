@@ -144,67 +144,35 @@
         </div>
 
         <div id="dashboard" class="hidden min-h-screen flex flex-col">
-          <nav class="p-3 sm:p-5 glass border-b border-white/5 sticky top-0 z-[1000] flex flex-col gap-4">
+        <nav class="p-3 sm:p-5 glass border-b border-white/5 sticky top-0 z-[1000] flex flex-col md:flex-row gap-4 justify-between px-3 sm:px-10 items-center">
+                <div class="flex items-center gap-4 cursor-pointer" onclick="navigate('home')">
+                    <img src="https://res.cloudinary.com/dowhvdkjh/image/upload/v1777895769/IMG-20260504-WA0002_fucbjd.jpg" class="h-10 rounded-xl">
+                    <h2 class="text-2xl font-black italic tracking-tighter">Open<span class="text-brandOrange">Class</span></h2>
+                </div>
+                
+                <div class="flex gap-1 glass p-1 rounded-2xl">
+                    <button id="tab-home" onclick="setTab('home')" class="tab-btn active">Home</button>
+                    <button id="tab-groups" onclick="setTab('groups')" class="tab-btn">Groups</button>
+                    <button id="tab-courses" onclick="setTab('courses')" class="tab-btn">Courses</button>
+                    <button id="tab-content" onclick="setTab('content')" class="tab-btn">Content</button>
+                </div>
 
-    <!-- Top -->
-    <div class="flex items-center justify-between w-full flex-wrap gap-3">
-
-        <div class="flex items-center gap-3 cursor-pointer"
-        onclick="navigate('home')">
-
-            <img src="https://res.cloudinary.com/dowhvdkjh/image/upload/v1777895769/IMG-20260504-WA0002_fucbjd.jpg"
-            class="h-10 rounded-xl">
-
-            <h2 class="text-xl sm:text-2xl font-black italic tracking-tighter">
-                Open<span class="text-brandOrange">Class</span>
-            </h2>
-       
-        </div>
-<div class="flex items-center gap-2 sm:gap-4 w-full md:w-auto relative flex-nowrap overflow-visible">
-
-
-    <!-- Cart -->
-    <button onclick="showCart()"
-    class="p-2 glass rounded-xl relative flex items-center justify-center w-10 h-10">
-        🛒
-    </button>
-
-    <!-- Dark Light -->
-    <button onclick="toggleMode()"
-    class="p-2 glass rounded-xl flex items-center justify-center w-10 h-10">
-        🌓
-    </button>
-
-    <div id="nav-profile-pic"
-class="w-10 h-10 min-w-[40px] min-h-[40px]
-rounded-full border-2 border-brandOrange
-overflow-hidden bg-zinc-700
-flex items-center justify-center
-shrink-0 block">
-
-    <img src="${profile?.photo || 'https://i.pravatar.cc/100'}"
-    class="w-full h-full object-cover rounded-full block">
-
+              <div class="flex items-center gap-2 sm:gap-4 w-full md:w-auto relative flex-wrap md:flex-nowrap justify-center">
+                   <div class="relative flex-1 min-w-[140px] md:w-72 group">
+                        <div class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="8" cy="8" r="6" /><path d="M13 13l4 4" /></svg></div>
+                        <input type="text" id="g-search" oninput="reactiveSearch(this.value)" placeholder="Search campus..." class="input-field rounded-2xl pl-12 pr-6 py-2.5 text-sm w-full">
+                    </div>
+                    <button onclick="showCart()" class="p-2 glass rounded-xl relative">🛒 <span id="cart-pill" class="hidden absolute -top-1 -right-1 bg-brandOrange text-white text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center">0</span></button>
+                    <button onclick="toggleMode()" class="p-2 glass rounded-xl">🌓</button>
+                   <div id="nav-profile-pic"
+class="w-10 h-10 rounded-full border-2 overflow-hidden block shrink-0 bg-zinc-700">
+    <img
+    src="https://i.pravatar.cc/100"
+    class="w-full h-full object-cover">
 </div>
-</div>
-    </div>
-
-    <!-- Search -->
-    <div class="relative w-full">
-        <input type="text"
-        placeholder="Search campus..."
-        class="input-field rounded-2xl px-4 py-2.5 text-sm w-full">
-    </div>
-
-    <!-- Tabs -->
-    <div class="flex gap-1 glass p-1 rounded-2xl overflow-x-auto w-full">
-        <button class="tab-btn active whitespace-nowrap">Home</button>
-        <button class="tab-btn whitespace-nowrap">Groups</button>
-        <button class="tab-btn whitespace-nowrap">Courses</button>
-        <button class="tab-btn whitespace-nowrap">Content</button>
-    </div>
-
-</nav>
+                    <button onclick="logout()" class="text-[10px] font-black text-red-500 uppercase px-4 py-2 border border-red-500/20 rounded-xl">Logout</button>
+                </div>
+            </nav>
             <main id="main-content" class="p-10 max-w-7xl mx-auto w-full flex-grow"></main>
         </div>
     </div>
