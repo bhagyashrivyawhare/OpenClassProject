@@ -73,12 +73,12 @@
 
         .search-container { transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); width: 40px; }
         .search-container.expanded { width: 260px; }
-        #g-search{
-    color: black !important;
-}
+       html.dark #g-search {
+      color: white !important;
+    }
 
-.dark #g-search{
-    color: white !important;
+    html.light #g-search {
+    color: black !important;
 }
 
         #floating-bottom-nav-bar { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 4500; width: calc(100% - 2rem); max-width: 500px; transition: transform 0.3s ease, opacity 0.3s ease; }
