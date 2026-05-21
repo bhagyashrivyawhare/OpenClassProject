@@ -354,18 +354,32 @@
             const brandingBlock = document.getElementById('nav-branding-block');
             
             if(wrapper.classList.contains('expanded')) {
-                wrapper.classList.remove('expanded');
-                input.classList.add('hidden');
-                input.value = "";
-                iconsRow.classList.remove('hidden');
-                if(brandingBlock) brandingBlock.classList.remove('hidden');
-            } else {
-                wrapper.classList.add('expanded');
-                input.classList.remove('hidden');
-                setTimeout(() => input.focus(), 50);
-                iconsRow.classList.add('hidden');
-                if(window.innerWidth < 768 && brandingBlock) brandingBlock.classList.add('hidden');
-            }
+    wrapper.classList.remove('expanded');
+
+    input.classList.add('hidden');
+    input.style.display = "none";
+
+    input.value = "";
+    iconsRow.classList.remove('hidden');
+
+    if(brandingBlock) brandingBlock.classList.remove('hidden');
+
+} else {
+
+    wrapper.classList.add('expanded');
+
+    input.classList.remove('hidden');
+    input.style.display = "block";
+
+    input.style.color = "black";
+
+    setTimeout(() => input.focus(), 50);
+
+    iconsRow.classList.add('hidden');
+
+    if(window.innerWidth < 768 && brandingBlock)
+        brandingBlock.classList.add('hidden');
+}
         };
 
         window.collapseSearchOnBlur = () => {
