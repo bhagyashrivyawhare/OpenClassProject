@@ -1152,54 +1152,48 @@
     if (!container) return;
 
     container.innerHTML = `
-    <div class="flex flex-wrap justify-center gap-6 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
+
         ${docs.map(doc => {
 
             const c = doc.data();
 
             return `
-           <div class="glass rounded-[2rem] overflow-hidden
-border border-white/10 shadow-xl bg-white
-w-full max-w-[520px] flex flex-col">
+            <div class="glass bg-white rounded-[2.5rem] overflow-hidden
+                border border-white/10 shadow-xl p-5 w-full">
 
                 <!-- IMAGE -->
-                <div class="w-full h-[130px] overflow-hidden bg-white">
+                <div class="w-full h-[240px] overflow-hidden rounded-[2rem] bg-white">
                     <img
                         src="${c.thumbnail}"
                         alt="${c.title}"
-                        class="w-full h-full object-contain"
+                        class="w-full h-full object-cover hover:scale-105 transition duration-500"
                     >
                 </div>
 
                 <!-- CONTENT -->
-                <div class="p-4 flex flex-col flex-1">
+                <div class="mt-5 flex items-center justify-between gap-4">
 
-                    <div class="flex-1">
-                        <h2 class="text-xl font-black italic text-[#003B66] mb-2 line-clamp-2">
+                    <div class="flex-1 min-w-0">
+
+                        <h2 class="text-3xl font-black italic text-[#003B66] truncate">
                             ${c.title}
                         </h2>
 
-                        <p class="text-zinc-500 text-sm">
-                            Premium Course
-                        </p>
-                    </div>
-
-                    <!-- BOTTOM -->
-                    <div class="flex items-center justify-between mt-4">
-
-                        <h3 class="text-xl font-black text-orange-500">
+                        <p class="text-orange-500 text-2xl font-black mt-3">
                             ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
-                        </h3>
-
-                        <button
-                            onclick="openCourse('${doc.id}')"
-                            class="btn-brand px-3 py-2 text-[11px] rounded-xl whitespace-nowrap shrink-0">
-                            VIEW COURSE
-                        </button>
+                        </p>
 
                     </div>
+
+                    <button
+                        onclick="openCourse('${doc.id}')"
+                        class="btn-brand px-6 py-3 text-sm rounded-2xl whitespace-nowrap shrink-0">
+                        VIEW COURSE
+                    </button>
 
                 </div>
+
             </div>
             `;
 
