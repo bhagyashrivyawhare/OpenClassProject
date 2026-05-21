@@ -353,7 +353,8 @@
             const iconsRow = document.getElementById('nav-action-icons-row');
             const brandingBlock = document.getElementById('nav-branding-block');
             
-            if(wrapper.classList.contains('expanded')) {
+           if(wrapper.classList.contains('expanded')) {
+
     wrapper.classList.remove('expanded');
 
     input.classList.add('hidden');
@@ -362,7 +363,8 @@
     input.value = "";
     iconsRow.classList.remove('hidden');
 
-    if(brandingBlock) brandingBlock.classList.remove('hidden');
+    if(brandingBlock)
+        brandingBlock.classList.remove('hidden');
 
 } else {
 
@@ -370,12 +372,6 @@
 
     input.classList.remove('hidden');
     input.style.display = "block";
-
-    if(document.documentElement.classList.contains('dark')) {
-        input.style.color = "white";
-    } else {
-        input.style.color = "black";
-    }
 
     setTimeout(() => input.focus(), 50);
 
