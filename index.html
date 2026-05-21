@@ -371,7 +371,11 @@
     input.classList.remove('hidden');
     input.style.display = "block";
 
-    input.style.color = "black";
+    if(document.documentElement.classList.contains('dark')) {
+        input.style.color = "white";
+    } else {
+        input.style.color = "black";
+    }
 
     setTimeout(() => input.focus(), 50);
 
