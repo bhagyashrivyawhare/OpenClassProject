@@ -1159,8 +1159,8 @@
             const c = doc.data();
 
             return `
-            <div class="glass bg-white rounded-[2.5rem] overflow-hidden
-                border border-white/10 shadow-xl p-5 w-full">
+           <div class="glass bg-white rounded-[2.5rem] overflow-hidden
+border border-white/10 shadow-xl p-5 w-full max-w-[520px]">
 
                 <!-- IMAGE -->
                 <div class="w-full h-[200px] overflow-hidden rounded-[2rem] bg-white">
@@ -1175,24 +1175,23 @@
                 <div class="mt-5 flex items-center justify-between gap-4">
 
                     <div class="flex-1 min-w-0">
+ <h2 class="text-2xl font-black italic text-[#003B66]">
+            ${c.title}
+        </h2>
 
-                        <h2 class="text-3xl font-black italic text-[#003B66] truncate">
-                            ${c.title}
-                        </h2>
+        <p class="text-orange-500 text-2xl font-black mt-2">
+            ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
+        </p>
+    </div>
 
-                        <p class="text-orange-500 text-2xl font-black mt-3">
-                            ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
-                        </p>
+    <button
+        onclick="openCourse('${doc.id}')"
+        class="btn-brand px-5 py-3 text-sm rounded-2xl whitespace-nowrap">
+        VIEW COURSE
+    </button>
 
-                    </div>
-
-                    <button
-                        onclick="openCourse('${doc.id}')"
-                        class="btn-brand px-6 py-3 text-sm rounded-2xl whitespace-nowrap shrink-0">
-                        VIEW COURSE
-                    </button>
-
-                </div>
+</div>
+                      
 
             </div>
             `;
