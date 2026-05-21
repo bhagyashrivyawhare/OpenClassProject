@@ -78,19 +78,14 @@
       html.light #g-search {
       color: black !important;
     }
-   .course-card{
-    width:100%;
+  .course-card{
     background:transparent;
+    width:100%;
     transition:all .4s ease;
 }
 
 .course-card:hover{
-    transform:translateY(-6px);
-}
-
-.course-card img{
-    width:100%;
-    display:block;
+    transform:translateY(-5px);
 }
 
         #floating-bottom-nav-bar { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 4500; width: calc(100% - 2rem); max-width: 500px; transition: transform 0.3s ease, opacity 0.3s ease; }
@@ -1149,7 +1144,7 @@
             if (container) container.innerHTML = docs.map(d => renderResourceCard(d, isT)).join(''); 
         }
 
-       function renderCourses(docs, isT) {
+      function renderCourses(docs, isT) {
     const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
     if (!container) return;
 
@@ -1159,27 +1154,29 @@
             const c = doc.data();
 
             return `
-            <div class="course-card rounded-[2.8rem] overflow-hidden p-5">
+            <div class="course-card p-5 rounded-[2.5rem]">
 
-                <div class="aspect-[16/9] rounded-[2rem] overflow-hidden">
+                <!-- Thumbnail -->
+                <div class="w-full aspect-[16/9] overflow-hidden rounded-[2rem]">
                     <img src="${c.thumbnail}" 
                         class="w-full h-full object-cover hover:scale-105 transition duration-500">
                 </div>
 
-                <div class="flex justify-between items-center pt-5 gap-4">
+                <!-- Bottom -->
+                <div class="mt-5 flex items-center justify-between gap-4">
 
-                    <div class="flex-1 min-w-0">
-                        <h2 class="text-[32px] leading-none font-black italic text-brandBlue truncate">
+                    <div>
+                        <h2 class="text-2xl font-black italic text-brandBlue mb-2">
                             ${c.title}
                         </h2>
 
-                        <p class="text-brandOrange text-[22px] font-black mt-3">
+                        <p class="text-brandOrange text-xl font-black">
                             ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
                         </p>
                     </div>
 
                     <button onclick="openCourse('${doc.id}')"
-                        class="btn-brand px-7 py-4 rounded-2xl text-sm font-bold whitespace-nowrap shrink-0">
+                        class="btn-brand px-6 py-3 rounded-2xl text-sm font-bold whitespace-nowrap">
                         VIEW COURSE
                     </button>
 
