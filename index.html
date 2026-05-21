@@ -1143,49 +1143,70 @@
             if (container) container.innerHTML = docs.map(d => renderResourceCard(d, isT)).join(''); 
         }
 
-     function renderCourses(docs, isT) {
-    const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
+      function renderCourses(docs, isT) {
+
+    const container =
+        document.getElementById('courses-feed') ||
+        document.getElementById('tab-display');
+
     if (!container) return;
 
     container.innerHTML = `
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-
+    <div class="flex flex-wrap justify-center gap-6 w-full">
         ${docs.map(doc => {
+
             const c = doc.data();
 
             return `
-            <div class="course-card bg-white rounded-[32px] p-5 shadow-lg w-full max-w-[520px]">
+           <div class="glass rounded-[2rem] overflow-hidden
+border border-white/10 shadow-xl bg-white
+w-full max-w-[520px] flex flex-col">
 
                 <!-- IMAGE -->
-                <div class="w-full h-[260px] overflow-hidden rounded-[28px]">
-                    <img src="${c.thumbnail}"
-                        class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                <div class="w-full h-[130px] overflow-hidden bg-white">
+                    <img
+                        src="${c.thumbnail}"
+                        alt="${c.title}"
+                        class="w-full h-full object-contain"
+                    >
                 </div>
 
                 <!-- CONTENT -->
-                <div class="flex items-center justify-between mt-5 gap-4">
+                <div class="p-4 flex flex-col flex-1">
 
-                    <div>
-                        <h2 class="text-[42px] leading-none font-black italic text-brandBlue">
+                    <div class="flex-1">
+                        <h2 class="text-xl font-black italic text-[#003B66] mb-2 line-clamp-2">
                             ${c.title}
                         </h2>
 
-                        <p class="text-brandOrange text-[28px] font-black mt-3">
-                            ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
+                        <p class="text-zinc-500 text-sm">
+                            Premium Course
                         </p>
                     </div>
 
-                    <button onclick="openCourse('${doc.id}')"
-                        class="btn-brand px-7 py-4 rounded-2xl text-sm font-bold whitespace-nowrap">
-                        VIEW COURSE
-                    </button>
+                    <!-- BOTTOM -->
+                    <div class="flex items-center justify-between mt-4">
+
+                        <h3 class="text-xl font-black text-orange-500">
+                            ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
+                        </h3>
+
+                        <button
+                            onclick="openCourse('${doc.id}')"
+                            class="btn-brand px-3 py-2 text-[11px] rounded-xl whitespace-nowrap shrink-0">
+                            VIEW COURSE
+                        </button>
+
+                    </div>
 
                 </div>
+            </div>
+            `;
 
-            </div>`;
         }).join('')}
 
-    </div>`;
+    </div>
+    `;
 }
         function renderResourceCard(d, isT) {
             const i = d.data();
