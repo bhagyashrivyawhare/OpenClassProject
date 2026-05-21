@@ -78,6 +78,13 @@
       html.light #g-search {
       color: black !important;
     }
+     .course-card{
+    transition:all .4s ease;
+   }
+   .course-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 25px 50px rgba(0,0,0,.25);
+}
 
         #floating-bottom-nav-bar { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 4500; width: calc(100% - 2rem); max-width: 500px; transition: transform 0.3s ease, opacity 0.3s ease; }
         #floating-bottom-nav-bar.nav-hidden { transform: translate(-50%, 100px); opacity: 0; pointer-events: none; }
@@ -1135,15 +1142,34 @@
             if (container) container.innerHTML = docs.map(d => renderResourceCard(d, isT)).join(''); 
         }
 
-        function renderCourses(docs, isT) {
-            const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
-            // Strict element dimension mapping scaling card sizes dynamically alongside responsive ratios
-            if (container) container.innerHTML = `<div class="grid md:grid-cols-2 gap-6 w-full">${docs.map(doc => {
-                const c = doc.data();
-                return `<div class="glass p-5 rounded-[2.5rem] border border-white/5 flex flex-col justify-between h-auto"><div class="w-full flex items-center justify-center overflow-hidden rounded-2xl mb-4 bg-zinc-950/40 aspect-video"><img src="${c.thumbnail}" class="w-full h-full object-cover border border-white/5"></div><div><h2 class="text-xl font-black italic mb-2 truncate pr-4">${c.title}</h2><div class="flex justify-between items-center mt-4"><h3 class="text-lg font-black text-brandOrange">₹${c.price === '0' ? 'FREE' : c.price}</h3><button onclick="openCourse('${doc.id}')" class="btn-brand px-6 py-2 text-xs">Inspect Module</button></div></div></div>`;
-            }).join('')}</div>`;
-        }
-
+       function renderCourses(docs, isT) {
+    const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
+if (!container) return;
+ container.innerHTML = `
+    <div class="grid md:grid-cols-2 gap-8 w-full">
+        ${docs.map(doc => {
+            const c = doc.data();
+ return `
+      <div class="course-card bg-white dark:bg-zinc-900 rounded-[2.5rem] overflow-hidden shadow-xl border border-white/10 p-4">
+     <div class="aspect-[16/9] overflow-hidden rounded-[2rem] bg-black">
+    <img src="${c.thumbnail}" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+     </div>
+<div class="pt-5 px-2 flex justify-between items-end gap-4">
+<div>
+  <h2 class="text-2xl font-black italic text-brandBlue mb-3">${c.title}</h2>
+                        <p class="text-brandOrange text-3xl font-black">
+                            ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
+                        </p>
+                    </div>
+                    <button onclick="openCourse('${doc.id}')" 
+                     class="btn-brand px-6 py-3 rounded-2xl text-xs whitespace-nowrap">
+                      VIEW COURSE
+                    </button>
+                </div>
+                </div>`;
+        }).join('')}
+    </div>`;
+}
         function renderResourceCard(d, isT) {
             const i = d.data();
             let liveStatusLabel = '';
