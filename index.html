@@ -78,12 +78,19 @@
       html.light #g-search {
       color: black !important;
     }
-     .course-card{
+   .course-card{
+    width:100%;
+    background:transparent;
     transition:all .4s ease;
-   }
-   .course-card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 25px 50px rgba(0,0,0,.25);
+}
+
+.course-card:hover{
+    transform:translateY(-6px);
+}
+
+.course-card img{
+    width:100%;
+    display:block;
 }
 
         #floating-bottom-nav-bar { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 4500; width: calc(100% - 2rem); max-width: 500px; transition: transform 0.3s ease, opacity 0.3s ease; }
@@ -1144,29 +1151,41 @@
 
        function renderCourses(docs, isT) {
     const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
-if (!container) return;
- container.innerHTML = `
-    <div class="grid md:grid-cols-2 gap-8 w-full">
+    if (!container) return;
+
+    container.innerHTML = `
+    <div class="grid md:grid-cols-2 gap-10 w-full">
         ${docs.map(doc => {
             const c = doc.data();
- return `
-      <div class="course-card bg-white dark:bg-zinc-900 rounded-[2.5rem] overflow-hidden shadow-xl border border-white/10 p-4">
-     <div class="aspect-[16/9] overflow-hidden rounded-[2rem] bg-black">
-    <img src="${c.thumbnail}" class="w-full h-full object-cover hover:scale-105 transition duration-500">
-     </div>
-<div class="pt-5 px-2 flex justify-between items-end gap-4">
-<div>
-  <h2 class="text-2xl font-black italic text-brandBlue mb-3">${c.title}</h2>
-                        <p class="text-brandOrange text-3xl font-black">
+
+            return `
+            <div class="course-card rounded-[2.8rem] overflow-hidden p-5">
+
+                <div class="aspect-[16/9] rounded-[2rem] overflow-hidden">
+                    <img src="${c.thumbnail}" 
+                        class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                </div>
+
+                <div class="flex justify-between items-center pt-5 gap-4">
+
+                    <div class="flex-1 min-w-0">
+                        <h2 class="text-[32px] leading-none font-black italic text-brandBlue truncate">
+                            ${c.title}
+                        </h2>
+
+                        <p class="text-brandOrange text-[22px] font-black mt-3">
                             ${parseFloat(c.price) === 0 ? 'FREE' : '₹' + c.price}
                         </p>
                     </div>
-                    <button onclick="openCourse('${doc.id}')" 
-                     class="btn-brand px-6 py-3 rounded-2xl text-xs whitespace-nowrap">
-                      VIEW COURSE
+
+                    <button onclick="openCourse('${doc.id}')"
+                        class="btn-brand px-7 py-4 rounded-2xl text-sm font-bold whitespace-nowrap shrink-0">
+                        VIEW COURSE
                     </button>
+
                 </div>
-                </div>`;
+
+            </div>`;
         }).join('')}
     </div>`;
 }
