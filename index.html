@@ -617,9 +617,9 @@
             // Enforce input lock rules if lecture duration tracking boundary has elapsed
            if(currentVideoContext?.liveDate && currentVideoContext?.endTargetClockStr){
 
-    const deadline = new Date(
-        `${currentVideoContext.liveDate} ${currentVideoContext.endTargetClockStr}`
-    );
+  const deadline = new Date(
+    `${currentVideoContext.liveDate}T${currentVideoContext.endTargetClockStr}:00`
+);
 
     if(new Date() > deadline){
 
