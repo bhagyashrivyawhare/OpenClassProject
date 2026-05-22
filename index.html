@@ -1229,8 +1229,76 @@ else if(now > endTime){
                 name: `${t} (Core Sync Hub)`, type: 'private', code, teacherId: profile.teacherId, teacherName: profile.name, members: [Core.auth.currentUser.uid], pending: [], createdAt: Core.serverTimestamp() 
             });
             await Core.addDoc(Core.collection(Core.db, "courses"), { 
-                title: t, description: d, thumbnail: window.getSmartPreview(vu[0]), playlist, price: p, teacherId: profile.teacherId, teacherName: profile.name, groupId: gRef.id, createdAt: Core.serverTimestamp() 
-            });
+               const courseRef = await Core.addDoc(
+    Core.collection(Core.db, "courses"),
+    { 
+        title: t,
+        description: d,
+        thumbnail: window.getSmartPreview(vu[0]),
+        playlist,
+        price: p,
+        teacherId: profile.teacherId,
+        teacherName: profile.name,
+        groupId: gRef.id,
+        createdAt: Core.serverTimestamp()
+    }
+);
+
+// SEND NOTIFICATIONS TO FOLLOWERS
+
+const followersSnap = await Core.getDocs(
+
+    Core.query(
+
+        Core.collection(Core.db, "users"),
+
+        Core.where(
+            "subs",
+            "array-contains",
+            profile.teacherId
+        )
+    )
+);
+
+followersSnap.forEach(async(docSnap)=>{
+
+    const student = docSnap.data();
+
+    await Core.addDoc(
+
+        Core.collection(
+            Core.db,
+            "notifications"
+        ),
+
+        {
+
+            receiverId: docSnap.id,
+
+            senderId: Core.auth.currentUser.uid,
+
+            senderName: profile.name,
+
+            senderPhoto: profile.photo || '',
+
+            type: "course_upload",
+
+            title: "New Course Uploaded",
+
+            message: `${profile.name} uploaded "${t}"`,
+
+            courseId: courseRef.id,
+
+            createdAt: Core.serverTimestamp(),
+
+            seen: false
+        }
+    );
+});
+
+toast("Course launched successfully");
+
+loadHome();
             toast("Course launched successfully"); loadHome();
         };
 
