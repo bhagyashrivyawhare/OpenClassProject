@@ -110,7 +110,13 @@
             <div id="live-chat-messages-target" class="flex-grow overflow-y-auto p-4 space-y-4 text-xs"></div>
             <div id="live-chat-input-row" class="p-3 border-t border-white/5 bg-zinc-950/50 flex gap-2">
                 <input id="live-stream-msg-field" type="text" placeholder="Send real-time question..." class="bg-zinc-900 border border-white/10 p-2 text-xs rounded-xl outline-none flex-grow text-white" onkeydown="if(event.key==='Enter') dispatchLiveStreamMessage()">
-                <button onclick="dispatchLiveStreamMessage()" class="bg-brandOrange text-white font-bold px-4 rounded-xl text-[10px] uppercase">Send</button>
+                <button
+    id="live-stream-send-btn"
+    onclick="dispatchLiveStreamMessage()"
+    class="bg-brandOrange text-white font-bold px-4 rounded-xl text-[10px] uppercase"
+>
+    Send
+</button>
             </div>
         </div>
     </div>
@@ -615,31 +621,76 @@
             messagesTarget.innerHTML = `<p class="opacity-30 italic text-center py-4">Connecting to live chat stream...</p>`;
 
             // Enforce input lock rules if lecture duration tracking boundary has elapsed
-           if(currentVideoContext?.liveDate && currentVideoContext?.endTargetClockStr){
+          const sendBtn = document.getElementById(
+    'live-stream-send-btn'
+);
 
-  const deadline = new Date(
+const now = new Date();
+
+const startTime = new Date(
+    `${currentVideoContext.liveDate}T${currentVideoContext.startTargetClockStr}:00`
+);
+
+const endTime = new Date(
     `${currentVideoContext.liveDate}T${currentVideoContext.endTargetClockStr}:00`
 );
 
-    if(new Date() > deadline){
+// BEFORE LIVE
+if(now < startTime){
 
-        if(msgField){
-            msgField.disabled = true;
-            msgField.placeholder = "Lecture ended. Chat locked.";
-        }
+    if(msgField){
+        msgField.style.display = "none";
+    }
 
-        const sendBtn = document.querySelector(
-            '#live-chat-input-row button'
-        );
+    if(sendBtn){
+        sendBtn.style.display = "none";
+    }
 
-        if(sendBtn){
-            sendBtn.disabled = true;
-            sendBtn.classList.add('opacity-40','cursor-not-allowed');
-        }
+    if(statusBadge){
+        statusBadge.innerText =
+            "LIVE CHAT NOT STARTED";
+    }
+}
 
-        if(statusBadge){
-            statusBadge.innerText = "CHAT CLOSED";
-        }
+// LIVE RUNNING
+else if(now >= startTime && now <= endTime){
+
+    if(msgField){
+
+        msgField.style.display = "flex";
+
+        msgField.disabled = false;
+    }
+
+    if(sendBtn){
+
+        sendBtn.style.display = "flex";
+
+        sendBtn.disabled = false;
+
+        sendBtn.innerText = "SEND";
+    }
+
+    if(statusBadge){
+        statusBadge.innerText =
+            "ACTIVE CONNECTION";
+    }
+}
+
+// AFTER LIVE
+else if(now > endTime){
+
+    if(msgField){
+        msgField.style.display = "none";
+    }
+
+    if(sendBtn){
+        sendBtn.style.display = "none";
+    }
+
+    if(statusBadge){
+        statusBadge.innerText =
+            "READ ONLY ARCHIVE";
     }
 }
 
