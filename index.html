@@ -615,16 +615,33 @@
             messagesTarget.innerHTML = `<p class="opacity-30 italic text-center py-4">Connecting to live chat stream...</p>`;
 
             // Enforce input lock rules if lecture duration tracking boundary has elapsed
-            if(endTimeStr) {
-                const deadline = new Date(`${endTimeStr}`);
-                if(new Date() > deadline) {
-                    if(msgField) {
-                        msgField.disabled = true;
-                        msgField.placeholder = "Lecture ended. Chat locked.";
-                    }
-                    if(statusBadge) statusBadge.innerText = "ARCHIVED FEED";
-                }
-            }
+           if(currentVideoContext?.liveDate && currentVideoContext?.endTargetClockStr){
+
+    const deadline = new Date(
+        `${currentVideoContext.liveDate} ${currentVideoContext.endTargetClockStr}`
+    );
+
+    if(new Date() > deadline){
+
+        if(msgField){
+            msgField.disabled = true;
+            msgField.placeholder = "Lecture ended. Chat locked.";
+        }
+
+        const sendBtn = document.querySelector(
+            '#live-chat-input-row button'
+        );
+
+        if(sendBtn){
+            sendBtn.disabled = true;
+            sendBtn.classList.add('opacity-40','cursor-not-allowed');
+        }
+
+        if(statusBadge){
+            statusBadge.innerText = "CHAT CLOSED";
+        }
+    }
+}
 
             const q = Core.query(
                 Core.collection(Core.db, "liveChats"), 
@@ -640,7 +657,13 @@
                 }
                 snapshot.forEach(doc => {
                     const msg = doc.data();
-                    const postTime = msg.createdAt ? new Date(msg.createdAt.seconds * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) : '';
+                   const postTime = msg.createdAt
+    ? new Date(msg.createdAt.seconds * 1000)
+        .toLocaleTimeString([], {
+            hour: '2-digit',
+            minute:'2-digit'
+        })
+    : 'LIVE';
                     
                     const item = document.createElement('div');
                     item.className = "flex gap-2 items-start bg-white/5 p-2 rounded-xl border border-white/5";
@@ -661,22 +684,37 @@
         }
 
         window.dispatchLiveStreamMessage = async () => {
-            const field = document.getElementById('live-stream-msg-field');
-            if(!field || !field.value.trim() || !currentVideoContext || !currentVideoContext.id) return;
-            
-            const txt = field.value.trim();
-            field.value = "";
-            
-            await Core.addDoc(Core.collection(Core.db, "liveChats"), {
-                contentId: currentVideoContext.id,
-                senderId: Core.auth.currentUser.uid,
-                senderName: profile.name,
-                senderPhoto: profile.photo || '',
-                text: txt,
-                createdAt: Core.serverTimestamp()
-            });
-        };
+    const field = document.getElementById('live-stream-msg-field');
 
+    if(!field || !field.value.trim() || !currentVideoContext) return;
+
+    // LIVE STATUS CHECK
+    const status = checkLiveStatus(
+        currentVideoContext.liveDate,
+        currentVideoContext.startTargetClockStr,
+        currentVideoContext.endTargetClockStr
+    );
+
+    if(status !== 'live'){
+        toast("Live lecture ended. Chat locked.", "error");
+        field.disabled = true;
+        return;
+    }
+
+    const txt = field.value.trim();
+    field.value = "";
+
+    await Core.addDoc(Core.collection(Core.db, "liveChats"), {
+        contentId: currentVideoContext.id,
+        senderId: Core.auth.currentUser.uid,
+        senderName: profile.name,
+        senderPhoto: profile.photo || '',
+        text: txt,
+
+        // TIMESTAMP
+        createdAt: Core.serverTimestamp()
+    });
+};
         function setupPlayer(contentId, videoId, metadata, rawUrl) {
             currentVideoContext = { id: contentId, ...metadata };
             const container = document.getElementById('player-container');
