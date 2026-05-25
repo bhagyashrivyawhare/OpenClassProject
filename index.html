@@ -22,6 +22,7 @@
         .btn-brand { background: linear-gradient(135deg, #004a80 0%, #f7941d 100%); background-size: 200% auto; transition: 0.5s; color: white !important; font-weight: 800; text-transform: uppercase; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
         .btn-brand:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 74, 128, 0.2); }
         
+        /* Fixed Symmetrical Navigation Pill Architecture */
         .tab-btn { width: 100%; text-align: center; padding: 12px 0; font-weight: 800; text-transform: uppercase; font-size: 10px; border-radius: 20px; transition: 0.3s; opacity: 0.4; color: var(--text-main); border: 1px solid transparent; }
         .tab-btn.active { background: rgba(247, 148, 29, 0.15); color: #f7941d; opacity: 1; border: 1px solid rgba(247, 148, 29, 0.25); }
         
@@ -74,10 +75,7 @@
         .search-container.expanded { width: 260px; }
 
         #floating-bottom-nav-bar { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 4500; width: calc(100% - 2rem); max-width: 500px; transition: transform 0.3s ease, opacity 0.3s ease; }
-        #floating-bottom-nav-bar.nav-hidden { transform: translate(-50%, 100px); opacity: 0; pointer-events: none; }
-
-        /* Custom Live Intercept Chat Module Presentation Grid Layout Map */
-        #live-classroom-chat-container { height: 100%; max-height: 80vh; display: flex; flex-direction: column; background: #0b0b0b; border-left: 1px solid rgba(255, 255, 255, 0.05); }
+        #floating-bottom-nav-bar.nav-hidden { transform: translate(-50(), 100px); opacity: 0; pointer-events: none; }
 
         @keyframes popUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -90,34 +88,14 @@
         <div id="modal-content" class="w-full max-w-xl glass p-10 rounded-[3rem] border border-brandOrange/20 shadow-2xl overflow-y-auto max-h-[90vh]"></div>
     </div>
 
-    <div id="media-vault" class="hidden fixed inset-0 z-[2000] bg-black flex flex-col md:flex-row items-center justify-center p-2 md:p-4 gap-4">
+    <div id="media-vault" class="hidden fixed inset-0 z-[2000] bg-black flex items-center justify-center p-4">
         <button onclick="closeVault()" class="absolute top-6 right-6 bg-white/10 hover:bg-red-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-black z-[2147483647]">✕</button>
-        
-        <div id="vault-capture-container" class="w-full max-w-4xl overflow-hidden rounded-2xl shadow-2xl relative flex items-center justify-center flex-grow">
+        <div id="vault-capture-container" class="w-full max-w-5xl overflow-hidden rounded-2xl shadow-2xl relative flex items-center justify-center">
              <div id="vault-wrapper">
                  <div id="anti-theft-blank">⚠️ Screen Capture / Recording Warning: Active Assets Paused</div>
                  <div id="secure-watermark"></div>
                  <div id="player-container" class="w-full h-full"></div>
              </div>
-        </div>
-
-        <!-- Integrated Live Stream Real-Time Synchronized Chat Interface Layer -->
-        <div id="live-classroom-chat-container" class="hidden w-full md:w-[360px] h-[320px] md:h-[80vh] rounded-2xl overflow-hidden border border-white/5 flex flex-col">
-            <div class="p-4 border-b border-white/5 bg-zinc-950 flex items-center justify-between">
-                <span class="text-xs font-black uppercase tracking-wider text-red-500 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>Live Classroom Room</span>
-                <span id="live-chat-status-badge" class="text-[9px] opacity-40 uppercase font-bold">Active Connection</span>
-            </div>
-            <div id="live-chat-messages-target" class="flex-grow overflow-y-auto p-4 space-y-4 text-xs"></div>
-            <div id="live-chat-input-row" class="p-3 border-t border-white/5 bg-zinc-950/50 flex gap-2">
-                <input id="live-stream-msg-field" type="text" placeholder="Send real-time question..." class="bg-zinc-900 border border-white/10 p-2 text-xs rounded-xl outline-none flex-grow text-white" onkeydown="if(event.key==='Enter') dispatchLiveStreamMessage()">
-                <button
-    id="live-stream-send-btn"
-    onclick="dispatchLiveStreamMessage()"
-    class="bg-brandOrange text-white font-bold px-4 rounded-xl text-[10px] uppercase"
->
-    Send
-</button>
-            </div>
         </div>
     </div>
 
@@ -153,7 +131,7 @@
                     <input type="email" id="auth-email" placeholder="Email" class="input-field">
                     <input type="password" id="auth-pass" placeholder="Password" class="input-field">
                     <button onclick="handleAuth()" id="primary-auth-btn" class="w-full py-4 btn-brand">Sign In</button>
-                    <button onclick="handleGoogle()" class="w-full py-4 glass text-[#002e50] dark:text-white rounded-2xl font-bold uppercase text-[10px] flex items-center justify-center gap-4 border border-zinc-500/20">
+                    <button onclick="handleGoogle()" class="w-full py-4 glass dark:text-white text-[#002e50] rounded-2xl font-bold uppercase text-[10px] flex items-center justify-center gap-4 border border-zinc-500/20">
                         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5"> 
                         Continue with Google
                     </button>
@@ -202,6 +180,7 @@
             
             <main id="main-content" class="p-4 md:p-10 max-w-7xl mx-auto w-full flex-grow"></main>
 
+            <!-- Floating Symmetrical Bottom Nav Bar Pinned Structure -->
             <div id="floating-bottom-nav-bar" class="glass p-2 rounded-[2.5rem] shadow-2xl border border-white/10">
                 <div class="grid grid-cols-4 w-full gap-1 justify-items-center items-center">
                     <button id="tab-home" onclick="setTab('home')" class="tab-btn active">Home</button>
@@ -241,7 +220,7 @@
         import { aiConfig } from "./config.js";
 
         let profile = null, isSignup = false, otpCode = null, tempUser = null, activeGroupId = null, currentTab = 'home', videoPlayer = null;
-        let currentVideoContext = null, watermarkInterval = null, groupMessageTrackers = {}, notificationsMap = [], activeLiveChatListenerUnsub = null;
+        let currentVideoContext = null, watermarkInterval = null, groupMessageTrackers = {}, notificationsMap = [];
         
         const tabsOrderIndex = ['home', 'groups', 'courses', 'content'];
         let touchStartCoordsX = 0;
@@ -252,17 +231,6 @@
             const preservedCart = localStorage.getItem('oc_cart_manifest');
             if(preservedCart) { cart = JSON.parse(preservedCart); }
         } catch(e) { cart = []; }
-
-        function injectSkeletonState(targetElementId) {
-            const el = document.getElementById(targetElementId);
-            if(!el) return;
-            el.innerHTML = `
-                <div class="space-y-4 animate-pulse w-full">
-                    <div class="h-20 bg-zinc-800/50 rounded-3xl w-full border border-white/5"></div>
-                    <div class="h-20 bg-zinc-800/50 rounded-3xl w-full border border-white/5"></div>
-                    <div class="h-20 bg-zinc-800/50 rounded-3xl w-full border border-white/5"></div>
-                </div>`;
-        }
 
         function initializeSwipeGestures() {
             const mainContentNode = document.getElementById('main-content');
@@ -423,7 +391,7 @@
             modal.classList.remove('hidden');
             
             if(notificationsMap.length === 0) {
-                content.innerHTML = `<div class="text-center py-10"><p class="text-sm font-bold opacity-30 uppercase">No new alerts found</p></div>`;
+                content.innerHTML = `<div class="text-center py-10"><p class="text-sm font-bold opacity-30 uppercase">No updates found</p></div>`;
                 return;
             }
             
@@ -439,7 +407,7 @@
                                 <span class="font-bold text-brandOrange uppercase text-[9px] tracking-wider">${n.type}</span>
                                 <span class="opacity-30 text-[9px]">${n.time}</span>
                             </div>
-                            <p class="opacity-80 pr-4 text-zinc-700 dark:text-zinc-300">${n.text}</p>
+                            <p class="opacity-80">${n.text}</p>
                         </div>
                     `).join('')}
                 </div>
@@ -582,12 +550,9 @@
             if (!url) return "https://res.cloudinary.com/dowhvdkjh/image/upload/v1777895769/IMG-20260504-WA0002_fucbjd.jpg";
             const cleanUrl = url.toLowerCase().trim();
             if (cleanUrl.match(/\.(jpeg|jpg|gif|png|webp|svg)/)) return url;
-            
             if (cleanUrl.includes('v=')) return `https://img.youtube.com/vi/${url.split('v=')[1].split('&')[0]}/mqdefault.jpg`;
             if (cleanUrl.includes('youtu.be/')) return `https://img.youtube.com/vi/${url.split('/').pop().split('?')[0]}/mqdefault.jpg`;
-            if (cleanUrl.includes('/shorts/')) return `https://img.youtube.com/vi/${url.split('/shorts/')[1].split('?')[0]}/mqdefault.jpg`;
             if (cleanUrl.includes('/live/')) return `https://img.youtube.com/vi/${url.split('/live/')[1].split('?')[0]}/mqdefault.jpg`;
-            
             return "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop";
         };
 
@@ -598,9 +563,7 @@
                 const targetEnd = endTimeStr ? new Date(`${dateStr} ${endTimeStr}`) : new Date(targetStart.getTime() + 180 * 60000);
                 const currentDateTime = new Date();
                 
-                if (currentDateTime < targetStart) {
-                    return 'scheduled';
-                } else if (currentDateTime >= targetStart && currentDateTime <= targetEnd) {
+                if (currentDateTime >= targetStart && currentDateTime <= targetEnd) {
                     return 'live';
                 }
                 return 'recorded';
@@ -609,172 +572,11 @@
             }
         };
 
-        // --- REAL-TIME LIVE COMMENTS HANDLER MATRIX ---
-        function subscribeToLiveStreamChat(contentId, endTimeStr) {
-            const chatBox = document.getElementById('live-classroom-chat-container');
-            const messagesTarget = document.getElementById('live-chat-messages-target');
-            const statusBadge = document.getElementById('live-chat-status-badge');
-            const msgField = document.getElementById('live-stream-msg-field');
-            
-            if(!chatBox || !messagesTarget) return;
-            chatBox.classList.remove('hidden');
-            messagesTarget.innerHTML = `<p class="opacity-30 italic text-center py-4">Connecting to live chat stream...</p>`;
-
-            // Enforce input lock rules if lecture duration tracking boundary has elapsed
-          const sendBtn = document.getElementById(
-    'live-stream-send-btn'
-);
-
-const now = new Date();
-
-const startTime = new Date(
-    `${currentVideoContext.liveDate}T${currentVideoContext.startTargetClockStr}:00`
-);
-
-const endTime = new Date(
-    `${currentVideoContext.liveDate}T${currentVideoContext.endTargetClockStr}:00`
-);
-
-// BEFORE LIVE
-if(now < startTime){
-
-    if(msgField){
-        msgField.style.display = "none";
-    }
-
-    if(sendBtn){
-        sendBtn.style.display = "none";
-    }
-
-    if(statusBadge){
-        statusBadge.innerText =
-            "LIVE CHAT NOT STARTED";
-    }
-}
-
-// LIVE RUNNING
-else if(now >= startTime && now <= endTime){
-
-    if(msgField){
-
-        msgField.style.display = "flex";
-
-        msgField.disabled = false;
-    }
-
-    if(sendBtn){
-
-        sendBtn.style.display = "flex";
-
-        sendBtn.disabled = false;
-
-        sendBtn.innerText = "SEND";
-    }
-
-    if(statusBadge){
-        statusBadge.innerText =
-            "ACTIVE CONNECTION";
-    }
-}
-
-// AFTER LIVE
-else if(now > endTime){
-
-    if(msgField){
-        msgField.style.display = "none";
-    }
-
-    if(sendBtn){
-        sendBtn.style.display = "none";
-    }
-
-    if(statusBadge){
-        statusBadge.innerText =
-            "READ ONLY ARCHIVE";
-    }
-}
-
-            const q = Core.query(
-                Core.collection(Core.db, "liveChats"), 
-                Core.where("contentId", "==", contentId), 
-                Core.orderBy("createdAt", "asc")
-            );
-
-            activeLiveChatListenerUnsub = Core.onSnapshot(q, (snapshot) => {
-                messagesTarget.innerHTML = "";
-                if(snapshot.empty) {
-                    messagesTarget.innerHTML = `<p class="opacity-30 italic text-center py-4">Welcome to the live session! Ask any question below.</p>`;
-                    return;
-                }
-                snapshot.forEach(doc => {
-                    const msg = doc.data();
-                   const postTime = msg.createdAt
-    ? new Date(msg.createdAt.seconds * 1000)
-        .toLocaleTimeString([], {
-            hour: '2-digit',
-            minute:'2-digit'
-        })
-    : 'LIVE';
-                    
-                    const item = document.createElement('div');
-                    item.className = "flex gap-2 items-start bg-white/5 p-2 rounded-xl border border-white/5";
-                    item.innerHTML = `
-                        <img src="${msg.senderPhoto || 'https://ui-avatars.com/api/?name='+msg.senderName}" class="w-6 h-6 rounded-full border border-white/10 bg-black shrink-0 object-cover">
-                        <div class="overflow-hidden w-full">
-                            <div class="flex justify-between items-center opacity-40 text-[9px] mb-0.5">
-                                <span class="font-black truncate">${msg.senderName}</span>
-                                <span>${postTime}</span>
-                            </div>
-                            <p class="text-zinc-200 break-words leading-relaxed">${msg.text}</p>
-                        </div>
-                    `;
-                    messagesTarget.appendChild(item);
-                });
-                messagesTarget.scrollTop = messagesTarget.scrollHeight;
-            });
-        }
-
-        window.dispatchLiveStreamMessage = async () => {
-    const field = document.getElementById('live-stream-msg-field');
-
-    if(!field || !field.value.trim() || !currentVideoContext) return;
-
-    // LIVE STATUS CHECK
-    const status = checkLiveStatus(
-        currentVideoContext.liveDate,
-        currentVideoContext.startTargetClockStr,
-        currentVideoContext.endTargetClockStr
-    );
-
-    if(status !== 'live'){
-        toast("Live lecture ended. Chat locked.", "error");
-        field.disabled = true;
-        return;
-    }
-
-    const txt = field.value.trim();
-    field.value = "";
-
-    await Core.addDoc(Core.collection(Core.db, "liveChats"), {
-        contentId: currentVideoContext.id,
-        senderId: Core.auth.currentUser.uid,
-        senderName: profile.name,
-        senderPhoto: profile.photo || '',
-        text: txt,
-
-        // TIMESTAMP
-        createdAt: Core.serverTimestamp()
-    });
-};
-        function setupPlayer(contentId, videoId, metadata, rawUrl) {
-            currentVideoContext = { id: contentId, ...metadata };
+        function setupPlayer(videoId, metadata, rawUrl) {
+            currentVideoContext = metadata;
             const container = document.getElementById('player-container');
             container.innerHTML = "";
             
-            // Terminate existing listener chains when switching stream channels
-            if(activeLiveChatListenerUnsub) { activeLiveChatListenerUnsub(); activeLiveChatListenerUnsub = null; }
-            document.getElementById('live-classroom-chat-container').classList.add('hidden');
-
             if (videoPlayer) { try { videoPlayer.destroy(); } catch(e){} }
 
             const cleanUrl = rawUrl.toLowerCase().trim();
@@ -810,7 +612,6 @@ else if(now > endTime){
                 playerDiv.setAttribute('data-plyr-embed-id', videoId);
                 videoPlayer = new Plyr('#player-instance', {
                     autoplay: true,
-                    // Hardened query manipulation logic filters advertisement tracking tags completely
                     youtube: { noCookie: true, rel: 0, showinfo: 0, iv_load_policy: 3, modestbranding: 1, controls: 0 }
                 });
             } else {
@@ -835,6 +636,7 @@ else if(now > endTime){
             });
 
             videoPlayer.on('exitfullscreen', () => {
+                toggleBottomNavBarVisibility(true);
                 const blankOverlay = document.getElementById('anti-theft-blank');
                 const watermarkEl = document.getElementById('secure-watermark');
                 const wrapper = document.getElementById('vault-wrapper');
@@ -843,11 +645,6 @@ else if(now > endTime){
                     wrapper.insertBefore(watermarkEl, wrapper.children[1]);
                 }
             });
-
-            // Bind conversational chat streams strictly onto Live Class type models
-            if(metadata && metadata.isLiveBroadcast && contentId) {
-                subscribeToLiveStreamChat(contentId, metadata.endTargetClockStr);
-            }
 
             toggleBottomNavBarVisibility(false);
             activateAntiTheftShields();
@@ -865,7 +662,6 @@ else if(now > endTime){
         window.navigate = (p, q = '') => { history.pushState({ p, q }, '', `#${p}`); renderContent(p, q); };
 
         async function renderContent(p, q) {
-            injectSkeletonState('main-content');
             if (p === 'home') loadHome();
             else if (p === 'search') loadSearch(q);
             else if (p === 'profile') viewTeacher(q);
@@ -893,7 +689,7 @@ else if(now > endTime){
                     <div class="space-y-6 lg:sticky lg:top-32 h-fit">
                         <div class="glass p-8 rounded-[3rem] border border-brandBlue/30 text-center shadow-xl">
                             <img src="${profile.photo || 'https://ui-avatars.com/api/?name='+profile.name}" class="w-24 h-24 mx-auto mb-4 rounded-full border-4 border-brandBlue p-1 object-cover bg-black">
-                            <h3 class="text-xl font-black italic pr-4">${profile.name}</h3>
+                            <h3 class="text-xl font-black italic">${profile.name}</h3>
                             <p class="text-[10px] font-bold opacity-40 uppercase tracking-widest mb-6">${profile.teacherId}</p>
                             <div class="grid grid-cols-2 gap-4">
                                 <div onclick="manageFollowersRoster('${profile.teacherId}')" class="bg-white/5 p-4 rounded-3xl text-center cursor-pointer hover:bg-brandBlue/10 transition-all border border-white/5">
@@ -941,15 +737,15 @@ else if(now > endTime){
                         <div class="flex flex-row flex-nowrap overflow-x-auto gap-3 w-full pb-4 mb-10 selection:bg-transparent">
                             <div class="glass p-6 md:p-8 rounded-[2rem] border border-white/5 min-w-[120px] flex-1">
                                 <p class="text-[9px] opacity-40 font-black uppercase">Uploads</p>
-                                <h2 class="text-2xl md:text-4xl font-black mt-1 pr-2">${contentSnap.size}</h2>
+                                <h2 class="text-2xl md:text-4xl font-black mt-1">${contentSnap.size}</h2>
                             </div>
                             <div class="glass p-6 md:p-8 rounded-[2rem] border border-white/5 min-w-[120px] flex-1">
                                 <p class="text-[9px] opacity-40 font-black uppercase">Courses</p>
-                                <h2 class="text-2xl md:text-4xl font-black mt-1 pr-2">${courseSnap.size}</h2>
+                                <h2 class="text-2xl md:text-4xl font-black mt-1">${courseSnap.size}</h2>
                             </div>
                             <div class="glass p-6 md:p-8 rounded-[2rem] border border-white/5 min-w-[120px] flex-1">
                                 <p class="text-[9px] opacity-40 font-black uppercase">Groups</p>
-                                <h2 class="text-2xl md:text-4xl font-black mt-1 pr-2">${groupSnap.size}</h2>
+                                <h2 class="text-2xl md:text-4xl font-black mt-1">${groupSnap.size}</h2>
                             </div>
                         </div>
                         <div id="feed" class="space-y-4"></div>`;
@@ -958,7 +754,7 @@ else if(now > endTime){
                     box.innerHTML = `<h3 class="text-2xl font-black italic mb-6">Your Managed Hubs</h3><div id="student-groups" class="space-y-4"></div>`;
                     renderGroups(groupSnap.docs, true);
                 } else if (currentTab === 'courses') {
-                    box.innerHTML = `<h3 class="text-2xl font-black italic mb-6">Course Matrix</h3><div id="courses-feed" class="grid md:grid-cols-2 gap-6"></div>`;
+                    box.innerHTML = `<h3 class="text-2xl font-black italic mb-6">Course Matrix</h3><div id="courses-feed" <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 w-full"></div>`;
                     renderCourses(coursesSorted, true);
                 } else if (currentTab === 'content') {
                     box.innerHTML = `<h3 class="text-2xl font-black italic mb-6">Published Resource Materials</h3><div id="feed" class="space-y-4"></div>`;
@@ -969,20 +765,19 @@ else if(now > endTime){
                 const box = document.getElementById('tab-display');
                 if (currentTab === 'home') {
                     box.innerHTML = `<h3 class="text-2xl font-black italic mb-6">Suggested Syllabus</h3><div id="suggested-feed" class="grid md:grid-cols-2 gap-6 mb-10"></div><h3 class="text-2xl font-black italic mb-6">Subscribed Feed Streams</h3><div id="feed" class="space-y-6"></div>`;
-                    
-                    const allContent = await Core.getDocs(Core.query(Core.collection(Core.db, "content"), Core.limit(40)));
+                    const allContent = await Core.getDocs(Core.query(Core.collection(Core.db, "content"), Core.limit(30)));
                     const allContentSorted = allContent.docs.sort((a,b) => (b.data().date?.seconds || 0) - (a.data().date?.seconds || 0));
-                    
                     renderFeed(allContentSorted.slice(0,6), false, 'suggested-feed');
                     
                     if (profile.subs?.length) {
-                        const subContent = allContentSorted.filter(doc => profile.subs.includes(doc.data().tId));
-                        renderFeed(subContent, false, 'feed');
+                        const subContent = await Core.getDocs(Core.query(Core.collection(Core.db, "content"), Core.where("tId", "in", profile.subs)));
+                        const subContentSorted = subContent.docs.sort((a,b) => (b.data().date?.seconds || 0) - (a.data().date?.seconds || 0));
+                        renderFeed(subContentSorted, false, 'feed');
                     } else {
                         document.getElementById('feed').innerHTML = `<p class="text-xs font-bold opacity-30 text-center py-10">Follow updates from teachers to view updates here.</p>`;
                     }
                 } else if (currentTab === 'groups') {
-                    box.innerHTML = `<div class="glass p-8 rounded-[3rem] mb-10"><h3 class="text-2xl font-black mb-4">Join Campus Hub</h3><div class="flex gap-4"><input id="hub-code" placeholder="OC-XXXXXX" class="input-field"><button onclick="joinGroup()" class="btn-brand px-10">Join</button></div></div><h3 class="text-xl font-black mb-4 italic">Enrolled Hubs Matrix</h3><div id="student-groups" class="space-y-4"></div>`;
+                    box.innerHTML = `<div class="glass p-8 rounded-[3rem] mb-10"><h3 class="text-2xl font-black mb-4">Join Campus Hub</h3><div class="flex gap-4"><input id="hub-code" placeholder="OC-XXXXXX" class="input-field"><button onclick="joinGroup()" class="btn-brand px-10">Join</button></div></div><div id="student-groups" class="space-y-4"></div>`;
                     loadGroups();
                 } else if (currentTab === 'courses') {
                     const coSnap = await Core.getDocs(Core.collection(Core.db, "courses"));
@@ -1014,14 +809,13 @@ else if(now > endTime){
             
             container.innerHTML = snap.docs.map(doc => {
                 const u = doc.data();
-                return `<div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5"><div><p class="text-sm font-black pr-2">${u.name}</p><p class="text-[10px] opacity-40 pr-2">${u.email}</p></div><button onclick="severFollowerRelation('${doc.id}','${teacherId}')" class="text-[9px] bg-red-500/20 text-red-400 font-bold px-4 py-2 rounded-xl hover:bg-red-500 hover:text-white transition-all">Block & Sever</button></div>`;
+                return `<div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5"><div><p class="text-sm font-black">${u.name}</p><p class="text-[10px] opacity-40">${u.email}</p></div><button onclick="severFollowerRelation('${doc.id}','${teacherId}')" class="text-[9px] bg-red-500/20 text-red-400 font-bold px-4 py-2 rounded-xl hover:bg-red-500 hover:text-white transition-all">Block & Sever</button></div>`;
             }).join('');
         };
 
         window.severFollowerRelation = async (uid, teacherId) => {
             if(confirm("Confirm user eviction and blocking from channel profile stream?")) {
                 await Core.updateDoc(Core.doc(Core.db, "users", uid), { subs: Core.arrayRemove(teacherId) });
-                pushSystemNotification("FOLLOWER UPDATE", `Roster change: A subscriber has been disconnected from your updates stream.`);
                 toast("Follower removed and stream blacklisted");
                 manageFollowersRoster(teacherId);
                 loadHome();
@@ -1050,7 +844,7 @@ else if(now > endTime){
             usersSnap.forEach(uDoc => {
                 if (data.members.includes(uDoc.id) && uDoc.data().teacherId !== data.teacherId) {
                     const usr = uDoc.data();
-                    html += `<div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5"><div><p class="text-sm font-black pr-2">${usr.name}</p><p class="text-[10px] opacity-40 pr-2">${usr.role.toUpperCase()}</p></div><button onclick="kickGroupMember('${groupId}','${uDoc.id}','${groupName}')" class="text-[9px] bg-red-600 text-white font-black px-4 py-2 rounded-xl">Revoke Entry</button></div>`;
+                    html += `<div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5"><div><p class="text-sm font-black">${usr.name}</p><p class="text-[10px] opacity-40">${usr.role.toUpperCase()}</p></div><button onclick="kickGroupMember('${groupId}','${uDoc.id}','${groupName}')" class="text-[9px] bg-red-600 text-white font-black px-4 py-2 rounded-xl">Revoke Entry</button></div>`;
                 }
             });
             container.innerHTML = html || `<p class="text-xs font-bold opacity-30 text-center py-4">No active external members inside this asset hub.</p>`;
@@ -1059,7 +853,6 @@ else if(now > endTime){
         window.kickGroupMember = async (groupId, uid, groupName) => {
             if (confirm("Confirm complete revocation of asset pool access credentials for this individual user?")) {
                 await Core.updateDoc(Core.doc(Core.db, "groups", groupId), { members: Core.arrayRemove(uid) });
-                pushSystemNotification("GROUP ACCESS REVOKED", `Community hub log: A student's access authorization has been removed from "${groupName}".`);
                 toast("Access cleared and denied.");
                 manageGroupRoster(groupId, groupName);
             }
@@ -1099,7 +892,7 @@ else if(now > endTime){
             content.innerHTML = `
                 <h3 class="text-2xl font-black italic mb-6">SaaS Checkout Matrix</h3>
                 <div class="space-y-4 mb-8">
-                    ${cart.map(i => `<div class="flex justify-between items-center glass p-4 rounded-2xl border border-white/5"><div><p class="font-bold text-sm pr-2">${i.title}</p><p class="text-xs text-brandOrange font-bold">₹${i.price}</p></div><button onclick="removeItemFromCart('${i.id}')" class="text-xs text-red-500 font-bold">Remove</button></div>`).join('')}
+                    ${cart.map(i => `<div class="flex justify-between items-center glass p-4 rounded-2xl border border-white/5"><div><p class="font-bold text-sm">${i.title}</p><p class="text-xs text-brandOrange font-bold">₹${i.price}</p></div><button onclick="removeItemFromCart('${i.id}')" class="text-xs text-red-500 font-bold">Remove</button></div>`).join('')}
                 </div>
                 <div class="flex justify-between items-center mb-6 border-t border-white/10 pt-4"><p class="text-sm uppercase opacity-40 font-bold">Aggregate Value</p><p class="text-2xl font-black text-brandOrange">₹${total}</p></div>
                 <button onclick="simulateBulkCheckout()" class="w-full py-4 btn-brand">Execute Order Processing</button>
@@ -1118,7 +911,6 @@ else if(now > endTime){
                 const cDoc = await Core.getDoc(Core.doc(Core.db, "courses", item.id));
                 if (cDoc.exists()) {
                     await Core.updateDoc(Core.doc(Core.db, "groups", cDoc.data().groupId), { members: Core.arrayUnion(Core.auth.currentUser.uid) });
-                    pushSystemNotification("COURSE PURCHASED", `SaaS Enrollment success: You are now registered for course "${cDoc.data().title}".`);
                 }
             }
             cart = []; 
@@ -1132,13 +924,13 @@ else if(now > endTime){
         window.loadSearch = async (q) => {
             const main = document.getElementById('main-content');
             if (!q) return loadHome();
-            injectSkeletonState('main-content');
+            main.innerHTML = `<div class="space-y-4">${Array(3).fill('<div class="skeleton h-20 rounded-2xl opacity-10 bg-white"></div>').join('')}</div>`;
             const [uS, cS, gS] = await Promise.all([Core.getDocs(Core.collection(Core.db, "users")), Core.getDocs(Core.collection(Core.db, "content")), Core.getDocs(Core.collection(Core.db, "groups"))]);
             const teachers = uS.docs.filter(d => d.data().role === 'teacher' && (d.data().name.toLowerCase().includes(q.toLowerCase()) || d.data().teacherId === q));
             const content = cS.docs.filter(d => d.data().title.toLowerCase().includes(q.toLowerCase())).sort((a,b) => (b.data().date?.seconds || 0) - (a.data().date?.seconds || 0));
             const groups = gS.docs.filter(d => d.data().code === q || d.data().name.toLowerCase().includes(q.toLowerCase()));
             
-            main.innerHTML = `<div class="space-y-12">${teachers.length ? `<div><h3 class="text-xs font-black uppercase opacity-40 mb-4 ml-4">Instructors</h3><div class="grid gap-4">${teachers.map(m => `<div onclick="viewTeacher('${m.data().teacherId}')" class="glass p-6 rounded-[2.5rem] flex justify-between items-center cursor-pointer group"><div class="flex items-center gap-6"><img src="${m.data().photo || 'https://ui-avatars.com/api/?name='+m.data().name}" class="w-16 h-16 rounded-2xl object-cover bg-brandBlue shadow-lg"><div><h3 class="text-xl font-black italic pr-2">${m.data().name}</h3><p class="text-[10px] opacity-30 font-bold pr-2">${m.data().teacherId}</p></div></div><p class="text-brandBlue font-black uppercase text-[10px] pr-2">Biography →</p></div>`).join('')}</div></div>` : ''}${groups.length ? `<div><h3 class="text-xs font-black uppercase opacity-40 mb-4 ml-4">Groups</h3><div class="grid gap-4">${groups.map(g => `<div class="glass p-6 rounded-[2.5rem] flex justify-between items-center border border-white/5"><div><span class="text-[9px] text-brandOrange font-black uppercase tracking-widest">${g.data().type}</span><h3 class="text-xl font-black mt-1 pr-2">${g.data().name}</h3><p class="text-xs opacity-50 pr-2">${g.data().code}</p></div><button onclick="handleHubSearchJoin('${g.id}','${g.data().code}')" class="btn-brand px-8 py-2 text-[10px]">Access</button></div>`).join('')}</div></div>` : ''}${content.length ? `<div><h3 class="text-xs font-black uppercase opacity-40 mb-4 ml-4">Lessons Catalog</h3><div class="grid gap-4">${content.map(d => renderResourceCard(d, false)).join('')}</div></div>` : ''}</div>`;
+            main.innerHTML = `<div class="space-y-12">${teachers.length ? `<div><h3 class="text-xs font-black uppercase opacity-40 mb-4 ml-4">Instructors</h3><div class="grid gap-4">${teachers.map(m => `<div onclick="viewTeacher('${m.data().teacherId}')" class="glass p-6 rounded-[2.5rem] flex justify-between items-center cursor-pointer group"><div class="flex items-center gap-6"><img src="${m.data().photo || 'https://ui-avatars.com/api/?name='+m.data().name}" class="w-16 h-16 rounded-2xl object-cover bg-brandBlue shadow-lg"><div><h3 class="text-xl font-black italic">${m.data().name}</h3><p class="text-[10px] opacity-30 font-bold">${m.data().teacherId}</p></div></div><p class="text-brandBlue font-black uppercase text-[10px]">Biography →</p></div>`).join('')}</div></div>` : ''}${groups.length ? `<div><h3 class="text-xs font-black uppercase opacity-40 mb-4 ml-4">Groups</h3><div class="grid gap-4">${groups.map(g => `<div class="glass p-6 rounded-[2.5rem] flex justify-between items-center border border-white/5"><div><span class="text-[9px] text-brandOrange font-black uppercase tracking-widest">${g.data().type}</span><h3 class="text-xl font-black mt-1">${g.data().name}</h3><p class="text-xs opacity-50">${g.data().code}</p></div><button onclick="handleHubSearchJoin('${g.id}','${g.data().code}')" class="btn-brand px-8 py-2 text-[10px]">Access</button></div>`).join('')}</div></div>` : ''}${content.length ? `<div><h3 class="text-xs font-black uppercase opacity-40 mb-4 ml-4">Lessons Catalog</h3><div class="grid gap-4">${content.map(d => renderResourceCard(d, false)).join('')}</div></div>` : ''}</div>`;
         };
 
         window.handleHubSearchJoin = (id, code) => { setTab('groups'); setTimeout(() => { const target = document.getElementById('hub-code'); if(target) target.value = code; joinGroup(); }, 500); };
@@ -1154,7 +946,7 @@ else if(now > endTime){
                 area.innerHTML = `<div id="request-list" class="space-y-3 mt-4 text-[10px] opacity-30 text-center font-bold">Scanning admissions...</div>`;
                 const groups = await Core.getDocs(Core.query(Core.collection(Core.db, "groups"), Core.where("teacherId", "==", profile.teacherId)));
                 let html = '';
-                groups.forEach(g => { const d = g.data(); if(d.pending?.length) d.pending.forEach(p => { html += `<div class="bg-white/5 p-4 rounded-xl flex flex-col gap-2 border border-white/5"><div><p class="text-[8px] text-brandOrange font-black">${d.name}</p><p class="font-bold text-[10px] pr-2">${p.name}</p></div><div class="flex gap-2"><button onclick="modReq('${g.id}','${p.uid}','${p.name}',true)" class="flex-1 py-1.5 bg-green-600 rounded-lg text-[8px] font-black">Accept</button><button onclick="modReq('${g.id}','${p.uid}','${p.name}',false)" class="flex-1 py-1.5 bg-red-600 rounded-lg text-[8px] font-black">Deny</button></div></div>`; }); });
+                groups.forEach(g => { const d = g.data(); if(d.pending?.length) d.pending.forEach(p => { html += `<div class="bg-white/5 p-4 rounded-xl flex flex-col gap-2 border border-white/5"><div><p class="text-[8px] text-brandOrange font-black">${d.name}</p><p class="font-bold text-[10px]">${p.name}</p></div><div class="flex gap-2"><button onclick="modReq('${g.id}','${p.uid}','${p.name}',true)" class="flex-1 py-1.5 bg-green-600 rounded-lg text-[8px] font-black">Accept</button><button onclick="modReq('${g.id}','${p.uid}','${p.name}',false)" class="flex-1 py-1.5 bg-red-600 rounded-lg text-[8px] font-black">Deny</button></div></div>`; }); });
                 document.getElementById('request-list').innerHTML = html || 'Clear Gate Management Queue';
             }
         };
@@ -1165,16 +957,7 @@ else if(now > endTime){
             document.getElementById('course-vids').appendChild(div);
         };
 
-        window.modReq = async (gid, uid, name, accept) => { 
-            const ref = Core.doc(Core.db, "groups", gid); 
-            if(accept) {
-                await Core.updateDoc(ref, { members: Core.arrayUnion(uid), pending: Core.arrayRemove({ uid, name }) }); 
-                pushSystemNotification("ADMISSION GRANTED", `Hub entry verification: Your admission application has been approved.`);
-            } else {
-                await Core.updateDoc(ref, { pending: Core.arrayRemove({ uid, name }) }); 
-            }
-            switchTeacherView('requests'); 
-        };
+        window.modReq = async (gid, uid, name, accept) => { const ref = Core.doc(Core.db, "groups", gid); if(accept) await Core.updateDoc(ref, { members: Core.arrayUnion(uid), pending: Core.arrayRemove({ uid, name }) }); else await Core.updateDoc(ref, { pending: Core.arrayRemove({ uid, name }) }); switchTeacherView('requests'); };
 
         window.handleAuth = async () => {
             const e = document.getElementById('auth-email').value, p = document.getElementById('auth-pass').value;
@@ -1214,7 +997,7 @@ else if(now > endTime){
             const n = document.getElementById('group-name').value; if (!n) return toast("Label missing");
             const c = "OC-" + Math.random().toString(36).substring(2, 8).toUpperCase();
             await Core.addDoc(Core.collection(Core.db, "groups"), { name: n, type: document.getElementById('group-type').value, code: c, teacherId: profile.teacherId, teacherName: profile.name, members: [Core.auth.currentUser.uid], pending: [], createdAt: Core.serverTimestamp() });
-            toast("Group created successfully"); loadHome();
+            toast(`Group created: ${c}`); loadHome();
         };
 
         window.launchCourse = async () => {
@@ -1229,76 +1012,9 @@ else if(now > endTime){
                 name: `${t} (Core Sync Hub)`, type: 'private', code, teacherId: profile.teacherId, teacherName: profile.name, members: [Core.auth.currentUser.uid], pending: [], createdAt: Core.serverTimestamp() 
             });
             await Core.addDoc(Core.collection(Core.db, "courses"), { 
-               const courseRef = await Core.addDoc(
-    Core.collection(Core.db, "courses"),
-    { 
-        title: t,
-        description: d,
-        thumbnail: window.getSmartPreview(vu[0]),
-        playlist,
-        price: p,
-        teacherId: profile.teacherId,
-        teacherName: profile.name,
-        groupId: gRef.id,
-        createdAt: Core.serverTimestamp()
-    }
-);
-
-// SEND NOTIFICATIONS TO FOLLOWERS
-
-const followersSnap = await Core.getDocs(
-
-    Core.query(
-
-        Core.collection(Core.db, "users"),
-
-        Core.where(
-            "subs",
-            "array-contains",
-            profile.teacherId
-        )
-    )
-);
-
-followersSnap.forEach(async(docSnap)=>{
-
-    const student = docSnap.data();
-
-    await Core.addDoc(
-
-        Core.collection(
-            Core.db,
-            "notifications"
-        ),
-
-        {
-
-            receiverId: docSnap.id,
-
-            senderId: Core.auth.currentUser.uid,
-
-            senderName: profile.name,
-
-            senderPhoto: profile.photo || '',
-
-            type: "course_upload",
-
-            title: "New Course Uploaded",
-
-            message: `${profile.name} uploaded "${t}"`,
-
-            courseId: courseRef.id,
-
-            createdAt: Core.serverTimestamp(),
-
-            seen: false
-        }
-    );
-});
-toast("Course launched successfully");
-
-loadHome();
-        
+                title: t, description: d, thumbnail: window.getSmartPreview(vu[0]), playlist, price: p, teacherId: profile.teacherId, teacherName: profile.name, groupId: gRef.id, createdAt: Core.serverTimestamp() 
+            });
+            toast("Course launched successfully"); loadHome();
         };
 
         window.joinGroup = async () => {
@@ -1309,48 +1025,21 @@ loadHome();
             if (d.members.includes(Core.auth.currentUser.uid)) return toast("Already a member of this hub");
             if (d.type === 'public') {
                 await Core.updateDoc(Core.doc(Core.db, "groups", g.id), { members: Core.arrayUnion(Core.auth.currentUser.uid) });
-                pushSystemNotification("GROUP JOINED", `Roster confirmation: You are now an authorized member of public hub "${d.name}".`);
+                pushSystemNotification("HUB SYNC", `Joined community group: "${d.name}"`);
             } else {
                 await Core.updateDoc(Core.doc(Core.db, "groups", g.id), { pending: Core.arrayUnion({ uid: Core.auth.currentUser.uid, name: profile.name }) });
-                pushSystemNotification("REQUEST PENDING", `Admission log: Access credentials verification requested for "${d.name}".`);
             }
             toast("Access requested"); loadHome();
         };
 
         window.openResource = async (id, url, title) => {
-            if(id && id !== 'null') {
-                const checkDoc = await Core.getDoc(Core.doc(Core.db, "content", id));
-                if(checkDoc.exists()) {
-                    const data = checkDoc.data();
-                    const status = window.checkLiveStatus(data.liveDate, data.liveStartTime, data.liveEndTime);
-                    // Deny stream connection entry if the current timestamp is prior to the scheduled window
-                    if(status === 'scheduled') {
-                        toast(`Broadcast locked until start configuration: ${data.liveDate} at ${data.liveStartTime}`, "error");
-                        return;
-                    }
-                    await Core.updateDoc(Core.doc(Core.db, "content", id), { views: Core.increment(1) });
-                    
-                    let vid = "";
-                    if (url.includes('v=')) vid = url.split('v=')[1].split('&')[0];
-                    else if (url.includes('youtu.be/')) vid = url.split('/').pop().split('?')[0];
-                    else if (url.includes('/live/')) vid = url.split('/live/')[1].split('?')[0];
-                    
-                    document.getElementById('media-vault').classList.remove('hidden');
-                    setupPlayer(id, vid, { 
-                        title, 
-                        link: url, 
-                        isLiveBroadcast: (data.type === 'live'),
-                        endTargetClockStr: data.liveEndTime ? `${data.liveDate} ${data.liveEndTime}` : null 
-                    }, url);
-                    return;
-                }
-            }
-            
-            let fallbackVid = "";
-            if (url.includes('v=')) fallbackVid = url.split('v=')[1].split('&')[0];
-            else if (url.includes('youtu.be/')) fallbackVid = url.split('/').pop().split('?')[0];
+            if(id && id !== 'null') await Core.updateDoc(Core.doc(Core.db, "content", id), { views: Core.increment(1) });
+            let vid = "";
+            if (url.includes('v=')) vid = url.split('v=')[1].split('&')[0];
+            else if (url.includes('youtu.be/')) vid = url.split('/').pop().split('?')[0];
+            else if (url.includes('/live/')) vid = url.split('/live/')[1].split('?')[0];
             document.getElementById('media-vault').classList.remove('hidden');
-            setupPlayer(id, fallbackVid, { title, link: url, isLiveBroadcast: false }, url);
+            setupPlayer(vid, { title, link: url }, url);
         };
 
         window.openCourse = async (id) => {
@@ -1363,14 +1052,14 @@ loadHome();
             toggleBottomNavBarVisibility(false);
             content.innerHTML = `
                 <img src="${c.thumbnail}" class="w-full h-auto max-h-64 object-cover rounded-3xl mb-6 shadow-2xl border border-white/10">
-                <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-black italic text-brandOrange pr-4">${c.title}</h2>${isT ? `<button onclick="delC('${id}')" class="text-red-500 font-black uppercase text-[10px]">Purge</button>` : ''}</div>
-                <p class="opacity-70 mb-6 text-xs leading-relaxed pr-4">${c.description}</p>
+                <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-black italic text-brandOrange">${c.title}</h2>${isT ? `<button onclick="delC('${id}')" class="text-red-500 font-black uppercase text-[10px]">Purge</button>` : ''}</div>
+                <p class="opacity-70 mb-6 text-xs leading-relaxed">${c.description}</p>
                 <div class="space-y-3 mb-8">
                     <p class="text-[9px] font-black uppercase opacity-40 tracking-wider">Course Syllabus Blueprint</p>
                     ${c.playlist.map((v, i) => `
                         <div onclick="openResource('null','${v.url}','${v.title}')" class="bg-white/5 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-white/10 border border-white/5 transition-all">
-                            <p class="text-xs font-bold pr-4">${i+1}. ${v.title}</p>
-                            <span class="text-[10px] text-brandOrange font-black uppercase tracking-tighter shrink-0">Access Stream</span>
+                            <p class="text-xs font-bold">${i+1}. ${v.title}</p>
+                            <span class="text-[10px] text-brandOrange font-black uppercase tracking-tighter">Access Stream</span>
                         </div>
                     `).join('')}
                 </div>
@@ -1400,7 +1089,7 @@ loadHome();
             const container = document.getElementById('courses-feed') || document.getElementById('tab-display');
             if (container) container.innerHTML = `<div class="grid md:grid-cols-2 gap-6 w-full">${docs.map(doc => {
                 const c = doc.data();
-                return `<div class="glass p-5 rounded-[2.5rem] border border-white/5 flex flex-col justify-between h-auto"><div class="w-full flex items-center justify-center overflow-hidden rounded-2xl mb-4 bg-zinc-950/40 aspect-video"><img src="${c.thumbnail}" class="w-full h-full object-cover border border-white/5"></div><div><h2 class="text-xl font-black italic mb-2 truncate pr-4">${c.title}</h2><div class="flex justify-between items-center mt-4"><h3 class="text-lg font-black text-brandOrange">₹${c.price === '0' ? 'FREE' : c.price}</h3><button onclick="openCourse('${doc.id}')" class="btn-brand px-6 py-2 text-xs">Inspect Module</button></div></div></div>`;
+                return `<div class="glass p-6 rounded-[2.5rem] border border-white/5 flex flex-col justify-between h-full"><div class="w-full flex items-center justify-center overflow-hidden rounded-2xl mb-4 bg-zinc-950/40"><img src="${c.thumbnail}" class="w-full h-auto max-h-52 object-cover border border-white/5"></div><div><h2 class="text-xl font-black italic mb-2 truncate">${c.title}</h2><div class="flex justify-between items-center mt-4"><h3 class="text-lg font-black text-brandOrange">${parseFloat(c.price)===0?'FREE':'₹'+c.price}</h3><button onclick="openCourse('${doc.id}')" class="btn-brand px-6 py-2 text-xs">Inspect Module</button></div></div></div>`;
             }).join('')}</div>`;
         }
 
@@ -1410,16 +1099,14 @@ loadHome();
             
             if (i.type === 'live') {
                 const status = window.checkLiveStatus(i.liveDate, i.liveStartTime, i.liveEndTime);
-                if (status === 'scheduled') {
-                    liveStatusLabel = `<span class="inline-flex items-center gap-1.5 bg-blue-600/20 text-blue-400 text-[8px] font-black px-2 py-0.5 rounded-full border border-blue-500/20">SCHEDULED AT ${i.liveStartTime}</span>`;
-                } else if (status === 'live') {
+                if (status === 'live') {
                     liveStatusLabel = `<span class="inline-flex items-center gap-1.5 bg-red-600/20 text-red-500 text-[8px] font-black px-2 py-0.5 rounded-full border border-red-500/20"><span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>LIVE NOW</span>`;
                 } else {
                     liveStatusLabel = `<span class="inline-flex items-center gap-1.5 bg-brandOrange/20 text-brandOrange text-[8px] font-black px-2 py-0.5 rounded-full border border-brandOrange/20"><span class="w-1.5 h-1.5 rounded-full bg-brandOrange"></span>RECORDED LIVE</span>`;
                 }
             }
 
-            return `<div class="glass p-5 rounded-[2.5rem] flex flex-col md:flex-row justify-between items-center group shadow-xl gap-6 border border-white/5"><div class="flex items-center gap-6 w-full md:w-auto"><div class="relative flex-shrink-0 self-start md:self-center"><img src="${window.getSmartPreview(i.url)}" class="w-32 h-20 rounded-2xl object-cover bg-brandBlue shadow-md border border-white/10">${window.getFileBadge(i.url)}</div><div class="overflow-hidden"><div class="flex flex-wrap items-center gap-2"><h4 class="font-black text-lg italic truncate max-w-xs md:max-w-md pr-4">${i.title}</h4> ${liveStatusLabel}</div><p class="text-[9px] opacity-40 uppercase font-bold tracking-widest mt-1 pr-4">${i.tName} • ${i.views || 0} Views ${i.liveStartTime ? '• Scheduled: ' + i.liveDate + ' [' + i.liveStartTime + ' - ' + (i.liveEndTime || 'End') + ']' : ''}</p></div></div><div class="flex gap-2 w-full md:w-auto justify-end"><button onclick="openResource('${d.id}','${i.url}','${i.title}')" class="flex-grow md:flex-none btn-brand px-10 py-3 rounded-2xl font-black text-[10px] uppercase">Access File</button>${isT ? `<button onclick="editR('${d.id}','${i.title}','${i.url}')" class="p-3 bg-zinc-800 text-white rounded-xl hover:text-brandBlue">✎</button><button onclick="delR('${d.id}')" class="p-3 bg-zinc-800 text-white rounded-xl hover:text-red-500">🗑</button>` : ''}</div></div>`;
+            return `<div class="glass p-5 rounded-[2.5rem] flex flex-col md:flex-row justify-between items-center group shadow-xl gap-6 border border-white/5"><div class="flex items-center gap-6 w-full md:w-auto"><div class="relative flex-shrink-0 self-start md:self-center"><img src="${window.getSmartPreview(i.url)}" class="w-32 h-20 rounded-2xl object-cover bg-brandBlue shadow-md border border-white/10">${window.getFileBadge(i.url)}</div><div class="overflow-hidden"><div class="flex flex-wrap items-center gap-2"><h4 class="font-black text-lg italic truncate max-w-xs md:max-w-md">${i.title}</h4> ${liveStatusLabel}</div><p class="text-[9px] opacity-40 uppercase font-bold tracking-widest mt-1">${i.tName} • ${i.views || 0} Views ${i.liveStartTime ? '• Scheduled: ' + i.liveDate + ' [' + i.liveStartTime + ' - ' + (i.liveEndTime || 'End') + ']' : ''}</p></div></div><div class="flex gap-2 w-full md:w-auto justify-end"><button onclick="openResource('${d.id}','${i.url}','${i.title}')" class="flex-grow md:flex-none btn-brand px-10 py-3 rounded-2xl font-black text-[10px] uppercase">Access File</button>${isT ? `<button onclick="editR('${d.id}','${i.title}','${i.url}')" class="p-3 bg-zinc-800 text-white rounded-xl hover:text-brandBlue">✎</button><button onclick="delR('${d.id}')" class="p-3 bg-zinc-800 text-white rounded-xl hover:text-red-500">🗑</button>` : ''}</div></div>`;
         }
         
         window.delR = async (id) => { if(confirm("Confirm asset removal?")) { await Core.deleteDoc(Core.doc(Core.db,"content",id)); loadHome(); } };
@@ -1439,13 +1126,7 @@ loadHome();
             }
 
             await Core.addDoc(Core.collection(Core.db, "content"), payload);
-            
-            // Dispatch target system notifications directly down following subscriber indices
-            if(y === 'live') {
-                pushSystemNotification("LIVE LECTURE SCHEDULED", `New live training scheduled: "${t}" is set for ${payload.liveDate} at ${payload.liveStartTime}.`);
-            } else {
-                pushSystemNotification("NEW MATERIAL", `New file asset sync: "${t}" has been added by your instructor.`);
-            }
+            pushSystemNotification("NEW UPLOAD", `Instructor shared resource: "${t}"`);
             toast("Resource published successfully"); loadHome();
         };
 
@@ -1516,7 +1197,6 @@ loadHome();
 
         window.viewTeacher = async (tId) => {
             const main = document.getElementById('main-content');
-            injectSkeletonState('main-content');
             const [uS, cS, coS] = await Promise.all([Core.getDocs(Core.query(Core.collection(Core.db, "users"), Core.where("teacherId", "==", tId))), Core.getDocs(Core.query(Core.collection(Core.db, "content"), Core.where("tId", "==", tId))), Core.getDocs(Core.query(Core.collection(Core.db, "courses"), Core.where("teacherId", "==", tId)))]);
             if(uS.empty) return navigate('home');
             const tD = uS.docs[0].data(), isF = profile.subs?.includes(tId);
@@ -1529,8 +1209,8 @@ loadHome();
                     <div class="flex items-center gap-6 md:gap-8">
                         <img src="${tD.photo || 'https://ui-avatars.com/api/?name='+tD.name}" class="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-brandBlue object-cover bg-black shadow-2xl">
                         <div>
-                            <h2 class="text-2xl md:text-4xl font-black italic tracking-tighter pr-4">${tD.name}</h2>
-                            <p class="text-xs md:text-sm font-bold text-brandBlue uppercase opacity-60 pr-4">${tD.teacherId}</p>
+                            <h2 class="text-2xl md:text-4xl font-black italic tracking-tighter">${tD.name}</h2>
+                            <p class="text-xs md:text-sm font-bold text-brandBlue uppercase opacity-60">${tD.teacherId}</p>
                         </div>
                     </div>
                     <button onclick="handleSub('${tId}', ${isF})" class="w-full md:w-auto px-10 py-4 ${isF ? 'bg-zinc-800' : 'btn-brand'} rounded-2xl font-black text-xs uppercase">${isF ? 'Unfollow' : 'Follow Instructor'}</button>
@@ -1546,7 +1226,7 @@ loadHome();
         window.handleSub = async (tId, isF) => {
             await Core.updateDoc(Core.doc(Core.db, "users", Core.auth.currentUser.uid), { subs: isF ? Core.arrayRemove(tId) : Core.arrayUnion(tId) });
             profile.subs = isF ? profile.subs.filter(i => i !== tId) : [...(profile.subs||[]), tId];
-            pushSystemNotification("INSTRUCTOR CONNECT MIGRATION", `Follower update: Your tracking settings have been modified for instructor "${tId}".`);
+            pushSystemNotification("ROSTER MUTATION", `Follow state synchronized for instructor: ${tId}`);
             viewTeacher(tId);
         };
 
@@ -1620,7 +1300,6 @@ loadHome();
             document.getElementById('media-vault').classList.add('hidden'); 
             currentVideoContext = null; 
             toggleBottomNavBarVisibility(true);
-            if(activeLiveChatListenerUnsub) { activeLiveChatListenerUnsub(); activeLiveChatListenerUnsub = null; }
             if(window._disengageShields) window._disengageShields();
             if(videoPlayer) { try { videoPlayer.destroy(); } catch(e){} videoPlayer = null; } 
         };
@@ -1631,7 +1310,6 @@ loadHome();
 
         async function loadGroups() {
             const container = document.getElementById('student-groups'); if (!container) return;
-            injectSkeletonState('student-groups');
             const snap = await Core.getDocs(Core.query(Core.collection(Core.db, "groups")));
             
             container.innerHTML = snap.docs.filter(d => d.data().members?.includes(Core.auth.currentUser.uid) || d.data().teacherId === profile.teacherId).map(docSnap => {
