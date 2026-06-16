@@ -2594,13 +2594,12 @@
             
             const gDoc = await Core.getDoc(Core.doc(Core.db, "groups", id));
             const isAdmin = gDoc.exists() && gDoc.data().teacherId === profile.teacherId;
-            const rosterBtn = document.getElementById('group-roster-btn');
-            if(isAdmin) { rosterBtn.style.display="block"; rosterBtn.onclick=()=>manageGroupRoster(id, name); }
-            else { rosterBtn.style.display="none"; }
-
-            groupMessageTrackers[id] = 0; 
-            
-            const q = Core.query(Core.collection(Core.db, "groupMessages"), Core.where("groupId", "==", id), Core.orderBy("createdAt", "asc"));
+            const groupTitle = document.getElementById('group-chat-title');
+if (isAdmin) { groupTitle.style.cursor = "pointer";
+ groupTitle.onclick = () => { manageGroupRoster(id, name); };
+} else { groupTitle.style.cursor = "default"; groupTitle.onclick = null;}
+   groupMessageTrackers[id] = 0; 
+ const q = Core.query(Core.collection(Core.db, "groupMessages"), Core.where("groupId", "==", id), Core.orderBy("createdAt", "asc"));
             Core.onSnapshot(q, (snap) => {
                 document.getElementById('group-chat-messages').innerHTML = snap.docs.map(m => {
                     const d = m.data(); const isM = d.senderId === Core.auth.currentUser.uid;
