@@ -198,7 +198,19 @@
             <div class="flex items-center gap-4">
                 <button class="text-[var(--text-main)] opacity-50 hover:opacity-100 mr-2 flex items-center justify-center bg-[var(--input-bg)] w-10 h-10 rounded-full border border-[var(--border-color)] hover:scale-110 transition-transform" onclick="closeGroupChat()">←</button>
                 <h2 id="group-chat-title" class="text-2xl font-black italic text-[var(--text-main)]">Group</h2>
-                <button id="group-roster-btn" class="text-xs font-bold text-brandOrange uppercase border border-brandOrange/20 px-3 py-1 rounded-lg hover:bg-brandOrange hover:text-white transition-colors">Manage Members</button>
+                <div class="flex items-center gap-4">
+    <button
+        class="text-[var(--text-main)] opacity-50 hover:opacity-100 mr-2 flex items-center justify-center bg-[var(--input-bg)] w-10 h-10 rounded-full border border-[var(--border-color)] hover:scale-110 transition-transform"
+        onclick="closeGroupChat()">
+        ←
+    </button>
+
+    <h2 id="group-chat-title"
+        onclick="openGroupDetails()"
+        class="text-xl md:text-2xl font-black text-[var(--text-main)] cursor-pointer hover:text-brandOrange transition-colors">
+        Group
+    </h2>
+</div>
             </div>
             <button onclick="closeGroupChat()" class="text-2xl w-10 h-10 flex items-center justify-center bg-[var(--input-bg)] rounded-full hover:bg-red-500 hover:text-white border border-[var(--border-color)] transition-colors text-[var(--text-main)]">✕</button>
         </div>
