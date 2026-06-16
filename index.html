@@ -2941,14 +2941,26 @@
             }).join('');
         }
 
-        function renderGroups(docs, isT) {
-            const container = document.getElementById('student-groups') || document.getElementById('tab-display'); if(!container) return;
-            container.innerHTML = `<div class="space-y-4">${docs.map(d => {
-                const g = d.data();
-                const unreadCount = groupMessageTrackers[d.id] || 0;
-                return `<div class="glass p-5 md:p-6 rounded-[2rem] flex justify-between items-center group border border-[var(--border-color)] hover:border-brandBlue/30 shadow-sm hover:shadow-md transition-all hover:scale-[1.01] fade-in"><div><span class="text-[8px] text-brandBlue font-black uppercase tracking-widest">${g.type}</span><div class="flex items-center gap-3 mt-0.5"><h3 class="text-xl md:text-2xl font-black truncate max-w-[150px] md:max-w-xs text-[var(--text-main)] drop-shadow-sm group-hover:text-brandBlue transition-colors">${g.name}</h3><span id="badge-${d.id}" class="${unreadCount===0?'hidden':''} bg-brandBlue text-white text-[9px] font-extrabold px-2 py-0.5 rounded-lg shadow-md border border-white/10">${unreadCount}</span></div><p class="text-[10px] opacity-40 font-mono mt-1">${g.code}</p></div><div class="flex gap-2"><button onclick="openGroupChat('${d.id}', '${g.name}')" class="btn-brand px-5 md:px-6 py-3 text-[10px] shadow-md hover:shadow-brandBlue/30 hover:scale-105">Manage Pool</button><button onclick="delG('${d.id}')" class="bg-red-500/10 text-red-500 p-3 rounded-xl hover:bg-red-600 hover:text-white transition-all shadow-sm border border-red-500/20 hover:scale-110">🗑</button></div></div>`;
-            }).join('')}</div>`;
-        }
+      function renderGroups(docs){
+    const c=document.getElementById('student-groups')||document.getElementById('tab-display');
+    if(!c) return;
+
+    c.innerHTML=`<div class="space-y-4">${docs.map(d=>{
+        const g=d.data(),u=groupMessageTrackers[d.id]||0;
+        return `
+        <div onclick="openGroupChat('${d.id}','${g.name}')" class="glass p-5 md:p-6 rounded-[2rem] flex justify-between items-center border border-[var(--border-color)] hover:border-brandBlue/30 shadow-sm hover:shadow-md transition-all hover:scale-[1.01] cursor-pointer fade-in">
+            <div class="flex-1 min-w-0">
+                <span class="text-[8px] text-brandBlue font-black uppercase">${g.type}</span>
+                <div class="flex items-center gap-2 mt-1">
+                    <h3 class="text-lg md:text-2xl font-black break-words text-[var(--text-main)]">${g.name}</h3>
+                    <span id="badge-${d.id}" class="${u?'':'hidden'} bg-brandBlue text-white text-[9px] font-bold px-2 py-0.5 rounded-lg">${u}</span>
+                </div>
+                <p class="text-[10px] opacity-40 font-mono">${g.code}</p>
+            </div>
+            <button onclick="event.stopPropagation();delG('${d.id}')" class="bg-red-500/10 text-red-500 p-3 rounded-xl hover:bg-red-600 hover:text-white">🗑</button>
+        </div>`;
+    }).join('')}</div>`;
+}
         window.delG = async (id) => { if(confirm("Confirm asset group dissolution?")) { await Core.deleteDoc(Core.doc(Core.db, "groups", id)); window.loadHome(); } };
         window.onclick = (e) => { if (e.target === document.getElementById('custom-modal')) window.closeCustomModal(); };
     </script>
