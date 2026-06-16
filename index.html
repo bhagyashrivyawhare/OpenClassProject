@@ -1674,25 +1674,30 @@
                             </div>
                         </div>
                         <h3 class="text-2xl font-black italic mb-6">Channel Analytics</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full pb-4">
-                            <div onclick="manageFollowersRoster('${profile.teacherId}')" class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-brandBlue/50 transition-all cursor-pointer shadow-md hover:-translate-y-1 flex flex-col items-center justify-center text-center group">
-                                <p class="text-[10px] opacity-60 font-black uppercase tracking-widest text-brandBlue group-hover:opacity-100 transition-opacity">Followers</p>
-                                <h2 class="text-3xl md:text-5xl font-black mt-2 text-brandBlue">${followersSnap.size}</h2>
-                                ${profile.pendingSubs && profile.pendingSubs.length > 0 ? `<p class="text-[9px] bg-red-500 text-white px-2 py-0.5 rounded mt-2 animate-pulse">${profile.pendingSubs.length} Pending</p>` : ''}
-                            </div>
-                            <div onclick="showAnalyticsModal('views')" class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-brandOrange/50 shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
-                                <p class="text-[10px] opacity-60 font-black uppercase tracking-widest group-hover:text-brandOrange transition-colors">Total Views</p>
-                                <h2 class="text-3xl md:text-5xl font-black mt-2 group-hover:text-brandOrange transition-colors">${totalViews}</h2>
-                            </div>
-                            <div onclick="showAnalyticsModal('uploads')" class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-green-500/50 shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
-                                <p class="text-[10px] opacity-60 font-black uppercase tracking-widest group-hover:text-green-500 transition-colors">Uploads</p>
-                                <h2 class="text-3xl md:text-5xl font-black mt-2 group-hover:text-green-500 transition-colors">${contentSnap.size}</h2>
-                            </div>
-                            <div onclick="showAnalyticsModal('courses')" class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-purple-500/50 shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
-                                <p class="text-[10px] opacity-60 font-black uppercase tracking-widest group-hover:text-purple-500 transition-colors">Courses</p>
-                                <h2 class="text-3xl md:text-5xl font-black mt-2 group-hover:text-purple-500 transition-colors">${courseSnap.size}</h2>
-                            </div>
-                        </div>
+                       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full pb-4">
+
+    <div onclick="manageFollowersRoster('${profile.teacherId}')" class="${cardClass}">
+        <p class="text-[10px] opacity-60 font-black uppercase tracking-widest group-hover:text-brandBlue">Followers</p>
+        <h2 class="text-3xl md:text-5xl font-black mt-2 text-brandBlue">${followersSnap.size}</h2>
+    </div>
+
+    <div onclick="showAnalyticsModal('views')" class="${cardClass}">
+        <p class="text-[10px] opacity-60 font-black uppercase tracking-widest group-hover:text-brandBlue">Total Views</p>
+        <h2 class="text-3xl md:text-5xl font-black mt-2 text-brandBlue">${totalViews}</h2>
+    </div>
+
+    <div onclick="showAnalyticsModal('uploads')" class="${cardClass}">
+        <p class="text-[10px] opacity-60 font-black uppercase tracking-widest group-hover:text-brandBlue">Uploads</p>
+        <h2 class="text-3xl md:text-5xl font-black mt-2 text-brandBlue">${contentSnap.size}</h2>
+    </div>
+
+    <div onclick="showAnalyticsModal('courses')" class="${cardClass}">
+        <p class="text-[10px] opacity-60 font-black uppercase tracking-widest group-hover:text-brandBlue">Courses</p>
+        <h2 class="text-3xl md:text-5xl font-black mt-2 text-brandBlue">${courseSnap.size}</h2>
+    </div>
+
+</div>
+`;
                         <div class="flex justify-between items-center mt-8 mb-4 border-b border-[var(--border-color)] pb-4">
                             <h3 class="text-xl font-black italic">Content Performance Matrix</h3>
                             <select onchange="window.sortPerformanceMatrix(this.value)" class="bg-[var(--input-bg)] text-[var(--text-main)] text-xs border border-[var(--border-color)] rounded-xl px-3 py-1.5 outline-none font-bold uppercase tracking-widest">
