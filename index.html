@@ -456,6 +456,7 @@
 
     <script type="module">
         import * as Core from "./app.js";
+        import { sendPasswordResetEmail } from "./app.js";
         import { customAiConfig } from "./config.js";
 
         let profile = null, isSignup = false, otpCode = null, tempUser = null, activeGroupId = null, currentTab = 'home', videoPlayer = null;
@@ -603,19 +604,15 @@
 
     try {
 
-        await Core.sendPasswordResetEmail(
-            Core.auth,
-            email
-        );
-
-        alert("Password reset link sent to your email.");
-
-    } catch (error) {
-
-        console.error(error);
-        alert(error.message);
-
-    }
+       await sendPasswordResetEmail(
+    Core.auth,
+    email
+);
+ alert("Password reset link sent to your email.");
+  } catch (error) {
+console.error(error);
+alert(error.message);
+ }
 };
 
         window.showInstituteForm = () => {
