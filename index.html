@@ -573,6 +573,17 @@
                 privacySelect.classList.add('hidden');
             }
         };
+        window.togglePassword = () => {
+    const passwordInput = document.getElementById("auth-pass");
+
+    if (!passwordInput) return;
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+};
 
         window.showInstituteForm = () => {
             const modal = document.getElementById('custom-modal');
