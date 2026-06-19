@@ -1,9 +1,9 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <link rel="manifest" href="/manifest.json">
+    <link id="app-manifest" rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#050505">
     
     <script>
@@ -79,6 +79,9 @@
         @media (min-width: 768px) {
             body { padding-bottom: calc(280px + env(safe-area-inset-bottom)); }
         }
+         @media (min-width: 768px) {
+            body { padding-bottom: calc(280px + env(safe-area-inset-bottom)); }
+        }
         .search-container{
     width:40px;
     transition:width .3s ease;
@@ -98,9 +101,6 @@
     #nav-branding-block h2{
         font-size:14px;
     }
-}
-        .analytics-card:hover .stat-number{
-    color:var(--brandOrange);
 }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -198,17 +198,7 @@
             <div class="flex items-center gap-4">
                 <button class="text-[var(--text-main)] opacity-50 hover:opacity-100 mr-2 flex items-center justify-center bg-[var(--input-bg)] w-10 h-10 rounded-full border border-[var(--border-color)] hover:scale-110 transition-transform" onclick="closeGroupChat()">←</button>
                 <h2 id="group-chat-title" class="text-2xl font-black italic text-[var(--text-main)]">Group</h2>
-                <div class="flex items-center gap-4">
-    <button
-        class="text-[var(--text-main)] opacity-50 hover:opacity-100 mr-2 flex items-center justify-center bg-[var(--input-bg)] w-10 h-10 rounded-full border border-[var(--border-color)] hover:scale-110 transition-transform"
-        onclick="closeGroupChat()">
-    </button>
-
-    <h2 id="group-chat-title"
-        onclick="openGroupDetails()"
-        class="text-xl md:text-2xl font-black text-[var(--text-main)] cursor-pointer hover:text-brandOrange transition-colors">
-    </h2>
-</div>
+                <button id="group-roster-btn" class="text-xs font-bold text-brandOrange uppercase border border-brandOrange/20 px-3 py-1 rounded-lg hover:bg-brandOrange hover:text-white transition-colors">Manage Members</button>
             </div>
             <button onclick="closeGroupChat()" class="text-2xl w-10 h-10 flex items-center justify-center bg-[var(--input-bg)] rounded-full hover:bg-red-500 hover:text-white border border-[var(--border-color)] transition-colors text-[var(--text-main)]">✕</button>
         </div>
@@ -222,8 +212,8 @@
     <div id="app">
         <div id="auth-screen" class="hidden min-h-screen flex items-center justify-center p-6 fade-in">
             <div class="w-full max-w-md glass p-10 rounded-[3.5rem] text-center shadow-2xl transition-transform hover:scale-[1.02] duration-300">
-                <img src="https://res.cloudinary.com/dowhvdkjh/image/upload/v1777895769/IMG-20260504-WA0002_fucbjd.jpg" class="h-20 mx-auto mb-6 rounded-2xl object-cover shadow-lg">
-                <h1 class="text-4xl font-black mb-8 italic">Open<span class="text-brandOrange">Class</span></h1>
+                <img id="auth-logo" src="https://res.cloudinary.com/dowhvdkjh/image/upload/v1777895769/IMG-20260504-WA0002_fucbjd.jpg" class="h-20 mx-auto mb-6 rounded-2xl object-cover shadow-lg">
+                <h1 id="auth-title-text" class="text-4xl font-black mb-8 italic">Open<span class="text-brandOrange">Class</span></h1>
                 
                 <div id="signup-fields" class="hidden space-y-4 mb-4">
                     <input type="text" id="reg-name" placeholder="Full Name" class="input-field">
@@ -264,7 +254,7 @@
             </div>
         </div>
 
-        <div id="dashboard" class="hidden min-h-screen fade-in">
+         <div id="dashboard" class="hidden min-h-screen fade-in">
             <nav class="p-3 sm:p-4 md:p-5 glass border-b border-[var(--border-color)] sticky top-0 z-[1000] w-full flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-4 md:px-10 pt-[max(1rem,env(safe-area-inset-top))]">
  <!-- Logo -->
  <div class="flex items-center gap-2 sm:gap-3 cursor-pointer select-none group shrink-0 min-w-0"
@@ -277,43 +267,17 @@
  <button onclick="toggleExpandableSearch(event)" class="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center text-[var(--text-main)] opacity-60 hover:text-brandOrange shrink-0"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
                     <circle cx="8" cy="8" r="6 <path d="M13 13l4 4"/>  </svg> </button>
   <input type="text"  id="g-search"  oninput="reactiveSearch(this.value)"onblur="collapseSearchOnBlur()"placeholder="Search..."class="bg-transparent text-sm w-full outline-none pr-3 text-[var(--text-main)] placeholder-zinc-500 hidden"></div>
-
-        <!-- Icons -->
-        <div id="nav-action-icons-row"
-             class="flex items-center gap-1 sm:gap-2 md:gap-3">
-
-            <button onclick="showNotificationsHub()"
-                    class="w-9 h-9 md:w-10 md:h-10 glass rounded-xl relative flex items-center justify-center text-base md:text-lg hover:scale-110 transition-transform">
-                🔔
-                <span id="notify-pill"
-                      class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-black min-w-[16px] h-4 rounded-full flex items-center justify-center px-1">
-                    0
-                </span>
-            </button>
-
-            <button onclick="showCart()"
-                    class="w-9 h-9 md:w-10 md:h-10 glass rounded-xl relative flex items-center justify-center text-base md:text-lg hover:scale-110 transition-transform">
-                🛒
-                <span id="cart-pill"
-                      class="hidden absolute -top-1 -right-1 bg-brandOrange text-white text-[8px] font-black min-w-[16px] h-4 rounded-full flex items-center justify-center px-1">
-                    0
-                </span>
-            </button>
-
-            <button onclick="toggleMode()"
-                    class="w-9 h-9 md:w-10 md:h-10 glass rounded-xl flex items-center justify-center text-base md:text-lg hover:scale-110 transition-transform">
-                🌓
-            </button>
-
-            <div id="nav-profile-pic"
-                 onclick="showProfileSettings()"
-                 class="w-9 h-9 md:w-10 md:h-10 rounded-full cursor-pointer block select-none transition-all duration-300 shadow-lg profile-ring-stacked relative">
-            </div>
-
-        </div>
-    </div>
-
-</nav>
+   <!-- Icons -->
+    <div id="nav-action-icons-row" class="flex items-center gap-1 sm:gap-2 md:gap-3">
+ <button onclick="showNotificationsHub()" class="w-9 h-9 md:w-10 md:h-10 glass rounded-xl relative flex items-center justify-center text-base md:text-lg hover:scale-110 transition-transform">
+   🔔  <span id="notify-pill"  class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-black min-w-[16px] h-4 rounded-full flex items-center justify-center px-1">
+                  0 </span>  </button> <button onclick="showCart()" class="w-9 h-9 md:w-10 md:h-10 glass rounded-xl relative flex items-center justify-center text-base md:text-lg hover:scale-110 transition-transform">
+                🛒 <span id="cart-pill" class="hidden absolute -top-1 -right-1 bg-brandOrange text-white text-[8px] font-black min-w-[16px] h-4 rounded-full flex items-center justify-center px-1">
+                    0 </span>  </button>
+<button onclick="toggleMode()"  class="w-9 h-9 md:w-10 md:h-10 glass rounded-xl flex items-center justify-center text-base md:text-lg hover:scale-110 transition-transform">
+                🌓</button>
+ <div id="nav-profile-pic" onclick="showProfileSettings()" class="w-9 h-9 md:w-10 md:h-10 rounded-full cursor-pointer block select-none transition-all duration-300 shadow-lg profile-ring-stacked relative">
+            </div> </div> </div></nav>
             
             <main id="main-content" class="p-4 md:p-10 max-w-7xl mx-auto w-full"></main>
 
@@ -377,7 +341,6 @@
         </div>
     </div>
 
-    <!-- FULL SCREEN ADMIN DASHBOARD -->
     <div id="admin-dashboard" class="hidden fixed inset-0 bg-[var(--bg-main)] z-[9999] fade-in flex flex-col">
         <div class="w-full h-full p-6 md:p-10 overflow-hidden flex flex-col text-[var(--text-main)]">
             
@@ -394,7 +357,7 @@
                 <button onclick="window.showSection('institutes-section')" class="bg-purple-500/20 text-purple-400 hover:bg-purple-600 hover:scale-105 hover:text-white border border-purple-500/30 p-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">Institutes</button>
                 <button onclick="window.showSection('payments-section')" class="bg-brandOrange/20 text-brandOrange hover:bg-brandOrange hover:scale-105 hover:text-white border border-brandOrange/30 p-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">Payments</button>
                 <button onclick="window.showSection('subscriptions-section')" class="bg-green-500/20 text-green-500 hover:bg-green-600 hover:scale-105 hover:text-white border border-green-500/30 p-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">Subscriptions</button>
-                <button onclick="window.handleAdminRequestsView()" class="bg-yellow-500/20 text-yellow-500 hover:bg-yellow-600 hover:scale-105 hover:text-white border border-yellow-500/30 p-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">Requests</button>
+                <button onclick="window.showSection('requests-section')" class="bg-yellow-500/20 text-yellow-500 hover:bg-yellow-600 hover:scale-105 hover:text-white border border-yellow-500/30 p-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all">Requests</button>
             </div>
 
             <div class="flex-grow overflow-y-auto pr-4 custom-scrollbar">
@@ -483,8 +446,20 @@
         window._currentCourseList = [];
         window._tempGooglePhoto = "";
 
-        // NEW GLOBAL STORAGE FOR REQUESTS
+        // PWA DYNAMIC MANIFEST GLOBALS
         window._currentAdminRequests = [];
+        window.deferredPrompt = null;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        window._lockedInstId = urlParams.get('inst') || localStorage.getItem('locked_inst_id');
+        if (window._lockedInstId) {
+            localStorage.setItem('locked_inst_id', window._lockedInstId);
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            window.deferredPrompt = e;
+        });
 
         const tabsOrderIndex = ['home', 'groups', 'courses', 'content'];
         let touchStartX = 0;
@@ -498,6 +473,75 @@
             const preservedCart = localStorage.getItem('oc_cart_manifest');
             if(preservedCart) { cart = JSON.parse(preservedCart); }
         } catch(e) { cart = []; }
+
+        window.setDynamicManifest = (instData) => {
+            if (!instData) return;
+            const manifest = {
+                name: instData.name,
+                short_name: instData.name,
+                start_url: `/?inst=${instData.uniqueId}`,
+                display: "standalone",
+                background_color: "#050505",
+                theme_color: "#004a80",
+                icons: [
+                    { src: instData.logo || 'https://res.cloudinary.com/dowhvdkjh/image/upload/v1780123661/Icon192_hwdtob.png', sizes: "192x192", type: "image/png", purpose: "any" },
+                    { src: instData.logo || 'https://res.cloudinary.com/dowhvdkjh/image/upload/v1780123661/Icon_cpp9wz.png', sizes: "512x512", type: "image/png", purpose: "any" }
+                ]
+            };
+            const stringManifest = JSON.stringify(manifest);
+            const base64Manifest = 'data:application/json;charset=utf-8,' + encodeURIComponent(stringManifest);
+            const link = document.getElementById('app-manifest');
+            if (link) link.href = base64Manifest;
+        };
+
+        window.triggerInstAppInstall = async (instId) => {
+            const instData = await window.getInstBadgeData(instId);
+            if(!instData) return toast("Institute not found", "error");
+            
+            window.setDynamicManifest(instData);
+            
+            if (window.deferredPrompt) {
+                window.deferredPrompt.prompt();
+                window.deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        toast("Installing Institute App...");
+                    }
+                    window.deferredPrompt = null;
+                });
+            } else {
+                toast("Manifest generated! Use browser menu -> 'Install' or 'Add to Home Screen'");
+            }
+        };
+
+        window.applyLockedInstituteBranding = async () => {
+            if (window._lockedInstId) {
+                const instData = await window.getInstBadgeData(window._lockedInstId);
+                if (instData) {
+                    const authLogo = document.getElementById('auth-logo');
+                    const authTitle = document.getElementById('auth-title-text');
+                    const regIdField = document.getElementById('reg-institute-id');
+                    if (authLogo) authLogo.src = instData.logo;
+                    if (authTitle) authTitle.innerText = instData.name;
+                    if (regIdField) {
+                        regIdField.value = window._lockedInstId;
+                        regIdField.classList.add('hidden');
+                    }
+                    window.setDynamicManifest(instData);
+                }
+            }
+        };
+
+        window.showSection = (sectionId) => {
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.add('hidden'));
+            const target = document.getElementById(sectionId);
+            if(target) target.classList.remove('hidden');
+
+            if (sectionId === 'institutes-section') {
+                if(typeof window.loadAdminInstitutes === 'function') window.loadAdminInstitutes();
+            } else if (sectionId === 'requests-section') {
+                if(typeof window.loadAdminRequests === 'function') window.loadAdminRequests();
+            }
+        };
 
         window.showScreen = function(id) { 
             ['auth-screen', 'verify-screen', 'onboarding-screen', 'dashboard'].forEach(s => document.getElementById(s).classList.add('hidden')); 
@@ -588,7 +632,7 @@
                     e, p, 
                     n: document.getElementById('reg-name').value, 
                     r: document.getElementById('reg-role').value,
-                    instId: document.getElementById('reg-institute-id').value.trim() || null,
+                    instId: window._lockedInstId || document.getElementById('reg-institute-id').value.trim() || null,
                     privacy: document.getElementById('reg-privacy').value || 'public'
                 };
                 otpCode = Math.floor(100000 + Math.random() * 900000);
@@ -965,14 +1009,26 @@
                 </div>
             `;
             
-            if(profile.instituteId) {
+            if (window._lockedInstId) {
                 joinHubSectionHtml = `
-                    <div class="bg-brandBlue/10 border border-brandBlue/20 p-4 rounded-2xl flex justify-between items-center transition-colors">
+                    <div class="bg-brandOrange/10 border border-brandOrange/20 p-4 rounded-2xl flex justify-between items-center transition-colors">
+                        <div>
+                            <p class="text-[10px] uppercase font-black tracking-widest text-brandOrange">Locked Application</p>
+                            <p class="text-sm font-bold mt-1 text-[var(--text-main)]">${profile.instituteId}</p>
+                        </div>
+                    </div>
+                `;
+            } else if(profile.instituteId) {
+                joinHubSectionHtml = `
+                    <div class="bg-brandBlue/10 border border-brandBlue/20 p-4 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-colors">
                         <div>
                             <p class="text-[10px] uppercase font-black tracking-widest text-brandBlue">Active Institute</p>
                             <p class="text-sm font-bold mt-1 text-[var(--text-main)]">${profile.instituteId}</p>
                         </div>
-                        <button onclick="leaveInstituteFromProfile()" class="bg-red-500/10 text-red-500 border border-red-500/20 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all shadow-sm">Leave Institute</button>
+                        <div class="flex gap-2 w-full md:w-auto">
+                            <button onclick="window.triggerInstAppInstall('${profile.instituteId}')" class="flex-1 bg-green-500/10 text-green-500 border border-green-500/20 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-green-500 hover:text-white transition-all shadow-sm">Download App</button>
+                            <button onclick="leaveInstituteFromProfile()" class="flex-1 bg-red-500/10 text-red-500 border border-red-500/20 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all shadow-sm">Leave</button>
+                        </div>
                     </div>
                 `;
             }
@@ -1087,14 +1143,103 @@
             window.showSection('plans-section');
         };
 
-        window.handleAdminRequestsView = async () => {
-            if (typeof window.showSection === 'function') {
-                window.showSection('requests-section');
-            } else {
-                document.querySelectorAll('.admin-section').forEach(s => s.classList.add('hidden'));
-                document.getElementById('requests-section')?.classList.remove('hidden');
-            }
+        window.loadAdminInstitutes = async () => {
+            const container = document.getElementById('institutes-list');
+            if(!container) return;
             
+            container.innerHTML = '<p class="text-xs opacity-50 py-4 text-center">Loading institute registry...</p>';
+            
+            try {
+                const snap = await Core.getDocs(Core.collection(Core.db, "institutes"));
+                if(snap.empty) {
+                    container.innerHTML = '<p class="text-xs opacity-50 py-4 text-center">No institutes registered yet.</p>';
+                    return;
+                }
+                
+                let html = '';
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    html += `<div class="glass p-4 rounded-2xl flex justify-between items-center border border-[var(--border-color)] shadow-sm hover:border-brandBlue/30 transition-all mb-3">
+                        <div class="flex items-center gap-4">
+                            <img src="${d.logo || 'https://ui-avatars.com/api/?name='+encodeURIComponent(d.name)}" class="w-10 h-10 rounded-full object-cover bg-black border border-[var(--border-color)]">
+                            <div>
+                                <p class="font-bold text-sm text-[var(--text-main)]">${d.name}</p>
+                                <p class="text-[9px] opacity-50 font-mono mt-1">ID: ${d.uniqueId} | Owner: ${d.teacherId}</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="window.triggerInstAppInstall('${d.uniqueId}')" class="bg-green-500/10 text-green-500 border border-green-500/20 px-3 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-green-500 hover:text-white transition-all shadow-sm">Get App</button>
+                            <button onclick="window.deleteInstitute('${doc.id}')" class="bg-red-500/10 text-red-500 border border-red-500/20 px-3 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all shadow-sm">Revoke</button>
+                        </div>
+                    </div>`;
+                });
+                container.innerHTML = html;
+            } catch(e) {
+                console.error(e);
+                container.innerHTML = '<p class="text-red-500 text-xs py-2 text-center">Failed to fetch institute registry.</p>';
+            }
+        };
+
+        window.deleteInstitute = async (docId) => {
+            if(!confirm("Warning: Revoking this node will permanently delete the institute from the registry. Proceed?")) return;
+            try {
+                await Core.deleteDoc(Core.doc(Core.db, "institutes", docId));
+                toast("Institute node revoked and deleted.");
+                window.loadAdminInstitutes();
+            } catch(e) {
+                console.error(e);
+                toast("Failed to delete institute.", "error");
+            }
+        };
+
+        window.processInstituteSave = async () => {
+            const btn = document.getElementById('inst-action-btn');
+            const teacherId = document.getElementById('inst-teacher-id').value.trim();
+            const name = document.getElementById('inst-name').value.trim();
+            const logo = document.getElementById('inst-logo').value.trim();
+            const privacyMode = document.getElementById('inst-privacy').value;
+            const start = document.getElementById('inst-start').value;
+            const end = document.getElementById('inst-end').value;
+
+            if(!teacherId || !name) return toast("Teacher ID and Name are required", "error");
+
+            btn.innerText = "Processing..."; btn.disabled = true;
+            try {
+                const tSnap = await Core.getDocs(Core.query(Core.collection(Core.db, "users"), Core.where("teacherId", "==", teacherId)));
+                if(tSnap.empty) {
+                    btn.innerText = "Generate & Register Node"; btn.disabled = false;
+                    return toast("Teacher ID not found", "error");
+                }
+
+                const uniqueId = "INST-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+                
+                await Core.addDoc(Core.collection(Core.db, "institutes"), {
+                    uniqueId, name, logo, privacyMode, teacherId,
+                    planStart: start, planEnd: end,
+                    createdAt: Core.serverTimestamp()
+                });
+
+                const tUid = tSnap.docs[0].id;
+                await Core.updateDoc(Core.doc(Core.db, "users", tUid), {
+                    instituteId: uniqueId,
+                    privacyMode: privacyMode
+                });
+
+                toast(`Institute created! ID: ${uniqueId}`);
+                document.getElementById('inst-teacher-id').value = '';
+                document.getElementById('inst-name').value = '';
+                document.getElementById('inst-logo').value = '';
+                
+                window.loadAdminInstitutes();
+            } catch(e) {
+                console.error(e);
+                toast("Failed to create institute", "error");
+            } finally {
+                btn.innerText = "Generate & Register Node"; btn.disabled = false;
+            }
+        };
+
+        window.loadAdminRequests = async () => {
             const container = document.getElementById('admin-requests-list');
             if(!container) return;
             
@@ -1634,7 +1779,6 @@
                 ]);
                 
                 let totalViews = 0; contentSnap.forEach(d => totalViews += (d.data().views || 0));
-                
                 window._currentContentList = contentSnap.docs;
                 window._currentCourseList = courseSnap.docs;
                 
@@ -1659,64 +1803,26 @@
                                 ${profile.bio ? `<p class="text-sm opacity-80 leading-relaxed max-w-xl mx-auto md:mx-0">${profile.bio}</p>` : ''}
                             </div>
                         </div>
-                       <h3 class="text-2xl font-black italic mb-6">
-  Channel Analytics
-</h3>
-
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full pb-4">
-
-  <!-- Followers -->
-  <div onclick="manageFollowersRoster('${profile.teacherId}')"
-    class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-brandBlue/50 shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
-
-    <p class="text-sm md:text-base font-semibold text-gray-700 uppercase">
-      Followers
-    </p>
-
-    <h2 class="text-3xl md:text-5xl font-black mt-2 text-brandBlue">
-      ${followersSnap.size}
-    </h2>
-  </div>
-
-  <!-- Views -->
-  <div onclick="showAnalyticsModal('views')"
-    class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-brandBlue/50 shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
-
-    <p class="text-sm md:text-base font-semibold text-gray-700 uppercase">
-      Total Views
-    </p>
-
-    <h2 class="text-3xl md:text-5xl font-black mt-2 text-brandBlue">
-      ${totalViews}
-    </h2>
-  </div>
-
-  <!-- Uploads -->
-  <div onclick="showAnalyticsModal('uploads')"
-    class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-brandBlue/50 shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
-
-    <p class="text-sm md:text-base font-semibold text-gray-700 uppercase">
-      Uploads
-    </p>
-
-    <h2 class="text-3xl md:text-5xl font-black mt-2 text-brandBlue">
-      ${contentSnap.size}
-    </h2>
-  </div>
-
-  <!-- Courses -->
-  <div onclick="showAnalyticsModal('courses')"
-    class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-brandBlue/50 shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
-
-    <p class="text-sm md:text-base font-semibold text-gray-700 uppercase">
-      Courses
-    </p>
-
-    <h2 class="text-3xl md:text-5xl font-black mt-2 text-brandBlue">
-      ${courseSnap.size}
-    </h2>
-  </div>
-</div>
+                        <h3 class="text-2xl font-black italic mb-6">Channel Analytics</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full pb-4">
+                            <div onclick="manageFollowersRoster('${profile.teacherId}')" class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-brandBlue/50 transition-all cursor-pointer shadow-md hover:-translate-y-1 flex flex-col items-center justify-center text-center group">
+                                <p class="text-[10px] opacity-60 font-black uppercase tracking-widest text-brandBlue group-hover:opacity-100 transition-opacity">Followers</p>
+                                <h2 class="text-3xl md:text-5xl font-black mt-2 text-brandBlue">${followersSnap.size}</h2>
+                                ${profile.pendingSubs && profile.pendingSubs.length > 0 ? `<p class="text-[9px] bg-red-500 text-white px-2 py-0.5 rounded mt-2 animate-pulse">${profile.pendingSubs.length} Pending</p>` : ''}
+                            </div>
+                            <div onclick="showAnalyticsModal('views')" class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-brandOrange/50 shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
+                                <p class="text-[10px] opacity-60 font-black uppercase tracking-widest group-hover:text-brandOrange transition-colors">Total Views</p>
+                                <h2 class="text-3xl md:text-5xl font-black mt-2 group-hover:text-brandOrange transition-colors">${totalViews}</h2>
+                            </div>
+                            <div onclick="showAnalyticsModal('uploads')" class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-green-500/50 shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
+                                <p class="text-[10px] opacity-60 font-black uppercase tracking-widest group-hover:text-green-500 transition-colors">Uploads</p>
+                                <h2 class="text-3xl md:text-5xl font-black mt-2 group-hover:text-green-500 transition-colors">${contentSnap.size}</h2>
+                            </div>
+                            <div onclick="showAnalyticsModal('courses')" class="glass p-6 md:p-8 rounded-[2rem] border border-[var(--border-color)] hover:border-purple-500/50 shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
+                                <p class="text-[10px] opacity-60 font-black uppercase tracking-widest group-hover:text-purple-500 transition-colors">Courses</p>
+                                <h2 class="text-3xl md:text-5xl font-black mt-2 group-hover:text-purple-500 transition-colors">${courseSnap.size}</h2>
+                            </div>
+                        </div>
                         <div class="flex justify-between items-center mt-8 mb-4 border-b border-[var(--border-color)] pb-4">
                             <h3 class="text-xl font-black italic">Content Performance Matrix</h3>
                             <select onchange="window.sortPerformanceMatrix(this.value)" class="bg-[var(--input-bg)] text-[var(--text-main)] text-xs border border-[var(--border-color)] rounded-xl px-3 py-1.5 outline-none font-bold uppercase tracking-widest">
@@ -2280,7 +2386,7 @@
             if (!n || !p) return toast("Form fields incomplete", "error");
             try {
                 await Core.updatePassword(Core.auth.currentUser, p);
-                await Core.setDoc(Core.doc(Core.db, "users", Core.auth.currentUser.uid), { name: n, role: r, teacherId: "OC-"+n.split(' ')[0].toUpperCase()+Math.floor(100+Math.random()*899), email: Core.auth.currentUser.email, subs: [], pendingSubs: [], photo: window._tempGooglePhoto || Core.auth.currentUser.photoURL || "", privacyMode: 'public' });
+                await Core.setDoc(Core.doc(Core.db, "users", Core.auth.currentUser.uid), { name: n, role: r, teacherId: "OC-"+n.split(' ')[0].toUpperCase()+Math.floor(100+Math.random()*899), email: Core.auth.currentUser.email, subs: [], pendingSubs: [], photo: window._tempGooglePhoto || Core.auth.currentUser.photoURL || "", privacyMode: 'public', instituteId: window._lockedInstId || null });
                 location.reload();
             } catch(e) { toast(e.message, "error"); }
         };
@@ -2485,18 +2591,14 @@
             }
 
             return `<div class="flex flex-col group cursor-pointer w-full" onclick="openResource('${d.id}','${i.url}','${i.title}')">
-                <!-- Thumbnail -->
                 <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-md border border-[var(--border-color)] bg-zinc-950 mb-3 group-hover:shadow-lg group-hover:border-brandOrange/50 transition-all group-hover:scale-[1.02]">
                     <img src="${window.getSmartPreview(i.url)}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                     ${window.getFileBadge(i.url)}
                 </div>
                 
-                <!-- Metadata -->
                 <div class="flex gap-3 px-1">
-                    <!-- Avatar -->
                     <img src="${avatarSrc}" class="w-9 h-9 rounded-full object-cover shrink-0 border border-[var(--border-color)] bg-black shadow-sm mt-0.5">
                     
-                    <!-- Text Info -->
                     <div class="flex flex-col flex-1 min-w-0">
                         <h4 class="font-bold text-sm md:text-base text-[var(--text-main)] leading-snug line-clamp-2 break-words group-hover:text-brandOrange transition-colors">${i.title}</h4>
                         ${liveStatusLabel}
@@ -2509,7 +2611,6 @@
                             </div>
                         </div>
                         
-                        <!-- Actions -->
                         ${isT ? `<div class="flex gap-2 mt-3 w-full" onclick="event.stopPropagation()">
                             <button onclick="editR('${d.id}','${i.title}','${i.url}')" class="flex-1 p-2 bg-[var(--input-bg)] text-[var(--text-main)] rounded-xl hover:text-brandBlue hover:border-brandBlue transition-all border border-[var(--border-color)] shadow-sm text-xs font-bold">Edit</button>
                             <button onclick="delR('${d.id}')" class="flex-1 p-2 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/20 shadow-sm text-xs font-bold">Delete</button>
@@ -2569,12 +2670,13 @@
             
             const gDoc = await Core.getDoc(Core.doc(Core.db, "groups", id));
             const isAdmin = gDoc.exists() && gDoc.data().teacherId === profile.teacherId;
-            const groupTitle = document.getElementById('group-chat-title');
-if (isAdmin) { groupTitle.style.cursor = "pointer";
- groupTitle.onclick = () => { manageGroupRoster(id, name); };
-} else { groupTitle.style.cursor = "default"; groupTitle.onclick = null;}
-   groupMessageTrackers[id] = 0; 
- const q = Core.query(Core.collection(Core.db, "groupMessages"), Core.where("groupId", "==", id), Core.orderBy("createdAt", "asc"));
+            const rosterBtn = document.getElementById('group-roster-btn');
+            if(isAdmin) { rosterBtn.style.display="block"; rosterBtn.onclick=()=>manageGroupRoster(id, name); }
+            else { rosterBtn.style.display="none"; }
+
+            groupMessageTrackers[id] = 0; 
+            
+            const q = Core.query(Core.collection(Core.db, "groupMessages"), Core.where("groupId", "==", id), Core.orderBy("createdAt", "asc"));
             Core.onSnapshot(q, (snap) => {
                 document.getElementById('group-chat-messages').innerHTML = snap.docs.map(m => {
                     const d = m.data(); const isM = d.senderId === Core.auth.currentUser.uid;
@@ -2785,6 +2887,17 @@ if (isAdmin) { groupTitle.style.cursor = "pointer";
             if (user) {
                 // Temporarily cache Google Photo if it's a new user from Google Auth
                 if (user.photoURL) window._tempGooglePhoto = user.photoURL;
+                
+                // Enforce Locked App Institute ID for signed-in users
+                if (window._lockedInstId) {
+                    const docSnapCheck = await Core.getDoc(Core.doc(Core.db, "users", user.uid));
+                    if(docSnapCheck.exists()) {
+                        const dData = docSnapCheck.data();
+                        if(dData.instituteId !== window._lockedInstId) {
+                            await Core.updateDoc(Core.doc(Core.db, "users", user.uid), { instituteId: window._lockedInstId });
+                        }
+                    }
+                }
 
                 const docSnap = await Core.getDoc(Core.doc(Core.db, "users", user.uid));
                 if (!docSnap.exists()) window.showScreen('onboarding-screen');
@@ -2801,7 +2914,10 @@ if (isAdmin) { groupTitle.style.cursor = "pointer";
                     listenSystemEvents(); 
                     initializeSwipeGestures();
                 }
-            } else window.showScreen('auth-screen');
+            } else {
+                window.applyLockedInstituteBranding();
+                window.showScreen('auth-screen');
+            }
         });
 
         window.updateRequestsBadge = () => {
@@ -2925,26 +3041,14 @@ if (isAdmin) { groupTitle.style.cursor = "pointer";
             }).join('');
         }
 
-      function renderGroups(docs){
-    const c=document.getElementById('student-groups')||document.getElementById('tab-display');
-    if(!c) return;
-
-    c.innerHTML=`<div class="space-y-4">${docs.map(d=>{
-        const g=d.data(),u=groupMessageTrackers[d.id]||0;
-        return `
-        <div onclick="openGroupChat('${d.id}','${g.name}')" class="glass p-5 md:p-6 rounded-[2rem] flex justify-between items-center border border-[var(--border-color)] hover:border-brandBlue/30 shadow-sm hover:shadow-md transition-all hover:scale-[1.01] cursor-pointer fade-in">
-            <div class="flex-1 min-w-0">
-                <span class="text-[8px] text-brandBlue font-black uppercase">${g.type}</span>
-                <div class="flex items-center gap-2 mt-1">
-                    <h3 class="text-lg md:text-2xl font-black break-words text-[var(--text-main)]">${g.name}</h3>
-                    <span id="badge-${d.id}" class="${u?'':'hidden'} bg-brandBlue text-white text-[9px] font-bold px-2 py-0.5 rounded-lg">${u}</span>
-                </div>
-                <p class="text-[10px] opacity-40 font-mono">${g.code}</p>
-            </div>
-            <button onclick="event.stopPropagation();delG('${d.id}')" class="bg-red-500/10 text-red-500 p-3 rounded-xl hover:bg-red-600 hover:text-white">🗑</button>
-        </div>`;
-    }).join('')}</div>`;
-}
+        function renderGroups(docs, isT) {
+            const container = document.getElementById('student-groups') || document.getElementById('tab-display'); if(!container) return;
+            container.innerHTML = `<div class="space-y-4">${docs.map(d => {
+                const g = d.data();
+                const unreadCount = groupMessageTrackers[d.id] || 0;
+                return `<div class="glass p-5 md:p-6 rounded-[2rem] flex justify-between items-center group border border-[var(--border-color)] hover:border-brandBlue/30 shadow-sm hover:shadow-md transition-all hover:scale-[1.01] fade-in"><div><span class="text-[8px] text-brandBlue font-black uppercase tracking-widest">${g.type}</span><div class="flex items-center gap-3 mt-0.5"><h3 class="text-xl md:text-2xl font-black truncate max-w-[150px] md:max-w-xs text-[var(--text-main)] drop-shadow-sm group-hover:text-brandBlue transition-colors">${g.name}</h3><span id="badge-${d.id}" class="${unreadCount===0?'hidden':''} bg-brandBlue text-white text-[9px] font-extrabold px-2 py-0.5 rounded-lg shadow-md border border-white/10">${unreadCount}</span></div><p class="text-[10px] opacity-40 font-mono mt-1">${g.code}</p></div><div class="flex gap-2"><button onclick="openGroupChat('${d.id}', '${g.name}')" class="btn-brand px-5 md:px-6 py-3 text-[10px] shadow-md hover:shadow-brandBlue/30 hover:scale-105">Manage Pool</button><button onclick="delG('${d.id}')" class="bg-red-500/10 text-red-500 p-3 rounded-xl hover:bg-red-600 hover:text-white transition-all shadow-sm border border-red-500/20 hover:scale-110">🗑</button></div></div>`;
+            }).join('')}</div>`;
+        }
         window.delG = async (id) => { if(confirm("Confirm asset group dissolution?")) { await Core.deleteDoc(Core.doc(Core.db, "groups", id)); window.loadHome(); } };
         window.onclick = (e) => { if (e.target === document.getElementById('custom-modal')) window.closeCustomModal(); };
     </script>
