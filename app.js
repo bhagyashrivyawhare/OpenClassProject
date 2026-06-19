@@ -31,7 +31,7 @@ export {
     doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, updateDoc, 
     increment, deleteDoc, arrayUnion, arrayRemove, serverTimestamp, onSnapshot, orderBy, limit,
     signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, 
-    signOut, signInWithPopup, updatePassword 
+    signOut, signInWithPopup, updatePassword, sendPasswordResetEmail
 };
 
 // ... (Rest of your original getThumbnail and sendOTP functions remain the same)
