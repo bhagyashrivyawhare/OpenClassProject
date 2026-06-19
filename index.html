@@ -584,6 +584,31 @@
         passwordInput.type = "password";
     }
 };
+        window.forgotPassword = async () => {
+
+    const email = document.getElementById("auth-email")?.value.trim();
+
+    if (!email) {
+        alert("Please enter your email first.");
+        return;
+    }
+
+    try {
+
+        await Core.sendPasswordResetEmail(
+            Core.auth,
+            email
+        );
+
+        alert("Password reset link sent to your email.");
+
+    } catch (error) {
+
+        console.error(error);
+        alert(error.message);
+
+    }
+};
 
         window.showInstituteForm = () => {
             const modal = document.getElementById('custom-modal');
