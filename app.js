@@ -38,14 +38,20 @@ export {
 export function getThumbnail(url) {
     try {
         let id = '';
+
         if(url.includes('v=')) id = url.split('v=')[1].split('&')[0];
         else if(url.includes('youtu.be/')) id = url.split('/').pop().split('?')[0];
         else if(url.includes('/shorts/')) id = url.split('/shorts/')[1].split('?')[0];
         else if(url.includes('/live/')) id = url.split('/live/')[1].split('?')[0];
-        return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : 'https://res.cloudinary.com/dowhvdkjh/image/upload/v1777895769/IMG-20260504-WA0002_fucbjd.jpg';
-    } catch(e) { return 'https://res.cloudinary.com/dowhvdkjh/image/upload/v1777895769/IMG-20260504-WA0002_fucbjd.jpg'; }
-}
 
+        return id
+            ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
+            : 'https://res.cloudinary.com/dowhvdkjh/image/upload/v1777895769/IMG-20260504-WA0002_fucbjd.jpg';
+
+    } catch(e) {
+        return 'https://res.cloudinary.com/dowhvdkjh/image/upload/v1777895769/IMG-20260504-WA0002_fucbjd.jpg';
+    }
+}
 export async function sendOTP(email, code) {
     return await emailjs.send(emailConfig.serviceID, emailConfig.templateID, { to_email: email, otp: code });
 }
