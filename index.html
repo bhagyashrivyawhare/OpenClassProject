@@ -2473,104 +2473,104 @@
         }
 
         //
-        window.editCourse = async (id) => {
+//         window.editCourse = async (id) => {
 
-    const snap = await Core.getDoc(
-        Core.doc(Core.db, "courses", id)
-    );
+//     const snap = await Core.getDoc(
+//         Core.doc(Core.db, "courses", id)
+//     );
 
-    const c = snap.data();
+//     const c = snap.data();
 
-    const content = document.getElementById("modal-content");
+//     const content = document.getElementById("modal-content");
 
-    content.innerHTML = `
-        <h2 class="text-2xl font-black mb-4">
-            Edit Course Playlist
-        </h2>
+//     content.innerHTML = `
+//         <h2 class="text-2xl font-black mb-4">
+//             Edit Course Playlist
+//         </h2>
 
-        <div id="editPlaylist" class="space-y-3">
-            ${c.playlist.map(v => `
-                <div class="flex gap-2">
-                    <input
-                        value="${v.title}"
-                        class="editTitle input-field flex-1"
-                        placeholder="Topic Name">
+//         <div id="editPlaylist" class="space-y-3">
+//             ${c.playlist.map(v => `
+//                 <div class="flex gap-2">
+//                     <input
+//                         value="${v.title}"
+//                         class="editTitle input-field flex-1"
+//                         placeholder="Topic Name">
 
-                    <input
-                        value="${v.url}"
-                        class="editUrl input-field flex-1"
-                        placeholder="YouTube Link">
-                </div>
-            `).join("")}
-        </div>
+//                     <input
+//                         value="${v.url}"
+//                         class="editUrl input-field flex-1"
+//                         placeholder="YouTube Link">
+//                 </div>
+//             `).join("")}
+//         </div>
 
-        <div class="flex gap-2 mt-4">
-            <button
-                onclick="addTopicRow()"
-                class="bg-green-500 text-white px-4 py-2 rounded-xl">
-                + Add Topic
-            </button>
+//         <div class="flex gap-2 mt-4">
+//             <button
+//                 onclick="addTopicRow()"
+//                 class="bg-green-500 text-white px-4 py-2 rounded-xl">
+//                 + Add Topic
+//             </button>
 
-            <button
-                onclick="saveCourseEdit('${id}')"
-                class="bg-blue-500 text-white px-4 py-2 rounded-xl">
-                Save Changes
-            </button>
-        </div>
-    `;
-};
-window.addTopicRow = () => {
+//             <button
+//                 onclick="saveCourseEdit('${id}')"
+//                 class="bg-blue-500 text-white px-4 py-2 rounded-xl">
+//                 Save Changes
+//             </button>
+//         </div>
+//     `;
+// };
+// window.addTopicRow = () => {
 
-    document.getElementById("editPlaylist")
-    .insertAdjacentHTML("beforeend", `
-        <div class="flex gap-2">
-            <input
-                class="editTitle input-field flex-1"
-                placeholder="Topic Name">
+//     document.getElementById("editPlaylist")
+//     .insertAdjacentHTML("beforeend", `
+//         <div class="flex gap-2">
+//             <input
+//                 class="editTitle input-field flex-1"
+//                 placeholder="Topic Name">
 
-            <input
-                class="editUrl input-field flex-1"
-                placeholder="YouTube Link">
-        </div>
-    `);
+//             <input
+//                 class="editUrl input-field flex-1"
+//                 placeholder="YouTube Link">
+//         </div>
+//     `);
 
-};
-window.saveCourseEdit = async (id) => {
+// };
+// window.saveCourseEdit = async (id) => {
 
-    const titles =
-        [...document.querySelectorAll(".editTitle")]
-        .map(x => x.value.trim());
+//     const titles =
+//         [...document.querySelectorAll(".editTitle")]
+//         .map(x => x.value.trim());
 
-    const urls =
-        [...document.querySelectorAll(".editUrl")]
-        .map(x => x.value.trim());
+//     const urls =
+//         [...document.querySelectorAll(".editUrl")]
+//         .map(x => x.value.trim());
 
-    const playlist = [];
+//     const playlist = [];
 
-    for(let i = 0; i < titles.length; i++) {
+//     for(let i = 0; i < titles.length; i++) {
 
-        if(titles[i] && urls[i]) {
+//         if(titles[i] && urls[i]) {
 
-            playlist.push({
-                title: titles[i],
-                url: urls[i]
-            });
+//             playlist.push({
+//                 title: titles[i],
+//                 url: urls[i]
+//             });
 
-        }
-    }
+//         }
+//     }
 
-    await Core.updateDoc(
-        Core.doc(Core.db, "courses", id),
-        { playlist }
-    );
+//     await Core.updateDoc(
+//         Core.doc(Core.db, "courses", id),
+//         { playlist }
+//     );
 
-    toast("Course Updated Successfully");
+//     toast("Course Updated Successfully");
 
-    document.getElementById("custom-modal")
-        .classList.add("hidden");
+//     document.getElementById("custom-modal")
+//         .classList.add("hidden");
 
-    window.loadHome();
-};
+//     window.loadHome();
+// };
 
         async function renderCourses(docs, isT) {
             const container = document.getElementById('courses-feed');
