@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link id="app-manifest" rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#050505">
     
@@ -94,6 +96,31 @@
         .plyr__video-embed iframe{
     transform: scale(1.35);
     transform-origin:center;
+}
+        .social-icon{
+    font-size:20px;
+    color:#6b7280;
+    transition:all .25s ease;
+}
+
+.social-icon:hover{
+    transform:scale(1.15);
+}
+
+.fa-whatsapp:hover{
+    color:#25D366;
+}
+
+.fa-instagram:hover{
+    color:#E4405F;
+}
+
+.fa-telegram:hover{
+    color:#229ED9;
+}
+
+.fa-youtube:hover{
+    color:#FF0000;
 }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -2237,37 +2264,37 @@
                                 <p class="text-[9px] opacity-50 font-bold pr-2 tracking-widest mt-0.5 font-mono">${uData.teacherId}</p>
                                 <div class="flex items-center gap-2 mt-2">
 
+<div class="flex items-center gap-2 mt-2">
+
 ${uData.whatsapp ? `
-<a href="${uData.whatsapp}"
-   target="_blank"
-   onclick="event.stopPropagation()"
-   class="w-8 h-8 flex items-center justify-center rounded-full bg-green-500 text-white hover:scale-110 transition">
-   <i class="fab fa-whatsapp"></i>
+<a href="${uData.whatsapp}" target="_blank"
+onclick="event.stopPropagation()"
+class="social-icon">
+<i class="fab fa-whatsapp"></i>
 </a>` : ''}
 
 ${uData.instagram ? `
-<a href="${uData.instagram}"
-   target="_blank"
-   onclick="event.stopPropagation()"
-   class="w-8 h-8 flex items-center justify-center rounded-full bg-pink-500 text-white hover:scale-110 transition">
-   <i class="fab fa-instagram"></i>
+<a href="${uData.instagram}" target="_blank"
+onclick="event.stopPropagation()"
+class="social-icon">
+<i class="fab fa-instagram"></i>
 </a>` : ''}
 
 ${uData.telegram ? `
-<a href="${uData.telegram}"
-   target="_blank"
-   onclick="event.stopPropagation()"
-   class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white hover:scale-110 transition">
-   <i class="fab fa-telegram"></i>
+<a href="${uData.telegram}" target="_blank"
+onclick="event.stopPropagation()"
+class="social-icon">
+<i class="fab fa-telegram"></i>
 </a>` : ''}
 
 ${uData.youtubeChannel ? `
-<a href="${uData.youtubeChannel}"
-   target="_blank"
-   onclick="event.stopPropagation()"
-   class="w-8 h-8 flex items-center justify-center rounded-full bg-red-600 text-white hover:scale-110 transition">
-   <i class="fab fa-youtube"></i>
+<a href="${uData.youtubeChannel}" target="_blank"
+onclick="event.stopPropagation()"
+class="social-icon">
+<i class="fab fa-youtube"></i>
 </a>` : ''}
+
+</div>
 
 </div>
                             </div>
