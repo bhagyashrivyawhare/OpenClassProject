@@ -1297,34 +1297,73 @@
             toast("New digital avatar generated");
         };
 
-        window.saveProfileWorkspaceChanges = async (event) => {
-            const updatedName = document.getElementById('profile-hub-name').value.trim();
-            const updatedBio = document.getElementById('profile-hub-bio').value.trim();
-            const privacySelect = document.getElementById('profile-hub-privacy');
-            const updatedPrivacy = privacySelect ? privacySelect.value : profile.privacyMode;
-            
-            if (!updatedName) return toast("Name cannot be left blank", "error");
-            
-            const saveButton = event.target;
-            saveButton.innerHTML = "Saving...";
-            saveButton.disabled = true;
-            
-            try {
-                let updatePayload = { name: updatedName, bio: updatedBio, privacyMode: updatedPrivacy };
-                if (window._tempHubAvatarBuffer) updatePayload.photo = window._tempHubAvatarBuffer;
-                
-                await Core.updateDoc(Core.doc(Core.db, "users", Core.auth.currentUser.uid), updatePayload);
-                toast("Profile updated successfully");
-                setTimeout(() => location.reload(), 1000);
-            } catch(e) {
-                console.error(e);
-                toast("Failed to update profile block", "error");
-            } finally {
-                saveButton.innerHTML = "Save Profile Changes";
-                saveButton.disabled = false;
-            }
+       window.saveProfileWorkspaceChanges = async (event) => {
+
+    const updatedName =
+        document.getElementById('profile-hub-name').value.trim();
+
+    const updatedBio =
+        document.getElementById('profile-hub-bio').value.trim();
+
+    const privacySelect =
+        document.getElementById('profile-hub-privacy');
+
+    const updatedPrivacy =
+        privacySelect ? privacySelect.value : profile.privacyMode;
+
+    if (!updatedName)
+        return toast("Name cannot be left blank", "error");
+
+    const saveButton = event.target;
+    saveButton.innerHTML = "Saving...";
+    saveButton.disabled = true;
+
+    try {
+
+        let updatePayload = {
+
+            name: updatedName,
+            bio: updatedBio,
+            privacyMode: updatedPrivacy,
+
+            whatsapp:
+                document.getElementById('profile-hub-whatsapp')?.value.trim() || '',
+
+            instagram:
+                document.getElementById('profile-hub-instagram')?.value.trim() || '',
+
+            telegram:
+                document.getElementById('profile-hub-telegram')?.value.trim() || '',
+
+            youtubeChannel:
+                document.getElementById('profile-hub-youtube')?.value.trim() || ''
+
         };
 
+        if (window._tempHubAvatarBuffer)
+            updatePayload.photo = window._tempHubAvatarBuffer;
+
+        await Core.updateDoc(
+            Core.doc(Core.db, "users", Core.auth.currentUser.uid),
+            updatePayload
+        );
+
+        toast("Profile updated successfully");
+
+        setTimeout(() => location.reload(), 1000);
+
+    } catch (e) {
+
+        console.error(e);
+        toast("Failed to update profile block", "error");
+
+    } finally {
+
+        saveButton.innerHTML = "Save Profile Changes";
+        saveButton.disabled = false;
+
+    }
+};
         window.triggerAccountPurgePipeline = async () => {
             if(!confirm("Warning: Are you completely sure you want to delete your account? This action cannot be undone.")) return;
             if(!confirm("Final verification: You will lose all your course access and progress. Proceed?")) return;
