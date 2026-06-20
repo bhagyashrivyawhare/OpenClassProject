@@ -2359,29 +2359,46 @@
             setupPlayer(id, fallbackVid, { title, link: url, isLiveBroadcast: false }, url);
         };
 
-        window.openCourse = async (id) => {
-            const snap = await Core.getDoc(Core.doc(Core.db, "courses", id));
-            const c = snap.data();
-            const isT = c.teacherId === profile.teacherId;
-            const content = document.getElementById('modal-content');
-            const inCart = cart && cart.some(item => item.id === id);
-        
-            toggleBottomNavBarVisibility(false);
-            
-            let instBadgeStr = "";
-            const tSnap = await Core.getDocs(Core.query(Core.collection(Core.db, "users"), Core.where("teacherId", "==", c.teacherId)));
-            if(!tSnap.empty) {
-                const tData = tSnap.docs[0].data();
-                if(tData.instituteId) {
-                    const instData = await window.getInstBadgeData(tData.instituteId);
-                    if(instData) {
-                        instBadgeStr = `<div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-2 shadow-lg z-20">
-                            <img src="${instData.logo}" class="w-5 h-5 rounded-full object-cover bg-white">
-                            <span class="text-[9px] font-black uppercase tracking-widest text-white">${instData.name}</span>
-                        </div>`;
-                    }
-                }
+      window.openCourse = async (id) => {
+    const snap = await Core.getDoc(Core.doc(Core.db, "courses", id));
+    const c = snap.data();
+    const isT = c.teacherId === profile.teacherId;
+    const content = document.getElementById('modal-content');
+    const inCart = cart && cart.some(item => item.id === id);
+
+    toggleBottomNavBarVisibility(false);
+
+    let instBadgeStr = "";
+    const tSnap = await Core.getDocs(
+        Core.query(
+            Core.collection(Core.db, "users"),
+            Core.where("teacherId", "==", c.teacherId)
+        )
+    );
+
+    if(!tSnap.empty) {
+        const tData = tSnap.docs[0].data();
+
+        if(tData.instituteId) {
+            const instData = await window.getInstBadgeData(tData.instituteId);
+
+            if(instData) {
+                instBadgeStr = `
+                    <div>${instData.name}</div>
+                `;
             }
+        }
+    }
+
+    content.innerHTML = `
+        <div class="p-6">
+            <h2 class="text-2xl font-bold">${c.title}</h2>
+            <p class="mt-2">${c.description || ''}</p>
+        </div>
+    `;
+
+    document.getElementById('custom-modal').classList.remove('hidden');
+};
             //addd update course
 
            content.innerHTML = `
