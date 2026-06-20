@@ -1064,6 +1064,39 @@
                                     <option value="public" ${profile.privacyMode === 'public' ? 'selected' : ''}>Public (Visible to all)</option>
                                     <option value="private" ${profile.privacyMode === 'private' ? 'selected' : ''}>Private (Requires Approval)</option>
                                 </select>
+                                <div class="space-y-3">
+    <p class="text-[10px] font-black uppercase tracking-widest opacity-40 ml-2">
+        Social Links
+    </p>
+
+    <input
+        type="url"
+        id="profile-hub-whatsapp"
+        value="${profile.whatsapp || ''}"
+        placeholder="WhatsApp Channel Link"
+        class="input-field transition-all">
+
+    <input
+        type="url"
+        id="profile-hub-instagram"
+        value="${profile.instagram || ''}"
+        placeholder="Instagram Profile Link"
+        class="input-field transition-all">
+
+    <input
+        type="url"
+        id="profile-hub-telegram"
+        value="${profile.telegram || ''}"
+        placeholder="Telegram Channel Link"
+        class="input-field transition-all">
+
+    <input
+        type="url"
+        id="profile-hub-youtube"
+        value="${profile.youtubeChannel || ''}"
+        placeholder="YouTube Channel Link"
+        class="input-field transition-all">
+</div>
                             </div>
                         </div>
                         <button onclick="saveProfileWorkspaceChanges(event)" class="w-full py-4 btn-brand text-xs rounded-2xl font-black uppercase tracking-widest hover:scale-[1.02] transition-all shadow-lg">Save Profile Changes</button>
