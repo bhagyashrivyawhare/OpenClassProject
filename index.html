@@ -2235,6 +2235,41 @@
                                     ${uData.privacyMode === 'private' ? '<span class="inline-flex items-center justify-center text-[9px] bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-0.5 rounded-md uppercase tracking-widest font-black not-italic ml-2 align-middle">Private</span>' : ''}
                                 </h3>
                                 <p class="text-[9px] opacity-50 font-bold pr-2 tracking-widest mt-0.5 font-mono">${uData.teacherId}</p>
+                                <div class="flex items-center gap-2 mt-2">
+
+${uData.whatsapp ? `
+<a href="${uData.whatsapp}"
+   target="_blank"
+   onclick="event.stopPropagation()"
+   class="w-8 h-8 flex items-center justify-center rounded-full bg-green-500 text-white hover:scale-110 transition">
+   <i class="fab fa-whatsapp"></i>
+</a>` : ''}
+
+${uData.instagram ? `
+<a href="${uData.instagram}"
+   target="_blank"
+   onclick="event.stopPropagation()"
+   class="w-8 h-8 flex items-center justify-center rounded-full bg-pink-500 text-white hover:scale-110 transition">
+   <i class="fab fa-instagram"></i>
+</a>` : ''}
+
+${uData.telegram ? `
+<a href="${uData.telegram}"
+   target="_blank"
+   onclick="event.stopPropagation()"
+   class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white hover:scale-110 transition">
+   <i class="fab fa-telegram"></i>
+</a>` : ''}
+
+${uData.youtubeChannel ? `
+<a href="${uData.youtubeChannel}"
+   target="_blank"
+   onclick="event.stopPropagation()"
+   class="w-8 h-8 flex items-center justify-center rounded-full bg-red-600 text-white hover:scale-110 transition">
+   <i class="fab fa-youtube"></i>
+</a>` : ''}
+
+</div>
                             </div>
                         </div>
                         <p class="text-brandBlue font-black uppercase text-[10px] pr-2 hidden md:block group-hover:translate-x-1 transition-transform">Biography →</p>
