@@ -2359,117 +2359,55 @@
             setupPlayer(id, fallbackVid, { title, link: url, isLiveBroadcast: false }, url);
         };
 
-      window.openCourse = async (id) => {
-    const snap = await Core.getDoc(Core.doc(Core.db, "courses", id));
-    const c = snap.data();
-    const isT = c.teacherId === profile.teacherId;
-    const content = document.getElementById('modal-content');
-    const inCart = cart && cart.some(item => item.id === id);
-
-    toggleBottomNavBarVisibility(false);
-
-    let instBadgeStr = "";
-    const tSnap = await Core.getDocs(
-        Core.query(
-            Core.collection(Core.db, "users"),
-            Core.where("teacherId", "==", c.teacherId)
-        )
-    );
-
-    if(!tSnap.empty) {
-        const tData = tSnap.docs[0].data();
-
-        if(tData.instituteId) {
-            const instData = await window.getInstBadgeData(tData.instituteId);
-
-            if(instData) {
-                instBadgeStr = `
-                    <div>${instData.name}</div>
-                `;
+        window.openCourse = async (id) => {
+            const snap = await Core.getDoc(Core.doc(Core.db, "courses", id));
+            const c = snap.data();
+            const isT = c.teacherId === profile.teacherId;
+            const content = document.getElementById('modal-content');
+            const inCart = cart && cart.some(item => item.id === id);
+            
+            toggleBottomNavBarVisibility(false);
+            
+            let instBadgeStr = "";
+            const tSnap = await Core.getDocs(Core.query(Core.collection(Core.db, "users"), Core.where("teacherId", "==", c.teacherId)));
+            if(!tSnap.empty) {
+                const tData = tSnap.docs[0].data();
+                if(tData.instituteId) {
+                    const instData = await window.getInstBadgeData(tData.instituteId);
+                    if(instData) {
+                        instBadgeStr = `<div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-2 shadow-lg z-20">
+                            <img src="${instData.logo}" class="w-5 h-5 rounded-full object-cover bg-white">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-white">${instData.name}</span>
+                        </div>`;
+                    }
+                }
             }
-        }
-    }
 
-    content.innerHTML = `
-        <div class="p-6">
-            <h2 class="text-2xl font-bold">${c.title}</h2>
-            <p class="mt-2">${c.description || ''}</p>
-        </div>
-    `;
-
-    document.getElementById('custom-modal').classList.remove('hidden');
-};
-            //addd update course
-
-           content.innerHTML = `
-    <div class="fade-in">
-        <div class="relative w-full h-auto max-h-64 rounded-3xl mb-6 shadow-2xl border border-[var(--border-color)] overflow-hidden">
-            <img src="${c.thumbnail}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
-            ${instBadgeStr}
-        </div>
-
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-black italic text-brandOrange pr-4">
-                ${c.title}
-            </h2>
-
-            ${isT ? `
-            <div class="flex gap-2">
-                <button
-                    onclick="editCourse('${id}')"
-                    class="bg-blue-500 text-white font-black uppercase text-[10px] tracking-widest px-3 py-1.5 rounded-lg hover:scale-105 transition-all">
-                    Edit
-                </button>
-
-                <button
-                    onclick="delC('${id}')"
-                    class="text-red-500 font-black uppercase text-[10px] tracking-widest border border-red-500/20 bg-red-500/10 px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white hover:scale-105 transition-all">
-                    Purge
-                </button>
-            </div>
-            ` : ''}
-        </div>
-
-        <p class="opacity-80 mb-8 text-sm leading-relaxed pr-4 text-[var(--text-main)]">
-            ${c.description}
-        </p>
-
-        <div class="space-y-3 mb-8">
-            <p class="text-[9px] font-black uppercase opacity-40 tracking-widest mb-1 border-b border-[var(--border-color)] pb-2">
-                Course Syllabus Blueprint
-            </p>
-
-            ${c.playlist.map((v, i) => `
-                <div
-                    onclick="openResource('null','${v.url}','${v.title}')"
-                    class="bg-[var(--input-bg)] p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-[var(--border-color)] hover:border-brandOrange/30 border border-[var(--border-color)] transition-all shadow-sm hover:scale-[1.02]">
-
-                    <p class="text-xs font-bold pr-4">
-                        ${i + 1}. ${v.title}
-                    </p>
-
-                    <span class="text-[9px] text-brandOrange font-black uppercase tracking-widest shrink-0">
-                        Access
-                    </span>
+            content.innerHTML = `
+                <div class="fade-in">
+                    <div class="relative w-full h-auto max-h-64 rounded-3xl mb-6 shadow-2xl border border-[var(--border-color)] overflow-hidden">
+                        <img src="${c.thumbnail}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        ${instBadgeStr}
+                    </div>
+                    <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-black italic text-brandOrange pr-4">${c.title}</h2>${isT ? `<button onclick="delC('${id}')" class="text-red-500 font-black uppercase text-[10px] tracking-widest border border-red-500/20 bg-red-500/10 px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white hover:scale-105 transition-all">Purge</button>` : ''}</div>
+                    <p class="opacity-80 mb-8 text-sm leading-relaxed pr-4 text-[var(--text-main)] opacity-80">${c.description}</p>
+                    <div class="space-y-3 mb-8">
+                        <p class="text-[9px] font-black uppercase opacity-40 tracking-widest mb-1 border-b border-[var(--border-color)] pb-2">Course Syllabus Blueprint</p>
+                        ${c.playlist.map((v, i) => `
+                            <div onclick="openResource('null','${v.url}','${v.title}')" class="bg-[var(--input-bg)] p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-[var(--border-color)] hover:border-brandOrange/30 border border-[var(--border-color)] transition-all shadow-sm hover:scale-[1.02]">
+                                <p class="text-xs font-bold pr-4">${i+1}. ${v.title}</p>
+                                <span class="text-[9px] text-brandOrange font-black uppercase tracking-widest shrink-0 shadow-[0_0_10px_rgba(247,148,29,0.1)]">Access</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="toggleCartAction('${id}','${c.title}','${c.price}')" class="flex-1 py-4 glass tracking-widest text-[10px] font-black uppercase rounded-2xl border border-[var(--border-color)] shadow-md hover:bg-[var(--border-color)] hover:scale-105 transition-all text-[var(--text-main)]">${inCart?'Drop from Cart':'Add to Cart'}</button>
+                        <button onclick="enrollCourse('${id}','${c.groupId}')" class="flex-1 py-4 btn-brand shadow-xl text-[10px] hover:scale-105">${parseFloat(c.price)===0?'Instant Enrolment':`Acquire (₹${c.price})`}</button>
+                    </div>
                 </div>
-            `).join('')}
-        </div>
-
-        <div class="flex gap-4">
-            <button
-                onclick="toggleCartAction('${id}','${c.title}','${c.price}')"
-                class="flex-1 py-4 glass tracking-widest text-[10px] font-black uppercase rounded-2xl border border-[var(--border-color)] shadow-md hover:bg-[var(--border-color)] hover:scale-105 transition-all text-[var(--text-main)]">
-                ${inCart ? 'Drop from Cart' : 'Add to Cart'}
-            </button>
-
-            <button
-                onclick="enrollCourse('${id}','${c.groupId}')"
-                class="flex-1 py-4 btn-brand shadow-xl text-[10px] hover:scale-105">
-                ${parseFloat(c.price) === 0 ? 'Instant Enrolment' : `Acquire (₹${c.price})`}
-            </button>
-        </div>
-    </div>
-`;
+            `;
+            document.getElementById('custom-modal').classList.remove('hidden');
+        };
 
         window.enrollCourse = async (cid, gid) => {
             await Core.updateDoc(Core.doc(Core.db, "groups", gid), { members: Core.arrayUnion(Core.auth.currentUser.uid) });
@@ -2488,106 +2426,6 @@
                 container.innerHTML = htmlArr.join('');
             } 
         }
-
-        //
-//         window.editCourse = async (id) => {
-
-//     const snap = await Core.getDoc(
-//         Core.doc(Core.db, "courses", id)
-//     );
-
-//     const c = snap.data();
-
-//     const content = document.getElementById("modal-content");
-
-//     content.innerHTML = `
-//         <h2 class="text-2xl font-black mb-4">
-//             Edit Course Playlist
-//         </h2>
-
-//         <div id="editPlaylist" class="space-y-3">
-//             ${c.playlist.map(v => `
-//                 <div class="flex gap-2">
-//                     <input
-//                         value="${v.title}"
-//                         class="editTitle input-field flex-1"
-//                         placeholder="Topic Name">
-
-//                     <input
-//                         value="${v.url}"
-//                         class="editUrl input-field flex-1"
-//                         placeholder="YouTube Link">
-//                 </div>
-//             `).join("")}
-//         </div>
-
-//         <div class="flex gap-2 mt-4">
-//             <button
-//                 onclick="addTopicRow()"
-//                 class="bg-green-500 text-white px-4 py-2 rounded-xl">
-//                 + Add Topic
-//             </button>
-
-//             <button
-//                 onclick="saveCourseEdit('${id}')"
-//                 class="bg-blue-500 text-white px-4 py-2 rounded-xl">
-//                 Save Changes
-//             </button>
-//         </div>
-//     `;
-// };
-// window.addTopicRow = () => {
-
-//     document.getElementById("editPlaylist")
-//     .insertAdjacentHTML("beforeend", `
-//         <div class="flex gap-2">
-//             <input
-//                 class="editTitle input-field flex-1"
-//                 placeholder="Topic Name">
-
-//             <input
-//                 class="editUrl input-field flex-1"
-//                 placeholder="YouTube Link">
-//         </div>
-//     `);
-
-// };
-// window.saveCourseEdit = async (id) => {
-
-//     const titles =
-//         [...document.querySelectorAll(".editTitle")]
-//         .map(x => x.value.trim());
-
-//     const urls =
-//         [...document.querySelectorAll(".editUrl")]
-//         .map(x => x.value.trim());
-
-//     const playlist = [];
-
-//     for(let i = 0; i < titles.length; i++) {
-
-//         if(titles[i] && urls[i]) {
-
-//             playlist.push({
-//                 title: titles[i],
-//                 url: urls[i]
-//             });
-
-//         }
-//     }
-
-//     await Core.updateDoc(
-//         Core.doc(Core.db, "courses", id),
-//         { playlist }
-//     );
-
-//     toast("Course Updated Successfully");
-
-//     document.getElementById("custom-modal")
-//         .classList.add("hidden");
-
-//     window.loadHome();
-// };
 
         async function renderCourses(docs, isT) {
             const container = document.getElementById('courses-feed');
