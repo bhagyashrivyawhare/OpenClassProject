@@ -79,6 +79,18 @@
         @media (min-width: 768px) {
             body { padding-bottom: calc(280px + env(safe-area-inset-bottom)); }
         }
+        @media (max-width: 768px) {
+
+    .plyr__video-embed iframe {
+        transform: scale(1.22);
+        transform-origin: center center;
+    }
+
+    .plyr__video-embed {
+        overflow: hidden;
+        border-radius: 16px;
+    }
+}
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
