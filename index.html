@@ -410,32 +410,45 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
                                 <option value="public">Public Content</option>
                                 <option value="private">Private (Gated)</option>
                             </select>
-                            <div class="grid grid-cols-2 gap-4">
-                               <div class="mb-4">
+                           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-    <label class="text-[10px] uppercase opacity-60 block mb-2">
-        Subscription Plan
-    </label>
+    <!-- Plan Type -->
+    <div>
+        <label class="text-[10px] uppercase opacity-60 block mb-2">
+            Subscription Plan
+        </label>
 
-    <select id="plan-type"
-        class="w-full rounded-xl border border-gray-300 px-4 py-3">
+        <select id="plan-type"
+            class="w-full rounded-xl border border-gray-300 px-4 py-3">
+            <option value="free_trial">Free Trial (15 Days)</option>
+            <option value="one_year">One Year Plan</option>
+            <option value="custom">Custom Plan</option>
+        </select>
+    </div>
 
-        <option value="free_trial">
-            Free Trial (15 Days)
-        </option>
+    <!-- Start Date -->
+    <div>
+        <label class="text-[10px] uppercase opacity-60 block mb-2">
+            Plan Start
+        </label>
 
-        <option value="one_year">
-            One Year Plan
-        </option>
+        <input type="date"
+            id="plan-start"
+            class="w-full rounded-xl border border-gray-300 px-4 py-3">
+    </div>
 
-        <option value="custom">
-            Custom Plan
-        </option>
+    <!-- End Date -->
+    <div>
+        <label class="text-[10px] uppercase opacity-60 block mb-2">
+            Plan End
+        </label>
 
-    </select>
+        <input type="date"
+            id="plan-end"
+            class="w-full rounded-xl border border-gray-300 px-4 py-3">
+    </div>
 
 </div>
-
 <input
     type="number"
     id="custom-plan-days"
