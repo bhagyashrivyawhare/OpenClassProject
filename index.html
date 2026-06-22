@@ -3235,34 +3235,64 @@ window.saveCourseEdit = async (id) => {
         window.onclick = (e) => { if (e.target === document.getElementById('custom-modal')) window.closeCustomModal(); };
 
 
-        function updatePlanDates(){
+       const planType = document.getElementById("plan-type");
+const startDateInput = document.getElementById("inst-start");
+const endDateInput = document.getElementById("inst-end");
+const customDaysInput = document.getElementById("custom-plan-days");
 
-    const startDate = new Date();
-    const endDate = new Date();
+planType.addEventListener("change", updatePlanDates);
 
-    const plan =
-    document.getElementById('plan-type').value;
+function updatePlanDates() {
 
-    if(plan === 'free_trial'){
+    const today = new Date();
+    const endDate = new Date(today);
+
+    // Start Date = Today
+    startDateInput.value = today.toISOString().split("T")[0];
+
+    if (planType.value === "free_trial") {
+
+        customDaysInput.classList.add("hidden");
 
         endDate.setDate(endDate.getDate() + 15);
 
+    } 
+    else if (planType.value === "one_year") {
+
+        customDaysInput.classList.add("hidden");
+
+        endDate.setFullYear(endDate.getFullYear() + 1);
+
+    } 
+    else if (planType.value === "custom") {
+
+        customDaysInput.classList.remove("hidden");
+
+        endDateInput.value = "";
+
+        return;
     }
 
-    else if(plan === 'one_year'){
-
-        endDate.setFullYear(
-            endDate.getFullYear() + 1
-        );
-
-    }
-
-    document.getElementById('plan-start').value =
-        startDate.toISOString().split('T')[0];
-
-    document.getElementById('plan-end').value =
-        endDate.toISOString().split('T')[0];
+    endDateInput.value = endDate.toISOString().split("T")[0];
 }
+
+// Custom Plan Days
+customDaysInput.addEventListener("input", () => {
+
+    const days = parseInt(customDaysInput.value);
+
+    if (!days || days <= 0) return;
+
+    const start = new Date(startDateInput.value);
+    const end = new Date(start);
+
+    end.setDate(end.getDate() + days);
+
+    endDateInput.value = end.toISOString().split("T")[0];
+});
+
+// Default Load
+updatePlanDates();
     </script>
 </body>
 </html>
