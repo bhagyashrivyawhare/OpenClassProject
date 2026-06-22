@@ -397,6 +397,27 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
                         <option value="one_year">One Year Plan Config</option>
                         <option value="custom">Add Custom Plan</option>
                     </select>
+                    <div id="plan-fields-container" class="space-y-4 mt-4">
+
+    <div class="grid grid-cols-2 gap-4">
+
+        <div>
+            <label class="text-[10px] uppercase opacity-60 block mb-2">
+                Start Date
+            </label>
+            <input type="date" class="input-field">
+        </div>
+
+        <div>
+            <label class="text-[10px] uppercase opacity-60 block mb-2">
+                End Date
+            </label>
+            <input type="date" class="input-field">
+        </div>
+
+    </div>
+
+</div>
                     <div id="plan-fields-container" class="space-y-4 mt-4"></div>
                     <button onclick="window.processPlanSave()" class="w-full py-4 bg-brandBlue text-white rounded-xl font-black uppercase tracking-widest text-xs shadow-lg hover:bg-blue-600 hover:scale-[1.02] transition-all mt-4">Save Plan Configuration</button>
                     <div id="plans-list" class="mt-8 space-y-2"></div>
