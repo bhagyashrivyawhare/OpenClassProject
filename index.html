@@ -3377,6 +3377,19 @@ updatePlanDates();
         customDays.classList.remove("hidden");
     }
 };
+        customDaysInput.addEventListener("input", () => {
+
+    const days = parseInt(customDaysInput.value);
+
+    if (!days || days <= 0) return;
+
+    const start = new Date(startDateInput.value);
+    const end = new Date(start);
+
+    end.setDate(end.getDate() + days);
+
+    endDateInput.value = end.toISOString().split("T")[0];
+});
 window.addEventListener("load", () => {
     window.handleAdminPlanUI("free_trial");
 });
