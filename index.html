@@ -411,29 +411,36 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
                                 <option value="private">Private (Gated)</option>
                             </select>
                             <div class="grid grid-cols-2 gap-4">
-                                <div class="flex flex-col gap-3 mb-4">
+                               <div class="mb-4">
 
-    <label>
-        <input type="radio" name="planType" value="free_trial" checked>
-        Free Trial (15 Days)
+    <label class="text-[10px] uppercase opacity-60 block mb-2">
+        Subscription Plan
     </label>
 
-    <label>
-        <input type="radio" name="planType" value="one_year">
-        One Year Plan
-    </label>
+    <select id="plan-type"
+        class="w-full rounded-xl border border-gray-300 px-4 py-3">
 
-    <label>
-        <input type="radio" name="planType" value="custom">
-        Custom Plan
-    </label>
+        <option value="free_trial">
+            Free Trial (15 Days)
+        </option>
 
-    <input
-        type="number"
-        id="custom-plan-days"
-        placeholder="Custom Days"
-        class="hidden">
+        <option value="one_year">
+            One Year Plan
+        </option>
+
+        <option value="custom">
+            Custom Plan
+        </option>
+
+    </select>
+
 </div>
+
+<input
+    type="number"
+    id="custom-plan-days"
+    placeholder="Enter Custom Duration (Days)"
+    class="w-full hidden rounded-xl border border-gray-300 px-4 py-3 mb-4">
                                 <div>
                                     <label class="text-[9px] uppercase opacity-50 ml-2">Plan Start</label>
                                     <input id="inst-start" type="date" class="input-field mt-1">
