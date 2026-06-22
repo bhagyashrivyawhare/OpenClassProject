@@ -390,14 +390,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
             <div class="flex-grow overflow-y-auto pr-4 custom-scrollbar">
                 
-                <div id="plans-section" class="admin-section hidden space-y-4 max-w-xl mx-auto fade-in">
-                    <h2 class="text-2xl font-black italic text-brandBlue mb-6">Manage System Plans</h2>
-                  <div id="plans-section" class="admin-section hidden space-y-4 max-w-xl mx-auto fade-in">
+              <div id="plans-section" class="admin-section hidden space-y-4 max-w-xl mx-auto fade-in">
 
     <h2 class="text-2xl font-black italic text-brandBlue mb-6">
         Manage System Plans
     </h2>
 
+    <!-- Plan Select -->
     <select id="plan-type-select"
             class="input-field"
             onchange="window.handleAdminPlanUI(this.value)">
@@ -406,44 +405,48 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         <option value="custom">Add Custom Plan</option>
     </select>
 
-    <!-- Dates Here -->
+    <!-- Plan Fields -->
     <div id="plan-fields-container" class="mt-4">
+
         <div class="grid grid-cols-2 gap-4">
 
             <div>
                 <label class="text-[10px] uppercase opacity-60 block mb-2">
                     Plan Start
                 </label>
-                <input id="plan-start" type="date" class="input-field">
+                <input id="plan-start"
+                       type="date"
+                       class="input-field">
             </div>
 
             <div>
                 <label class="text-[10px] uppercase opacity-60 block mb-2">
                     Plan End
                 </label>
-                <input id="plan-end" type="date" class="input-field">
+                <input id="plan-end"
+                       type="date"
+                       class="input-field">
             </div>
 
         </div>
 
-        <input
-            id="custom-days"
-            type="number"
-            placeholder="Enter Custom Days"
-            class="input-field mt-4 hidden">
+        <input id="custom-days"
+               type="number"
+               placeholder="Enter Custom Days"
+               class="input-field mt-4 hidden">
+
     </div>
 
+    <!-- Save Button -->
     <button onclick="window.processPlanSave()"
-        class="w-full py-4 bg-brandBlue text-white rounded-xl font-black uppercase tracking-widest text-xs shadow-lg hover:bg-blue-600 transition-all mt-4">
+        class="w-full py-4 bg-brandBlue text-white rounded-xl font-black uppercase tracking-widest text-xs shadow-lg hover:bg-blue-600 hover:scale-[1.02] transition-all mt-4">
         Save Plan Configuration
     </button>
 
-</div>
-                    <div id="plan-fields-container" class="space-y-4 mt-4"></div>
-                    <button onclick="window.processPlanSave()" class="w-full py-4 bg-brandBlue text-white rounded-xl font-black uppercase tracking-widest text-xs shadow-lg hover:bg-blue-600 hover:scale-[1.02] transition-all mt-4">Save Plan Configuration</button>
-                    <div id="plans-list" class="mt-8 space-y-2"></div>
-                </div>
+    <!-- Plans List -->
+    <div id="plans-list" class="mt-8 space-y-2"></div>
 
+</div>
                 <div id="institutes-section" class="admin-section hidden space-y-4 max-w-4xl mx-auto fade-in">
                     <h2 class="text-2xl font-black italic text-purple-400 mb-6">Institute Registry</h2>
                     <div class="grid md:grid-cols-2 gap-8">
