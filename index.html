@@ -434,14 +434,27 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     id="custom-plan-days"
     placeholder="Enter Custom Duration (Days)"
     class="w-full hidden rounded-xl border border-gray-300 px-4 py-3 mb-4">
-                                <div>
-                                    <label class="text-[9px] uppercase opacity-50 ml-2">Plan Start</label>
-                                    <input id="inst-start" type="date" class="input-field mt-1">
-                                </div>
-                                <div>
-                                    <label class="text-[9px] uppercase opacity-50 ml-2">Plan End</label>
-                                    <input id="inst-end" type="date" class="input-field mt-1">
-                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+
+    <div>
+        <label class="text-[9px] uppercase opacity-50 ml-2">
+            Plan Start
+        </label>
+        <input id="inst-start"
+               type="date"
+               class="input-field mt-1">
+    </div>
+
+    <div>
+        <label class="text-[9px] uppercase opacity-50 ml-2">
+            Plan End
+        </label>
+        <input id="inst-end"
+               type="date"
+               class="input-field mt-1">
+    </div>
+
+</div>
                             </div>
                             <button id="inst-action-btn" onclick="window.processInstituteSave()" class="w-full py-4 bg-purple-600 text-white rounded-xl font-black uppercase tracking-widest text-xs shadow-lg hover:bg-purple-700 hover:scale-[1.02] transition-all mt-4">Generate & Register Node</button>
                         </div>
