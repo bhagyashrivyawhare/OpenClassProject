@@ -3377,6 +3377,23 @@ updatePlanDates();
         customDays.classList.remove("hidden");
     }
 };
+        const customDaysInput = document.getElementById("custom-days");
+
+customDaysInput.addEventListener("input", function () {
+
+    const startInput = document.getElementById("plan-start");
+    const endInput = document.getElementById("plan-end");
+
+    if (!startInput.value || !this.value) {
+        endInput.value = "";
+        return;
+    }
+
+    let startDate = new Date(startInput.value);
+    startDate.setDate(startDate.getDate() + parseInt(this.value));
+
+    endInput.value = startDate.toISOString().split("T")[0];
+});
 
 window.addEventListener("load", () => {
     window.handleAdminPlanUI("free_trial");
