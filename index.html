@@ -3233,6 +3233,36 @@ window.saveCourseEdit = async (id) => {
         }
         window.delG = async (id) => { if(confirm("Confirm asset group dissolution?")) { await Core.deleteDoc(Core.doc(Core.db, "groups", id)); window.loadHome(); } };
         window.onclick = (e) => { if (e.target === document.getElementById('custom-modal')) window.closeCustomModal(); };
+
+
+        function updatePlanDates(){
+
+    const startDate = new Date();
+    const endDate = new Date();
+
+    const plan =
+    document.getElementById('plan-type').value;
+
+    if(plan === 'free_trial'){
+
+        endDate.setDate(endDate.getDate() + 15);
+
+    }
+
+    else if(plan === 'one_year'){
+
+        endDate.setFullYear(
+            endDate.getFullYear() + 1
+        );
+
+    }
+
+    document.getElementById('plan-start').value =
+        startDate.toISOString().split('T')[0];
+
+    document.getElementById('plan-end').value =
+        endDate.toISOString().split('T')[0];
+}
     </script>
 </body>
 </html>
