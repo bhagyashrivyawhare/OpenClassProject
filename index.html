@@ -3341,6 +3341,46 @@ customDaysInput.addEventListener("input", () => {
 
 // Default Load
 updatePlanDates();
+        window.handleAdminPlanUI = function(planType){
+
+    const startInput = document.getElementById("plan-start");
+    const endInput = document.getElementById("plan-end");
+    const customDays = document.getElementById("custom-days");
+
+    const today = new Date();
+    startInput.value = today.toISOString().split("T")[0];
+
+    if(planType === "free_trial"){
+
+        let end = new Date(today);
+        end.setDate(end.getDate() + 15);
+
+        endInput.value = end.toISOString().split("T")[0];
+        endInput.readOnly = true;
+        customDays.classList.add("hidden");
+    }
+
+    else if(planType === "one_year"){
+
+        let end = new Date(today);
+        end.setFullYear(end.getFullYear() + 1);
+
+        endInput.value = end.toISOString().split("T")[0];
+        endInput.readOnly = true;
+        customDays.classList.add("hidden");
+    }
+
+    else{
+
+        endInput.value = "";
+        endInput.readOnly = false;
+        customDays.classList.remove("hidden");
+    }
+};
+
+window.addEventListener("load", () => {
+    window.handleAdminPlanUI("free_trial");
+});
     </script>
 </body>
 </html>
