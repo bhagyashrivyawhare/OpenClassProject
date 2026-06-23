@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebas
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, updatePassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, updateDoc, increment, deleteDoc, arrayUnion, arrayRemove, serverTimestamp, onSnapshot, orderBy, limit, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { firebaseConfig, emailConfig } from "./config.js";
+import { getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -238,50 +239,47 @@ async function loadInstitutePlans() {
 }
 document.addEventListener("DOMContentLoaded", () => {
 
-    loadInstitutePlans();
-
     const planType = document.getElementById("plan-type");
     const startDateInput = document.getElementById("start-date");
     const endDateInput = document.getElementById("end-date");
 
+    if (!planType || !startDateInput || !endDateInput) {
+        console.log("Missing HTML elements");
+        return;
+    }
+
+    loadInstitutePlans();
+
     planType.addEventListener("change", async () => {
 
         const today = new Date();
+
         startDateInput.value = today.toISOString().split("T")[0];
 
-        if (planType.value === "free_trial") {
-
-            let end = new Date(today);
-            end.setDate(end.getDate() + 15);
-            endDateInput.value = end.toISOString().split("T")[0];
-            return;
-        }
-
-        if (planType.value === "one_year") {
-
-            let end = new Date(today);
-            end.setFullYear(end.getFullYear() + 1);
-            endDateInput.value = end.toISOString().split("T")[0];
-            return;
-        }
-
-        const planRef = doc(db, "plans", planType.value);
-        const planSnap = await getDoc(planRef);
-
-        if (!planSnap.exists()) return;
-
-        const plan = planSnap.data();
-
         let end = new Date(today);
-        end.setFullYear(end.getFullYear() + (plan.years || 0));
-        end.setMonth(end.getMonth() + (plan.months || 0));
-        end.setDate(end.getDate() + (plan.days || 0));
+
+        if (planType.value === "free_trial") {
+            end.setDate(end.getDate() + 15);
+        }
+        else if (planType.value === "one_year") {
+            end.setFullYear(end.getFullYear() + 1);
+        }
+        else {
+            const planRef = doc(db, "plans", planType.value);
+            const planSnap = await getDoc(planRef);
+
+            if (planSnap.exists()) {
+                const plan = planSnap.data();
+
+                end.setFullYear(end.getFullYear() + (plan.years || 0));
+                end.setMonth(end.getMonth() + (plan.months || 0));
+                end.setDate(end.getDate() + (plan.days || 0));
+            }
+        }
 
         endDateInput.value = end.toISOString().split("T")[0];
     });
-
 });
-
 // =========================================
 // ADD INSTITUTE
 // =========================================
