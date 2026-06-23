@@ -196,39 +196,40 @@ window.processPlanSave = async function () {
     const days =
         parseInt(document.getElementById("custom-plan-days").value) || 0;
 
-    if (!planName) {
-
-        alert("Enter Plan Name");
-        return;
-    }
-
     await addDoc(collection(db, "plans"), {
-
         name: planName,
         years,
         months,
         days,
         createdAt: Date.now()
-
     });
 
     alert("Plan Saved");
 
     loadPlans();
+
+    // IMPORTANT
+    loadInstitutePlans();
 };
 async function loadInstitutePlans() {
 
     const planDropdown =
         document.getElementById("plan-type");
 
-    planDropdown.innerHTML = "";
+    console.log("Dropdown =", planDropdown);
 
     const snap =
         await getDocs(collection(db, "plans"));
 
+    console.log("Plans Found =", snap.size);
+
+    planDropdown.innerHTML = "";
+
     snap.forEach((docSnap) => {
 
         const plan = docSnap.data();
+
+        console.log(plan.name);
 
         planDropdown.innerHTML += `
             <option value="${docSnap.id}">
@@ -237,7 +238,6 @@ async function loadInstitutePlans() {
         `;
     });
 }
-
 
 // =========================================
 // ADD INSTITUTE
