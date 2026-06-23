@@ -212,25 +212,27 @@ window.processPlanSave = async function () {
     loadInstitutePlans();
 };
 async function loadInstitutePlans() {
-    console.log("Loading Institute Plans...");
 
     const planDropdown =
         document.getElementById("plan-type");
 
-    console.log("Dropdown =", planDropdown);
+    // Default Plans
+    planDropdown.innerHTML = `
+        <option value="free_trial">
+            Free Trial (15 Days)
+        </option>
+
+        <option value="one_year">
+            One Year Plan
+        </option>
+    `;
 
     const snap =
         await getDocs(collection(db, "plans"));
 
-    console.log("Plans Found =", snap.size);
-
-    planDropdown.innerHTML = "";
-
     snap.forEach((docSnap) => {
 
         const plan = docSnap.data();
-
-        console.log(plan.name);
 
         planDropdown.innerHTML += `
             <option value="${docSnap.id}">
@@ -238,7 +240,6 @@ async function loadInstitutePlans() {
             </option>
         `;
     });
-    console.log("Dropdown Updated");
 }
 
 // =========================================
