@@ -216,15 +216,10 @@ async function loadInstitutePlans() {
     const planDropdown =
         document.getElementById("plan-type");
 
-    // Default Plans
+    // Default options thev
     planDropdown.innerHTML = `
-        <option value="free_trial">
-            Free Trial (15 Days)
-        </option>
-
-        <option value="one_year">
-            One Year Plan
-        </option>
+        <option value="free_trial">Free Trial (15 Days)</option>
+        <option value="one_year">One Year Plan</option>
     `;
 
     const snap =
@@ -241,6 +236,10 @@ async function loadInstitutePlans() {
         `;
     });
 }
+document.addEventListener("DOMContentLoaded", () => {
+    loadInstitutePlans();
+});
+
 
 // =========================================
 // ADD INSTITUTE
