@@ -212,6 +212,7 @@ window.processPlanSave = async function () {
     loadInstitutePlans();
 };
 async function loadInstitutePlans() {
+    console.log("Loading Institute Plans...");
 
     const planDropdown =
         document.getElementById("plan-type");
@@ -237,6 +238,7 @@ async function loadInstitutePlans() {
             </option>
         `;
     });
+    console.log("Dropdown Updated");
 }
 
 // =========================================
