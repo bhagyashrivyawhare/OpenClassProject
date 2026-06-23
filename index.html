@@ -3324,53 +3324,64 @@ window.saveCourseEdit = async (id) => {
         return;
     }
 
-    function updatePlanDates() {
+   async function updatePlanDates() {
 
-        const today = new Date();
-        const endDate = new Date(today);
+    const today = new Date();
 
-        startDateInput.value = today.toISOString().split("T")[0];
+    startDateInput.value =
+        today.toISOString().split("T")[0];
 
-        if (planType.value === "free_trial") {
+    // Free Trial
+    if (planType.value === "free_trial") {
 
-            customDaysInput.classList.add("hidden");
-            endDate.setDate(endDate.getDate() + 15);
+        let end = new Date(today);
 
-        } else if (planType.value === "one_year") {
+        end.setDate(end.getDate() + 15);
 
-            customDaysInput.classList.add("hidden");
-            endDate.setFullYear(endDate.getFullYear() + 1);
+        endDateInput.value =
+            end.toISOString().split("T")[0];
 
-        } else {
-
-            customDaysInput.classList.remove("hidden");
-            endDateInput.value = "";
-            return;
-        }
-
-        endDateInput.value = endDate.toISOString().split("T")[0];
+        return;
     }
 
-    planType.addEventListener("change", updatePlanDates);
+    // One Year
+    if (planType.value === "one_year") {
 
-    customDaysInput.addEventListener("input", () => {
+        let end = new Date(today);
 
-        const days = parseInt(customDaysInput.value);
+        end.setFullYear(end.getFullYear() + 1);
 
-        if (!days || days <= 0) return;
+        endDateInput.value =
+            end.toISOString().split("T")[0];
 
-        const start = new Date(startDateInput.value);
+        return;
+    }
 
-        if (isNaN(start.getTime())) return;
+    // Custom Plan From Firestore
+    const planDoc =
+        await getDoc(doc(db, "plans", planType.value));
 
-        const end = new Date(start);
-        end.setDate(end.getDate() + days);
+    if (!planDoc.exists()) return;
 
-        endDateInput.value = end.toISOString().split("T")[0];
-    });
+    const plan = planDoc.data();
 
-    updatePlanDates();
-});
+    let end = new Date(today);
+
+    end.setFullYear(
+        end.getFullYear() + (plan.years || 0)
+    );
+
+    end.setMonth(
+        end.getMonth() + (plan.months || 0)
+    );
+
+    end.setDate(
+        end.getDate() + (plan.days || 0)
+    );
+
+    endDateInput.value =
+        end.toISOString().split("T")[0];
+}
 // Default Load
 window.handleAdminPlanUI = function(planType){
 
