@@ -476,8 +476,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         Save Plan Configuration
     </button>
 
-    <!-- Plans List -->
-    <div id="plans-list" class="mt-8 space-y-2"></div>
+  
 
 </div>
                 <div id="institutes-section" class="admin-section hidden space-y-4 max-w-4xl mx-auto fade-in">
@@ -3409,7 +3408,13 @@ window.handleAdminPlanUI = function(planType){
         let end = new Date(today);
         end.setFullYear(end.getFullYear() + 1);
 
-        endInput.value = end.toISOString().split("T")[0];
+        if (!startInput.value) return;
+
+let endDate = new Date(startInput.value);
+
+if (isNaN(endDate.getTime())) return;
+
+endInput.value = endDate.toISOString().split("T")[0];
     }
 
     else{
