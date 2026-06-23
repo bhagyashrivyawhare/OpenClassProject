@@ -237,9 +237,50 @@ async function loadInstitutePlans() {
     });
 }
 document.addEventListener("DOMContentLoaded", () => {
-    loadInstitutePlans();
-});
 
+    loadInstitutePlans();
+
+    const planType = document.getElementById("plan-type");
+    const startDateInput = document.getElementById("start-date");
+    const endDateInput = document.getElementById("end-date");
+
+    planType.addEventListener("change", async () => {
+
+        const today = new Date();
+        startDateInput.value = today.toISOString().split("T")[0];
+
+        if (planType.value === "free_trial") {
+
+            let end = new Date(today);
+            end.setDate(end.getDate() + 15);
+            endDateInput.value = end.toISOString().split("T")[0];
+            return;
+        }
+
+        if (planType.value === "one_year") {
+
+            let end = new Date(today);
+            end.setFullYear(end.getFullYear() + 1);
+            endDateInput.value = end.toISOString().split("T")[0];
+            return;
+        }
+
+        const planRef = doc(db, "plans", planType.value);
+        const planSnap = await getDoc(planRef);
+
+        if (!planSnap.exists()) return;
+
+        const plan = planSnap.data();
+
+        let end = new Date(today);
+        end.setFullYear(end.getFullYear() + (plan.years || 0));
+        end.setMonth(end.getMonth() + (plan.months || 0));
+        end.setDate(end.getDate() + (plan.days || 0));
+
+        endDateInput.value = end.toISOString().split("T")[0];
+    });
+
+});
 
 // =========================================
 // ADD INSTITUTE
