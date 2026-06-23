@@ -288,42 +288,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addInstitute = async () => {
 
-    const name =
-        document.getElementById('institute-name').value;
+    const name = document.getElementById('institute-name').value;
+    const logo = document.getElementById('institute-logo').value;
+    const ownerId = document.getElementById('institute-owner').value;
+    const currentPlan = document.getElementById('plan-type').value;
 
-    const logo =
-        document.getElementById('institute-logo').value;
-
-    const ownerId =
-        document.getElementById('institute-owner').value;
-
-    const currentPlan =
-        document.getElementById('institute-plan').value;
+    const expiryDate = await calculateEndDate(currentPlan);
 
     await addDoc(collection(db, "institutes"), {
-
         name,
         logo,
         ownerId,
-
-        createdAt: serverTimestamp(),
-
         currentPlan,
-
         subscriptionStatus: "active",
-
-        expiryDate: new Date(
-            Date.now() + 30 * 24 * 60 * 60 * 1000
-        )
-
+        createdAt: serverTimestamp(),
+        expiryDate: expiryDate
     });
 
     alert("Institute Added");
-
     loadInstitutes();
-
 };
+async function calculateEndDate(planId, startDate = new Date()) {
 
+    const start = new Date(startDate);
+
+    // default plans
+    if (planId === "free_trial") {
+        start.setDate(start.getDate() + 15);
+        return start;
+    }
+
+    if (planId === "one_year") {
+        start.setFullYear(start.getFullYear() + 1);
+        return start;
+    }
+
+    // custom plan from DB
+    const planRef = doc(db, "plans", planId);
+    const planSnap = await getDoc(planRef);
+
+    if (!planSnap.exists()) return start;
+
+    const plan = planSnap.data();
+
+    start.setFullYear(start.getFullYear() + (plan.years || 0));
+    start.setMonth(start.getMonth() + (plan.months || 0));
+    start.setDate(start.getDate() + (plan.days || 0));
+
+    return start;
+}
 
 // =========================================
 // LOAD INSTITUTES
