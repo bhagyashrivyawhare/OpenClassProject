@@ -152,7 +152,7 @@ window.addPlan = async () => {
 async function loadPlans() {
 
     const container =
-        document.getElementById('plans-list');
+        document.getElementById("plans-list");
 
     container.innerHTML = "";
 
@@ -168,28 +168,74 @@ async function loadPlans() {
         <div class="border p-4 rounded-xl mb-3">
 
             <h3 class="text-xl font-black">
-
                 ${data.name}
-
             </h3>
 
             <p>
-
-                Price: ₹${data.price}
-
-            </p>
-
-            <p>
-
-                Duration: ${data.duration} days
-
+                ${data.years || 0} Years
+                ${data.months || 0} Months
+                ${data.days || 0} Days
             </p>
 
         </div>
         `;
     });
 }
+window.processPlanSave = async function () {
 
+    const planName =
+        document.getElementById("custom-plan-name").value;
+
+    const years =
+        parseInt(document.getElementById("custom-plan-years").value) || 0;
+
+    const months =
+        parseInt(document.getElementById("custom-plan-months").value) || 0;
+
+    const days =
+        parseInt(document.getElementById("custom-plan-days").value) || 0;
+
+    if (!planName) {
+
+        alert("Enter Plan Name");
+        return;
+    }
+
+    await addDoc(collection(db, "plans"), {
+
+        name: planName,
+        years,
+        months,
+        days,
+        createdAt: Date.now()
+
+    });
+
+    alert("Plan Saved");
+
+    loadPlans();
+};
+async function loadInstitutePlans() {
+
+    const planDropdown =
+        document.getElementById("plan-type");
+
+    planDropdown.innerHTML = "";
+
+    const snap =
+        await getDocs(collection(db, "plans"));
+
+    snap.forEach((docSnap) => {
+
+        const plan = docSnap.data();
+
+        planDropdown.innerHTML += `
+            <option value="${docSnap.id}">
+                ${plan.name}
+            </option>
+        `;
+    });
+}
 
 
 // =========================================
