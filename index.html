@@ -3434,6 +3434,11 @@ endInput.value = endDate.toISOString().split("T")[0];
         customFields.classList.remove("hidden");
     }
 };
+          planType.addEventListener("change", updatePlanDates);
+
+updatePlanDates();
+
+}); // DOMContentLoaded close
     </script>
 </body>
 </html>
