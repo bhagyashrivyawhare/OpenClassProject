@@ -141,6 +141,7 @@ window.addPlan = async () => {
     alert("Plan Added");
 
     loadPlans();
+     loadInstitutePlans();
 
 };
 
