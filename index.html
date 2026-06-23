@@ -408,6 +408,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     <!-- Plan Fields -->
     <div id="plan-fields-container" class="mt-4">
 
+    <!-- Default Plans -->
+    <div id="default-plan-fields">
+
         <div class="grid grid-cols-2 gap-4">
 
             <div>
@@ -430,12 +433,31 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
         </div>
 
-        <input id="custom-days"
-               type="number"
-               placeholder="Enter Custom Days"
-               class="input-field mt-4 hidden">
+    </div>
+
+    <!-- Custom Plan Fields -->
+    <div id="custom-plan-fields" class="hidden space-y-4">
+
+        <input
+            id="custom-plan-name"
+            type="text"
+            placeholder="Plan Name (Ex: Premium Plan)"
+            class="input-field">
+
+        <input
+            id="custom-plan-duration"
+            type="number"
+            placeholder="Duration"
+            class="input-field">
+
+        <select id="custom-plan-unit" class="input-field">
+            <option value="days">Days</option>
+            <option value="months">Months</option>
+        </select>
 
     </div>
+
+</div>
 
     <!-- Save Button -->
     <button onclick="window.processPlanSave()"
@@ -3340,59 +3362,51 @@ customDaysInput.addEventListener("input", () => {
 });
 
 // Default Load
-updatePlanDates();
-        window.handleAdminPlanUI = function(planType){
+window.handleAdminPlanUI = function(planType){
 
     const startInput = document.getElementById("plan-start");
     const endInput = document.getElementById("plan-end");
-    const customDays = document.getElementById("custom-days");
+
+    const defaultFields =
+        document.getElementById("default-plan-fields");
+
+    const customFields =
+        document.getElementById("custom-plan-fields");
 
     const today = new Date();
-    startInput.value = today.toISOString().split("T")[0];
 
     if(planType === "free_trial"){
+
+        defaultFields.classList.remove("hidden");
+        customFields.classList.add("hidden");
+
+        startInput.value = today.toISOString().split("T")[0];
 
         let end = new Date(today);
         end.setDate(end.getDate() + 15);
 
         endInput.value = end.toISOString().split("T")[0];
-        endInput.readOnly = true;
-        customDays.classList.add("hidden");
     }
 
     else if(planType === "one_year"){
+
+        defaultFields.classList.remove("hidden");
+        customFields.classList.add("hidden");
+
+        startInput.value = today.toISOString().split("T")[0];
 
         let end = new Date(today);
         end.setFullYear(end.getFullYear() + 1);
 
         endInput.value = end.toISOString().split("T")[0];
-        endInput.readOnly = true;
-        customDays.classList.add("hidden");
     }
 
     else{
 
-        endInput.value = "";
-        endInput.readOnly = false;
-        customDays.classList.remove("hidden");
+        defaultFields.classList.add("hidden");
+        customFields.classList.remove("hidden");
     }
 };
-        customDaysInput.addEventListener("input", () => {
-
-    const days = parseInt(customDaysInput.value);
-
-    if (!days || days <= 0) return;
-
-    const start = new Date(startDateInput.value);
-    const end = new Date(start);
-
-    end.setDate(end.getDate() + days);
-
-    endDateInput.value = end.toISOString().split("T")[0];
-});
-window.addEventListener("load", () => {
-    window.handleAdminPlanUI("free_trial");
-});
     </script>
 </body>
 </html>
