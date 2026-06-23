@@ -435,25 +435,36 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
     </div>
 
-    <!-- Custom Plan Fields -->
-    <div id="custom-plan-fields" class="hidden space-y-4">
+  <div id="custom-plan-fields" class="hidden space-y-4">
+
+    <input
+        id="custom-plan-name"
+        type="text"
+        placeholder="Plan Name (Ex: Premium Plan)"
+        class="input-field">
+
+    <div class="grid grid-cols-3 gap-3">
 
         <input
-            id="custom-plan-name"
-            type="text"
-            placeholder="Plan Name (Ex: Premium Plan)"
-            class="input-field">
-
-        <input
-            id="custom-plan-duration"
+            id="custom-plan-years"
             type="number"
-            placeholder="Duration"
+            min="0"
+            placeholder="Years"
             class="input-field">
 
-        <select id="custom-plan-unit" class="input-field">
-            <option value="days">Days</option>
-            <option value="months">Months</option>
-        </select>
+        <input
+            id="custom-plan-months"
+            type="number"
+            min="0"
+            placeholder="Months"
+            class="input-field">
+
+        <input
+            id="custom-plan-days"
+            type="number"
+            min="0"
+            placeholder="Days"
+            class="input-field">
 
     </div>
 
