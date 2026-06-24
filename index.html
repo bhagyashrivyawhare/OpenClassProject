@@ -86,6 +86,14 @@ h1,h2,h3,h4,h5,h6 {
         color 0.55s ease,
         border-color 0.55s ease !important;
 }
+        .animate-pulse {
+    animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%,100% { opacity: .55; }
+    50% { opacity: 1; }
+}
 
 
         @media (min-width: 768px) {
@@ -775,15 +783,42 @@ h1,h2,h3,h4,h5,h6 {
         };
 
         function injectSkeletonState(targetElementId) {
-            const el = document.getElementById(targetElementId);
-            if(!el) return;
-            el.innerHTML = `
-                <div class="space-y-4 animate-pulse w-full fade-in">
-                    <div class="h-24 bg-[var(--border-color)] rounded-2xl w-full border border-[var(--border-color)]"></div>
-                    <div class="h-24 bg-[var(--border-color)] rounded-2xl w-full border border-[var(--border-color)]"></div>
-                    <div class="h-24 bg-[var(--border-color)] rounded-2xl w-full border border-[var(--border-color)]"></div>
-                </div>`;
-        }
+    const el = document.getElementById(targetElementId);
+    if (!el) return;
+
+    el.innerHTML = `
+    <div class="animate-pulse space-y-8">
+
+        <!-- Profile Card -->
+        <div class="glass rounded-[3rem] p-8 flex items-center gap-6">
+            <div class="w-28 h-28 rounded-full bg-[var(--border-color)]"></div>
+
+            <div class="flex-1">
+                <div class="h-10 w-72 bg-[var(--border-color)] rounded-xl mb-4"></div>
+                <div class="h-4 w-56 bg-[var(--border-color)] rounded mb-3"></div>
+                <div class="h-4 w-20 bg-[var(--border-color)] rounded"></div>
+            </div>
+        </div>
+
+        <!-- Analytics -->
+        <div class="grid md:grid-cols-4 gap-6">
+            <div class="glass h-40 rounded-3xl bg-[var(--border-color)]/20"></div>
+            <div class="glass h-40 rounded-3xl bg-[var(--border-color)]/20"></div>
+            <div class="glass h-40 rounded-3xl bg-[var(--border-color)]/20"></div>
+            <div class="glass h-40 rounded-3xl bg-[var(--border-color)]/20"></div>
+        </div>
+
+        <!-- Content Matrix -->
+        <div class="space-y-4">
+            <div class="h-8 w-80 bg-[var(--border-color)] rounded"></div>
+            <div class="glass h-24 rounded-3xl"></div>
+            <div class="glass h-24 rounded-3xl"></div>
+            <div class="glass h-24 rounded-3xl"></div>
+        </div>
+
+    </div>
+    `;
+}
 
         function initializeSwipeGestures() {
             document.addEventListener('touchstart', (e) => { 
