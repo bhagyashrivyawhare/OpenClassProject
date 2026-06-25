@@ -648,3 +648,14 @@ async function loadSubscriptions() {
         `;
     });
 }
+document.addEventListener(
+"DOMContentLoaded",
+() => {
+
+    loadPlans();
+
+    loadInstitutePlans();
+
+    loadInstitutes();
+
+});
