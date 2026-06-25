@@ -14,23 +14,51 @@ enableIndexedDbPersistence(db).catch((err) => {
 });
 
 // Add this after your app initialization logic
-// window.addEventListener('DOMContentLoaded', () => {
-//     const urlParams = new URLSearchParams(window.location.search);
-//     const path = urlParams.get('p');
-//     if (path) {
-//         // If the app was opened via 404 redirect, navigate to the correct page
-//         renderContent(path);
-//     }
-//    startDateInput.addEventListener(
-// "change",
-// () => {
+window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
 
-//  planType.dispatchEvent(
-//    new Event("change")
-//  );
+    loadPlans();
+    loadInstitutePlans();
+    loadInstitutes();
 
-// });
-// });
+    const planType =
+        document.getElementById("plan-type");
+
+    const startDate =
+        document.getElementById("inst-start");
+
+    if(planType){
+        planType.addEventListener(
+            "change",
+            updatePlanDates
+        );
+    }
+
+    if(startDate){
+        startDate.addEventListener(
+            "change",
+            updatePlanDates
+        );
+    }
+});
+    const urlParams = new URLSearchParams(window.location.search);
+    const path = urlParams.get('p');
+
+    if (path) {
+        // 404 redirect किंवा direct open handle
+        renderContent(path);
+    }
+
+    // date change listener (only if elements exist)
+    const startDateInput = document.getElementById("startDateInput");
+    const planType = document.getElementById("planType");
+
+    if (startDateInput && planType) {
+        startDateInput.addEventListener("change", () => {
+            planType.dispatchEvent(new Event("change"));
+        });
+    }
+});
 
 
 export const provider = new GoogleAuthProvider();
