@@ -3374,8 +3374,12 @@ window.saveCourseEdit = async (id) => {
 
     const today = new Date();
 
-    startDateInput.value =
-        today.toISOString().split("T")[0];
+    if(!startDateInput.value){
+
+ startDateInput.value =
+ today.toISOString().split("T")[0];
+
+}
 
     // Free Trial
     if (planType.value === "free_trial") {
