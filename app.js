@@ -21,6 +21,15 @@ window.addEventListener('DOMContentLoaded', () => {
         // If the app was opened via 404 redirect, navigate to the correct page
         renderContent(path);
     }
+   startDateInput.addEventListener(
+"change",
+() => {
+
+ planType.dispatchEvent(
+   new Event("change")
+ );
+
+});
 });
 
 
@@ -108,42 +117,7 @@ window.showSection = (sectionId) => {
 // ADD PLAN
 // =========================================
 
-window.addPlan = async () => {
 
-    const id =
-        document.getElementById('plan-id').value;
-
-    const name =
-        document.getElementById('plan-name').value;
-
-    const price =
-        Number(document.getElementById('plan-price').value);
-
-    const duration =
-        Number(document.getElementById('plan-duration').value);
-
-    if (!id || !name) {
-
-        alert("Fill all fields");
-
-        return;
-
-    }
-
-    await setDoc(doc(db, "plans", id), {
-
-        name,
-        price,
-        duration
-
-    });
-
-    alert("Plan Added");
-
-    loadPlans();
-     loadInstitutePlans();
-
-};
 
 
 // =========================================
@@ -195,7 +169,13 @@ window.processPlanSave = async function () {
 
     const days =
         parseInt(document.getElementById("custom-plan-days").value) || 0;
-
+if(
+ !planName ||
+ (years===0 && months===0 && days===0)
+){
+   alert("Enter Plan Name and Duration");
+   return;
+}
     await addDoc(collection(db, "plans"), {
         name: planName,
         years,
@@ -231,8 +211,11 @@ async function loadInstitutePlans() {
 
         planDropdown.innerHTML += `
             <option value="${docSnap.id}">
-                ${plan.name}
-            </option>
+ ${plan.name}
+ (${plan.years || 0}Y
+ ${plan.months || 0}M
+ ${plan.days || 0}D)
+</option>
         `;
     });
 }
@@ -250,12 +233,19 @@ document.addEventListener("DOMContentLoaded", () => {
     loadInstitutePlans();
 
     planType.addEventListener("change", async () => {
+if(!startDateInput.value){
 
-        const today = new Date();
+   const today = new Date();
 
-        startDateInput.value = today.toISOString().split("T")[0];
+   startDateInput.value =
+   today.toISOString().split("T")[0];
+}
 
-        let end = new Date(today);
+const start =
+new Date(startDateInput.value);
+
+let end =
+new Date(start);
 
         if (planType.value === "free_trial") {
             end.setDate(end.getDate() + 15);
@@ -285,25 +275,119 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addInstitute = async () => {
 
-    const name = document.getElementById('institute-name').value;
-    const logo = document.getElementById('institute-logo').value;
-    const ownerId = document.getElementById('institute-owner').value;
-    const currentPlan = document.getElementById('plan-type').value;
+    try {
 
-    const expiryDate = await calculateEndDate(currentPlan);
+        const name =
+            document.getElementById("institute-name").value.trim();
 
-    await addDoc(collection(db, "institutes"), {
-        name,
-        logo,
-        ownerId,
-        currentPlan,
-        subscriptionStatus: "active",
-        createdAt: serverTimestamp(),
-        expiryDate: expiryDate
-    });
+        const logo =
+            document.getElementById("institute-logo").value.trim();
 
-    alert("Institute Added");
-    loadInstitutes();
+        const ownerId =
+            document.getElementById("institute-owner").value.trim();
+
+        const currentPlan =
+            document.getElementById("plan-type").value;
+
+        const startDate =
+            document.getElementById("inst-start").value;
+
+        const endDate =
+            document.getElementById("inst-end").value;
+
+        if (!name) {
+            alert("Institute Name Required");
+            return;
+        }
+
+        if (!currentPlan) {
+            alert("Select Plan");
+            return;
+        }
+
+        let planName = "";
+        let years = 0;
+        let months = 0;
+        let days = 0;
+
+        // Free Trial
+        if (currentPlan === "free_trial") {
+
+            planName = "Free Trial";
+            days = 15;
+
+        }
+
+        // One Year Plan
+        else if (currentPlan === "one_year") {
+
+            planName = "One Year Plan";
+            years = 1;
+
+        }
+
+        // Custom Plan
+        else {
+
+            const planRef =
+                doc(db, "plans", currentPlan);
+
+            const planSnap =
+                await getDoc(planRef);
+
+            if (planSnap.exists()) {
+
+                const plan =
+                    planSnap.data();
+
+                planName =
+                    plan.name || "";
+
+                years =
+                    plan.years || 0;
+
+                months =
+                    plan.months || 0;
+
+                days =
+                    plan.days || 0;
+            }
+        }
+
+        await addDoc(collection(db, "institutes"), {
+
+            name,
+            logo,
+            ownerId,
+
+            currentPlan,
+            planName,
+
+            years,
+            months,
+            days,
+
+            startDate,
+            endDate,
+
+            subscriptionStatus: "active",
+
+            createdAt: serverTimestamp()
+        });
+
+        alert("Institute Added Successfully");
+
+        document.getElementById("institute-name").value = "";
+        document.getElementById("institute-logo").value = "";
+        document.getElementById("institute-owner").value = "";
+
+        loadInstitutes();
+
+    } catch (error) {
+
+        console.error(error);
+        alert("Error Adding Institute");
+    }
 };
 async function calculateEndDate(planId, startDate = new Date()) {
 
@@ -341,43 +425,42 @@ async function calculateEndDate(planId, startDate = new Date()) {
 
 async function loadInstitutes() {
 
-    const container =
-        document.getElementById('institutes-list');
+    container.innerHTML += `
 
-    container.innerHTML = "";
+<div class="border p-4 rounded-xl mb-3">
 
-    const snap =
-        await getDocs(collection(db, "institutes"));
+    <h3 class="text-xl font-black">
+        ${data.name}
+    </h3>
 
-    snap.forEach((docSnap) => {
+    <p>
+        Plan: ${data.planName || data.currentPlan}
+    </p>
 
-        const data = docSnap.data();
+    <p>
+        Duration:
+        ${data.years || 0}Y
+        ${data.months || 0}M
+        ${data.days || 0}D
+    </p>
 
-        container.innerHTML += `
+    <p>
+        Start Date:
+        ${data.startDate || "-"}
+    </p>
 
-        <div class="border p-4 rounded-xl mb-3">
+    <p>
+        Expiry Date:
+        ${data.endDate || "-"}
+    </p>
 
-            <h3 class="text-xl font-black">
+    <p>
+        Status:
+        ${data.subscriptionStatus}
+    </p>
 
-                ${data.name}
-
-            </h3>
-
-            <p>
-
-                Plan: ${data.currentPlan}
-
-            </p>
-
-            <p>
-
-                Status: ${data.subscriptionStatus}
-
-            </p>
-
-        </div>
-        `;
-    });
+</div>
+`;
 }
 
 
