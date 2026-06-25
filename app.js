@@ -420,7 +420,7 @@ console.log(document.getElementById("inst-end"));
     } catch (error) {
 
         console.error(error);
-        alert("Error Adding Institute");
+      //  alert("Error Adding Institute");
     }
 };
 async function calculateEndDate(planId, startDate = new Date()) {
