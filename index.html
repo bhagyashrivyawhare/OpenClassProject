@@ -3427,6 +3427,57 @@ window.handleAdminPlanUI = function(planTypeValue){
         customFields.classList.remove("hidden");
     }
 };
+    window.updatePlanDates = async function () {
+
+    const planType =
+        document.getElementById("plan-type");
+
+    const startDateInput =
+        document.getElementById("inst-start");
+
+    const endDateInput =
+        document.getElementById("inst-end");
+
+    if (!planType || !startDateInput || !endDateInput) {
+        return;
+    }
+
+    const today = new Date();
+
+    if (!startDateInput.value) {
+        startDateInput.value =
+            today.toISOString().split("T")[0];
+    }
+
+    const start =
+        new Date(startDateInput.value);
+
+    // Free Trial
+    if (planType.value === "free_trial") {
+
+        let end = new Date(start);
+
+        end.setDate(end.getDate() + 15);
+
+        endDateInput.value =
+            end.toISOString().split("T")[0];
+
+        return;
+    }
+
+    // One Year
+    if (planType.value === "one_year") {
+
+        let end = new Date(start);
+
+        end.setFullYear(end.getFullYear() + 1);
+
+        endDateInput.value =
+            end.toISOString().split("T")[0];
+
+        return;
+    }
+}
 document.addEventListener(
 "DOMContentLoaded",
 () => {
