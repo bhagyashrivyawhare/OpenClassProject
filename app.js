@@ -14,23 +14,23 @@ enableIndexedDbPersistence(db).catch((err) => {
 });
 
 // Add this after your app initialization logic
-window.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const path = urlParams.get('p');
-    if (path) {
-        // If the app was opened via 404 redirect, navigate to the correct page
-        renderContent(path);
-    }
-   startDateInput.addEventListener(
-"change",
-() => {
+// window.addEventListener('DOMContentLoaded', () => {
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const path = urlParams.get('p');
+//     if (path) {
+//         // If the app was opened via 404 redirect, navigate to the correct page
+//         renderContent(path);
+//     }
+//    startDateInput.addEventListener(
+// "change",
+// () => {
 
- planType.dispatchEvent(
-   new Event("change")
- );
+//  planType.dispatchEvent(
+//    new Event("change")
+//  );
 
-});
-});
+// });
+// });
 
 
 export const provider = new GoogleAuthProvider();
