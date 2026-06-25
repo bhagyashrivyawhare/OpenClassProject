@@ -424,47 +424,62 @@ async function calculateEndDate(planId, startDate = new Date()) {
 // =========================================
 
 async function loadInstitutes() {
+
     const container =
         document.getElementById("institutes-list");
 
     if (!container) return;
 
-    container.innerHTML += `
+    container.innerHTML = "";
 
-<div class="border p-4 rounded-xl mb-3">
+    const snap =
+        await getDocs(
+            collection(db, "institutes")
+        );
 
-    <h3 class="text-xl font-black">
-        ${data.name}
-    </h3>
+    snap.forEach((docSnap) => {
 
-    <p>
-        Plan: ${data.planName || data.currentPlan}
-    </p>
+        const data =
+            docSnap.data();
 
-    <p>
-        Duration:
-        ${data.years || 0}Y
-        ${data.months || 0}M
-        ${data.days || 0}D
-    </p>
+        container.innerHTML += `
 
-    <p>
-        Start Date:
-        ${data.startDate || "-"}
-    </p>
+        <div class="border p-4 rounded-xl mb-3">
 
-    <p>
-        Expiry Date:
-        ${data.endDate || "-"}
-    </p>
+            <h3 class="text-xl font-black">
+                ${data.name || ""}
+            </h3>
 
-    <p>
-        Status:
-        ${data.subscriptionStatus}
-    </p>
+            <p>
+                Plan:
+                ${data.planName || data.currentPlan || "-"}
+            </p>
 
-</div>
-`;
+            <p>
+                Duration:
+                ${data.years || 0}Y
+                ${data.months || 0}M
+                ${data.days || 0}D
+            </p>
+
+            <p>
+                Start Date:
+                ${data.startDate || "-"}
+            </p>
+
+            <p>
+                Expiry Date:
+                ${data.endDate || "-"}
+            </p>
+
+            <p>
+                Status:
+                ${data.subscriptionStatus || "-"}
+            </p>
+
+        </div>
+        `;
+    });
 }
 
 
