@@ -424,6 +424,10 @@ async function calculateEndDate(planId, startDate = new Date()) {
 // =========================================
 
 async function loadInstitutes() {
+    const container =
+        document.getElementById("institutes-list");
+
+    if (!container) return;
 
     container.innerHTML += `
 
