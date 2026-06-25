@@ -222,8 +222,8 @@ async function loadInstitutePlans() {
 document.addEventListener("DOMContentLoaded", () => {
 
     const planType = document.getElementById("plan-type");
-    const startDateInput = document.getElementById("start-date");
-    const endDateInput = document.getElementById("end-date");
+    const startDateInput = document.getElementById("inst-start");
+    const endDateInput =document.getElementById("inst-end")
 
     if (!planType || !startDateInput || !endDateInput) {
         console.log("Missing HTML elements");
