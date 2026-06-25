@@ -274,6 +274,12 @@ new Date(start);
 // =========================================
 
 window.addInstitute = async () => {
+    console.log(document.getElementById("institute-name"));
+console.log(document.getElementById("institute-logo"));
+console.log(document.getElementById("institute-owner"));
+console.log(document.getElementById("plan-type"));
+console.log(document.getElementById("inst-start"));
+console.log(document.getElementById("inst-end"));
 
     try {
 
