@@ -3356,87 +3356,14 @@ window.saveCourseEdit = async (id) => {
         }
         window.delG = async (id) => { if(confirm("Confirm asset group dissolution?")) { await Core.deleteDoc(Core.doc(Core.db, "groups", id)); window.loadHome(); } };
         window.onclick = (e) => { if (e.target === document.getElementById('custom-modal')) window.closeCustomModal(); };
-
-
-      document.addEventListener("DOMContentLoaded", () => {
-
-    const planType = document.getElementById("plan-type");
-    const startDateInput = document.getElementById("inst-start");
-    const endDateInput = document.getElementById("inst-end");
-    const customDaysInput = document.getElementById("custom-plan-days");
-
-    if (!planType || !startDateInput || !endDateInput || !customDaysInput) {
-        console.error("Institute plan elements not found");
-        return;
-    }
-
-   async function updatePlanDates() {
-
-    const today = new Date();
-
-    if(!startDateInput.value){
-
- startDateInput.value =
- today.toISOString().split("T")[0];
-
-}
-
-    // Free Trial
-    if (planType.value === "free_trial") {
-
-        let end = new Date(today);
-
-        end.setDate(end.getDate() + 15);
-
-        endDateInput.value =
-            end.toISOString().split("T")[0];
-
-        return;
-    }
-
-    // One Year
-    if (planType.value === "one_year") {
-
-        let end = new Date(today);
-
-        end.setFullYear(end.getFullYear() + 1);
-
-        endDateInput.value =
-            end.toISOString().split("T")[0];
-
-        return;
-    }
-
-    // Custom Plan From Firestore
-    const planDoc =
-        await getDoc(doc(db, "plans", planType.value));
-
-    if (!planDoc.exists()) return;
-
-    const plan = planDoc.data();
-
-    let end = new Date(today);
-
-    end.setFullYear(
-        end.getFullYear() + (plan.years || 0)
-    );
-
-    end.setMonth(
-        end.getMonth() + (plan.months || 0)
-    );
-
-    end.setDate(
-        end.getDate() + (plan.days || 0)
-    );
-
-    endDateInput.value =
-        end.toISOString().split("T")[0];
-}
 // Default Load
-window.handleAdminPlanUI = function(planType){
+window.handleAdminPlanUI = function(planTypeValue){
 
-    const startInput = document.getElementById("plan-start");
-    const endInput = document.getElementById("plan-end");
+    const startInput =
+        document.getElementById("plan-start");
+
+    const endInput =
+        document.getElementById("plan-end");
 
     const defaultFields =
         document.getElementById("default-plan-fields");
@@ -3444,51 +3371,96 @@ window.handleAdminPlanUI = function(planType){
     const customFields =
         document.getElementById("custom-plan-fields");
 
+    if(
+        !startInput ||
+        !endInput ||
+        !defaultFields ||
+        !customFields
+    ){
+        return;
+    }
+
     const today = new Date();
 
-    if(planType === "free_trial"){
+    // Free Trial
+    if(planTypeValue === "free_trial"){
 
         defaultFields.classList.remove("hidden");
         customFields.classList.add("hidden");
 
-        startInput.value = today.toISOString().split("T")[0];
+        startInput.value =
+            today.toISOString().split("T")[0];
 
         let end = new Date(today);
-        end.setDate(end.getDate() + 15);
 
-        endInput.value = end.toISOString().split("T")[0];
+        end.setDate(
+            end.getDate() + 15
+        );
+
+        endInput.value =
+            end.toISOString().split("T")[0];
     }
 
-    else if(planType === "one_year"){
+    // One Year
+    else if(planTypeValue === "one_year"){
 
         defaultFields.classList.remove("hidden");
         customFields.classList.add("hidden");
 
-        startInput.value = today.toISOString().split("T")[0];
+        startInput.value =
+            today.toISOString().split("T")[0];
 
         let end = new Date(today);
-        end.setFullYear(end.getFullYear() + 1);
 
-        if (!startInput.value) return;
+        end.setFullYear(
+            end.getFullYear() + 1
+        );
 
-let endDate = new Date(startInput.value);
-
-if (isNaN(endDate.getTime())) return;
-
-endInput.value = endDate.toISOString().split("T")[0];
+        endInput.value =
+            end.toISOString().split("T")[0];
     }
 
+    // Custom
     else{
 
         defaultFields.classList.add("hidden");
         customFields.classList.remove("hidden");
     }
 };
-          planType.addEventListener("change", updatePlanDates);
+document.addEventListener(
+"DOMContentLoaded",
+() => {
 
-updatePlanDates();
+    const planType =
+        document.getElementById("plan-type");
 
-}); // DOMContentLoaded close
+    const startDateInput =
+        document.getElementById("inst-start");
+
+    if (planType) {
+
+        planType.addEventListener(
+            "change",
+            updatePlanDates
+        );
+    }
+
+    if (startDateInput) {
+
+        startDateInput.addEventListener(
+            "change",
+            updatePlanDates
+        );
+    }
+
+    loadPlans();
+    loadInstitutePlans();
+    loadInstitutes();
+
+    updatePlanDates();
+});
+
+</script>
     </script>
 </body>
 </html>
