@@ -3477,6 +3477,31 @@ window.handleAdminPlanUI = function(planTypeValue){
 
         return;
     }
+        // Custom Plan
+const planDoc = await getDoc(
+    doc(db, "plans", planType.value)
+);
+
+if (!planDoc.exists()) return;
+
+const plan = planDoc.data();
+
+let end = new Date(start);
+
+end.setFullYear(
+    end.getFullYear() + (plan.years || 0)
+);
+
+end.setMonth(
+    end.getMonth() + (plan.months || 0)
+);
+
+end.setDate(
+    end.getDate() + (plan.days || 0)
+);
+
+endDateInput.value =
+    end.toISOString().split("T")[0];
 }
 document.addEventListener(
 "DOMContentLoaded",
