@@ -310,24 +310,12 @@ console.log(document.getElementById("inst-start"));
 console.log(document.getElementById("inst-end"));
 
     try {
-
-        const name =
-            document.getElementById("institute-name").value.trim();
-
-        const logo =
-            document.getElementById("institute-logo").value.trim();
-
-        const ownerId =
-            document.getElementById("institute-owner").value.trim();
-
-        const currentPlan =
-            document.getElementById("plan-type").value;
-
-        const startDate =
-            document.getElementById("inst-start").value;
-
-        const endDate =
-            document.getElementById("inst-end").value;
+const name =document.getElementById("inst-name").value.trim();
+const logo = document.getElementById("inst-logo").value.trim();
+const ownerId = document.getElementById("inst-teacher-id").value.trim();
+const currentPlan =document.getElementById("plan-type").value;
+const startDate =document.getElementById("inst-start").value;
+const endDate =document.getElementById("inst-end").value;
 
         if (!name) {
             alert("Institute Name Required");
@@ -411,9 +399,9 @@ console.log(document.getElementById("inst-end"));
 
         alert("Institute Added Successfully");
 
-        document.getElementById("institute-name").value = "";
-        document.getElementById("institute-logo").value = "";
-        document.getElementById("institute-owner").value = "";
+        document.getElementById("inst-name").value = "";
+document.getElementById("inst-logo").value = "";
+document.getElementById("inst-teacher-id").value = "";
 
         loadInstitutes();
 
