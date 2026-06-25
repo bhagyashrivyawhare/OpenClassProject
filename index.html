@@ -3437,6 +3437,16 @@ window.handleAdminPlanUI = function(planTypeValue){
 
     const endDateInput =
         document.getElementById("inst-end");
+        console.log("updatePlanDates running");
+
+console.log("Selected Plan:",
+    planType.value);
+
+console.log("Start Input:",
+    startDateInput);
+
+console.log("End Input:",
+    endDateInput);
 
     if (!planType || !startDateInput || !endDateInput) {
         return;
