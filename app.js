@@ -528,6 +528,35 @@ endDateInput.value =
     end.toISOString().split("T")[0];
 }
 
+//block content
+async function checkInstituteExpiry(instituteId) {
+
+    const instituteRef = doc(db, "institutes", instituteId);
+
+    const instituteSnap = await getDoc(instituteRef);
+
+    if (!instituteSnap.exists()) return false;
+
+    const institute = instituteSnap.data();
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const endDate = new Date(institute.endDate);
+    endDate.setHours(0, 0, 0, 0);
+
+    if (today > endDate) {
+
+        await updateDoc(instituteRef, {
+            subscriptionStatus: "expired"
+        });
+
+        return false;
+    }
+
+    return true;
+}
+
 // =========================================
 // LOAD INSTITUTES
 // =========================================
@@ -547,6 +576,25 @@ async function loadInstitutes() {
         );
 
     snap.forEach((docSnap) => {
+        const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const endDate = new Date(data.endDate);
+endDate.setHours(0, 0, 0, 0);
+
+const status = today > endDate ? "Expired" : "Active";
+        // 👇 He pan add kara
+        if (
+            today > endDate &&
+            data.subscriptionStatus !== "expired"
+        ) {
+            await updateDoc(
+                doc(db, "institutes", docSnap.id),
+                {
+                    subscriptionStatus: "expired"
+                }
+            );
+        }
 
         const data =
             docSnap.data();
@@ -583,7 +631,7 @@ async function loadInstitutes() {
 
             <p>
                 Status:
-                ${data.subscriptionStatus || "-"}
+                ${status}
             </p>
 
         </div>
