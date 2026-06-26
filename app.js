@@ -17,7 +17,7 @@ enableIndexedDbPersistence(db).catch((err) => {
 window.addEventListener('DOMContentLoaded', () => {
     document.addEventListener("DOMContentLoaded", () => {
 
-    loadPlans();
+    //loadPlans();
     loadInstitutePlans();
     loadInstitutes();
 
@@ -214,7 +214,7 @@ if(
 
     alert("Plan Saved");
 
-    loadPlans();
+   // loadPlans();
 
     // IMPORTANT
     loadInstitutePlans();
