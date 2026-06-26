@@ -1896,8 +1896,42 @@ h1,h2,h3,h4,h5,h6 {
             let targetInstitute = null;
             if (profile.instituteId) {
                 const iSnap = await Core.getDocs(Core.query(Core.collection(Core.db, "institutes"), Core.where("uniqueId", "==", profile.instituteId)));
+                console.log("Profile Institute ID:", profile.instituteId);
+console.log("Institute Query Empty:", iSnap.empty);
                 if (!iSnap.empty) {
                     targetInstitute = iSnap.docs[0].data();
+                    const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const endDate = new Date(targetInstitute.endDate);
+endDate.setHours(0, 0, 0, 0);
+
+if (today > endDate) {
+
+    await Core.updateDoc(
+        iSnap.docs[0].ref,
+        {
+            subscriptionStatus: "expired"
+        }
+    );
+
+    main.innerHTML = `
+        <div class="glass p-10 rounded-[3rem] text-center border border-red-500/30 fade-in shadow-2xl">
+
+            <h2 class="text-3xl font-black text-red-500 mb-4 italic">
+                Institute Subscription Expired
+            </h2>
+
+            <p class="mb-8 opacity-80">
+                Your institute subscription has expired.
+                Please contact your institute administrator.
+            </p>
+
+        </div>
+    `;
+
+    return;
+}
                     currentInstituteMap[targetInstitute.uniqueId] = targetInstitute;
                     
                     // Update Branding
