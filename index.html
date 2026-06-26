@@ -3198,6 +3198,7 @@ window.saveCourseEdit = async (id) => {
                     const docSnapCheck = await Core.getDoc(Core.doc(Core.db, "users", user.uid));
                     if(docSnapCheck.exists()) {
                         const dData = docSnapCheck.data();
+                        
                         console.log("User Data:", dData);
                         if(dData.instituteId !== window._lockedInstId) {
                             await Core.updateDoc(Core.doc(Core.db, "users", user.uid), { instituteId: window._lockedInstId });
@@ -3209,6 +3210,37 @@ window.saveCourseEdit = async (id) => {
                 if (!docSnap.exists()) window.showScreen('onboarding-screen');
                 else {
                     profile = docSnap.data();
+
+const active = await checkInstituteExpiry(profile.instituteId);
+
+if (!active) {
+
+    window.showScreen("dashboard");
+
+    document.getElementById("dashboard").innerHTML = `
+        <div class="min-h-screen flex items-center justify-center bg-[var(--bg-main)]">
+
+            <div class="glass p-10 rounded-3xl text-center max-w-lg">
+
+                <h1 class="text-4xl font-black text-red-500 mb-4">
+                    Subscription Expired
+                </h1>
+
+                <p class="text-lg opacity-80 mb-6">
+                    Your institute subscription has expired.
+                </p>
+
+                <p class="opacity-60">
+                    Please contact your institute administrator to renew the subscription.
+                </p>
+
+            </div>
+
+        </div>
+    `;
+
+    return;
+}
                     const pic = document.getElementById('nav-profile-pic');
                     if (pic) {
                         const ringStyle = await window.updateProfileRing(user.uid, profile.role, profile.teacherId);
