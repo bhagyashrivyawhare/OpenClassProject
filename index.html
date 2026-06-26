@@ -3198,6 +3198,7 @@ window.saveCourseEdit = async (id) => {
                     const docSnapCheck = await Core.getDoc(Core.doc(Core.db, "users", user.uid));
                     if(docSnapCheck.exists()) {
                         const dData = docSnapCheck.data();
+                        console.log("User Data:", dData);
                         if(dData.instituteId !== window._lockedInstId) {
                             await Core.updateDoc(Core.doc(Core.db, "users", user.uid), { instituteId: window._lockedInstId });
                         }
