@@ -574,31 +574,30 @@ async function loadInstitutes() {
         await getDocs(
             collection(db, "institutes")
         );
+snap.forEach(async (docSnap) => {
 
-    snap.forEach((docSnap) => {
-        const today = new Date();
-today.setHours(0, 0, 0, 0);
+    const data = docSnap.data();
 
-const endDate = new Date(data.endDate);
-endDate.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-const status = today > endDate ? "Expired" : "Active";
-        // 👇 He pan add kara
-        if (
-            today > endDate &&
-            data.subscriptionStatus !== "expired"
-        ) {
-            await updateDoc(
-                doc(db, "institutes", docSnap.id),
-                {
-                    subscriptionStatus: "expired"
-                }
-            );
-        }
+    const endDate = new Date(data.endDate);
+    endDate.setHours(0, 0, 0, 0);
 
-        const data =
-            docSnap.data();
+    const status = today > endDate ? "Expired" : "Active";
 
+    if (
+        today > endDate &&
+        data.subscriptionStatus !== "expired"
+    ) {
+
+        await updateDoc(
+            doc(db, "institutes", docSnap.id),
+            {
+                subscriptionStatus: "expired"
+            }
+        );
+    }
         container.innerHTML += `
 
         <div class="border p-4 rounded-xl mb-3">
