@@ -587,17 +587,17 @@ snap.forEach(async (docSnap) => {
     const status = today > endDate ? "Expired" : "Active";
 
     if (
-        today > endDate &&
-        data.subscriptionStatus !== "expired"
-    ) {
+    today > endDate &&
+    data.subscriptionStatus !== "expired"
+) {
 
-        await updateDoc(
-            doc(db, "institutes", docSnap.id),
-            {
-                subscriptionStatus: "expired"
-            }
-        );
-    }
+    updateDoc(
+        doc(db, "institutes", docSnap.id),
+        {
+            subscriptionStatus: "expired"
+        }
+    );
+}
         container.innerHTML += `
 
         <div class="border p-4 rounded-xl mb-3">
