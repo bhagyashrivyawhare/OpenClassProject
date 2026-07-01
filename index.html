@@ -2877,24 +2877,27 @@ class="social-icon">
                         <img src="${c.thumbnail}" class="w-full h-full object-cover">
                         ${instBadgeStr}
                     </div>
-                    <div class="flex justify-between items-center mb-4 gap-4"><h2 class="text-xl md:text-2xl font-black italic text-brandOrange truncate">${c.title}</h2>
-                    ${isT ? `
-<div class="flex items-center gap-2 shrink-0">
+                   <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl md:text-2xl font-black italic text-brandOrange">
+        ${c.title}
+    </h2>
 
-    <button
-        onclick="editCourse('${id}')"
-        class="text-blue-500 font-black uppercase text-[10px] tracking-widest border border-blue-500/20 bg-blue-500/10 px-3 py-1.5 rounded-lg hover:bg-blue-500 hover:text-white transition">
-        Edit
-    </button>
+    ${isT ? `
+    <div class="flex items-center gap-2">
+        <button
+            onclick="editCourse('${id}')"
+            class="text-blue-500 font-black uppercase text-[10px] tracking-widest border border-blue-500/20 bg-blue-500/10 px-3 py-1.5 rounded-lg hover:bg-blue-500 hover:text-white transition">
+            EDIT
+        </button>
 
-    <button
-        onclick="delC('${id}')"
-        class="text-red-500 font-black uppercase text-[10px] tracking-widest border border-red-500/20 bg-red-500/10 px-3 py-1.5 rounded-lg shrink-0">
-        Delete
-    </button>
-
+        <button
+            onclick="delC('${id}')"
+            class="text-red-500 font-black uppercase text-[10px] tracking-widest border border-red-500/20 bg-red-500/10 px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white transition">
+            DELETE
+        </button>
+    </div>
+    ` : ''}
 </div>
-` : ''}
                     <p class="opacity-80 mb-6 text-sm leading-relaxed">${c.description}</p>
                     <div class="space-y-2 mb-6">
                         <p class="text-[9px] font-black uppercase opacity-40 tracking-widest mb-1 border-b border-[var(--border-color)] pb-2">Course Units Blueprint</p>
